@@ -2,30 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NEET 2027 · 静 Countdown</title>
-  <!-- Fonts: Noto Serif JP (for elegance) + Inter (for clean sans) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>NEET 2027 · 静 · The Peach Tree</title>
+  <meta name="theme-color" content="#1a1a2e" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Noto+Serif+JP:wght@200;400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Noto+Serif+JP:wght@200;400;600;700&display=swap" rel="stylesheet" />
   <style>
     /* ============================================================
-       0.  CSS VARIABLES – will be overridden by JS theme
+       0.  CSS VARIABLES (set by JS theme)
        ============================================================ */
     :root {
       --bg-primary: #f7f2eb;
-      --bg-card: rgba(255, 252, 248, 0.6);
+      --bg-card: rgba(255, 252, 248, 0.45);
       --text-primary: #1a1a2e;
       --text-secondary: #4a4a6a;
       --accent: #c9a84c;
       --accent-light: #e8d5a3;
       --border-color: rgba(26, 26, 46, 0.08);
       --shadow: rgba(26, 26, 46, 0.08);
-      --shadow-hover: rgba(26, 26, 46, 0.16);
-      --pattern-url: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%231a1a2e' fill-opacity='0.03'%3E%3Cpath d='M20 0v40M0 20h40'/%3E%3C/g%3E%3C/svg%3E");
-      --glass-bg: rgba(255, 252, 248, 0.4);
-      --badge-bg: #e8d5a3;
-      --badge-text: #1a1a2e;
+      --shadow-hover: rgba(26, 26, 46, 0.18);
+      --glass-border: rgba(255, 255, 255, 0.25);
+      --font-sans: 'Inter', -apple-system, sans-serif;
+      --font-serif: 'Noto Serif JP', 'Inter', serif;
+      --radius: 16px;
+      --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
     /* ============================================================
@@ -36,155 +37,108 @@
       padding: 0;
       box-sizing: border-box;
     }
-
     html {
       font-size: 62.5%;
       scroll-behavior: smooth;
     }
-
     body {
-      font-family: 'Inter', -apple-system, sans-serif;
+      font-family: var(--font-sans);
       font-size: 1.6rem;
-      line-height: 1.7;
+      line-height: 1.6;
       color: var(--text-primary);
       background: var(--bg-primary);
       min-height: 100vh;
-      background-image: var(--pattern-url), radial-gradient(ellipse at 20% 50%, var(--accent) 0%, transparent 70%);
-      background-blend-mode: overlay, normal;
+      overflow-x: hidden;
       transition: background 0.8s ease, color 0.8s ease;
-      padding: 0 1.6rem;
+    }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: rgba(0,0,0,0.03); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 20px; }
+
+    /* ============================================================
+       2.  TREE BACKGROUND
+       ============================================================ */
+    #tree-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    #tree-container svg {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      height: 100%;
+      max-width: 800px;
+      max-height: 800px;
+      opacity: 0.7;
+    }
+    #tree-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
     }
 
     /* ============================================================
-       2.  SCROLLBAR
+       3.  UI OVERLAY
        ============================================================ */
-    ::-webkit-scrollbar {
-      width: 5px;
-      height: 5px;
-    }
-    ::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.03);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: var(--accent);
-      border-radius: 20px;
-    }
-
-    /* ============================================================
-       3.  UTILITY
-       ============================================================ */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .text-center {
-      text-align: center;
-    }
-    .flex {
+    #app-overlay {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      padding: 1.6rem;
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
       display: flex;
-    }
-    .flex-col {
       flex-direction: column;
-    }
-    .items-center {
       align-items: center;
     }
-    .justify-between {
-      justify-content: space-between;
-    }
-    .gap-sm {
-      gap: 0.8rem;
-    }
-    .gap-md {
-      gap: 1.6rem;
-    }
-    .gap-lg {
-      gap: 3.2rem;
-    }
-    .mt-md {
-      margin-top: 1.6rem;
-    }
-    .mt-lg {
-      margin-top: 3.2rem;
-    }
-    .mb-md {
-      margin-bottom: 1.6rem;
-    }
-    .mb-lg {
-      margin-bottom: 3.2rem;
-    }
-    .hidden {
-      display: none !important;
-    }
-    .relative {
-      position: relative;
+    .app-container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
     }
 
     /* ============================================================
-       4.  TYPOGRAPHY
+       4.  GLASS CARD & COMPONENTS
        ============================================================ */
-    h1, h2, h3, h4 {
-      font-family: 'Noto Serif JP', 'Inter', serif;
-      font-weight: 400;
-      letter-spacing: 0.04em;
-    }
-    h1 {
-      font-size: 4.8rem;
-      font-weight: 200;
-    }
-    h2 {
-      font-size: 3.2rem;
-      font-weight: 300;
-    }
-    h3 {
-      font-size: 2rem;
-      font-weight: 400;
-    }
-    .subtitle {
-      font-size: 1.4rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      font-weight: 400;
-    }
-
-    /* ============================================================
-       5.  CARDS
-       ============================================================ */
-    .card {
+    .glass {
       background: var(--bg-card);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      border-radius: 16px;
-      border: 1px solid var(--border-color);
-      padding: 2.4rem;
-      box-shadow: 0 4px 20px var(--shadow);
-      transition: box-shadow 0.3s ease, transform 0.3s ease, background 0.6s ease;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 32px var(--shadow);
+      transition: all var(--transition);
     }
-    .card:hover {
-      box-shadow: 0 8px 40px var(--shadow-hover);
-      transform: translateY(-2px);
+    .glass:hover {
+      box-shadow: 0 12px 48px var(--shadow-hover);
+    }
+    .card {
+      padding: 2.4rem;
     }
 
     /* ============================================================
-       6.  HEADER / NAV
+       5.  HEADER / NAVIGATION
        ============================================================ */
     .site-header {
-      padding: 1.6rem 0;
-      border-bottom: 1px solid var(--border-color);
-      background: var(--bg-primary);
-      backdrop-filter: blur(12px);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      transition: background 0.6s ease;
-    }
-    .header-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 1.2rem;
+      padding: 1.2rem 2.4rem;
+      margin-bottom: 2.4rem;
+      border-bottom: 1px solid var(--border-color);
     }
     .logo {
       display: flex;
@@ -192,26 +146,26 @@
       gap: 0.8rem;
       text-decoration: none;
       color: var(--text-primary);
-      font-family: 'Noto Serif JP', serif;
+      font-family: var(--font-serif);
       font-size: 2.4rem;
       font-weight: 200;
       letter-spacing: 0.08em;
     }
     .logo-icon {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       width: 44px;
       height: 44px;
       border-radius: 50%;
       background: var(--accent);
       color: #fff;
-      text-align: center;
-      line-height: 44px;
       font-size: 2rem;
       transition: transform 0.3s ease;
     }
-    .logo:hover .logo-icon {
-      transform: rotate(-6deg) scale(1.05);
-    }
+    .logo:hover .logo-icon { transform: rotate(-8deg) scale(1.05); }
+    .logo span { font-weight: 300; opacity: 0.6; font-size: 1.6rem; }
+
     .nav-links {
       display: flex;
       list-style: none;
@@ -228,6 +182,7 @@
       text-decoration: none;
       transition: all 0.25s ease;
       position: relative;
+      cursor: pointer;
     }
     .nav-links a::after {
       content: '';
@@ -235,24 +190,20 @@
       bottom: 2px;
       left: 50%;
       width: 0;
-      height: 1.5px;
+      height: 2px;
       background: var(--accent);
       transition: width 0.3s ease, left 0.3s ease;
     }
-    .nav-links a:hover::after,
-    .nav-links a.active::after {
+    .nav-links a:hover::after, .nav-links a.active::after {
       width: 60%;
       left: 20%;
     }
-    .nav-links a:hover {
-      color: var(--text-primary);
-    }
+    .nav-links a:hover { color: var(--text-primary); }
     .nav-links a.active {
       color: var(--text-primary);
       background: rgba(201, 168, 76, 0.10);
     }
 
-    /* mobile menu */
     .menu-toggle {
       display: none;
       background: none;
@@ -262,9 +213,7 @@
       color: var(--text-primary);
     }
     @media (max-width: 640px) {
-      .menu-toggle {
-        display: block;
-      }
+      .menu-toggle { display: block; }
       .nav-links {
         display: none;
         width: 100%;
@@ -273,31 +222,40 @@
         padding: 1.2rem 0;
         gap: 0.4rem;
       }
-      .nav-links.open {
-        display: flex;
-      }
-      .nav-links a {
-        width: 100%;
-        text-align: center;
-        padding: 0.8rem;
-      }
-      h1 {
-        font-size: 3.6rem;
-      }
+      .nav-links.open { display: flex; }
+      .nav-links a { width: 100%; text-align: center; padding: 0.8rem; }
+      .site-header { padding: 1.2rem; }
+      .card { padding: 1.6rem; }
     }
 
     /* ============================================================
-       7.  PAGE TRANSITIONS
+       6.  SEASON INDICATOR
+       ============================================================ */
+    .season-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.3rem;
+      color: var(--text-secondary);
+      background: var(--bg-card);
+      padding: 0.4rem 1.6rem;
+      border-radius: 40px;
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(4px);
+      font-family: var(--font-serif);
+      letter-spacing: 0.04em;
+    }
+
+    /* ============================================================
+       7.  PAGE SYSTEM
        ============================================================ */
     .page {
       display: none;
-      animation: fadeIn 0.5s ease forwards;
-      padding: 2.4rem 0;
+      animation: fadeSlide 0.5s ease forwards;
+      padding: 0.8rem 0 2.4rem;
     }
-    .page.active {
-      display: block;
-    }
-    @keyframes fadeIn {
+    .page.active { display: block; }
+    @keyframes fadeSlide {
       0% { opacity: 0; transform: translateY(12px); }
       100% { opacity: 1; transform: translateY(0); }
     }
@@ -305,20 +263,7 @@
     /* ============================================================
        8.  COUNTDOWN
        ============================================================ */
-    .hero-section {
-      text-align: center;
-      padding: 3.2rem 0 1.6rem;
-      position: relative;
-    }
-    .hero-section::before {
-      content: '⛩️';
-      position: absolute;
-      top: -1.6rem;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 3.2rem;
-      opacity: 0.25;
-    }
+    .hero-section { text-align: center; padding: 1.6rem 0; }
     .phase-badge {
       display: inline-block;
       padding: 0.4rem 2.4rem;
@@ -326,17 +271,13 @@
       font-size: 1.4rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      background: var(--badge-bg);
-      color: var(--badge-text);
-      border: 1px solid var(--accent-light);
+      background: var(--accent-light);
+      color: var(--text-primary);
+      border: 1px solid var(--accent);
       margin-bottom: 1.2rem;
-      font-family: 'Noto Serif JP', serif;
+      font-family: var(--font-serif);
     }
-    .phase-badge.revision {
-      background: #d4a0a0;
-      border-color: #b33939;
-      color: #5a1a1a;
-    }
+    .phase-badge.revision { background: #d4a0a0; border-color: #b33939; color: #5a1a1a; }
     .countdown-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -352,13 +293,11 @@
       padding: 1.6rem 0.8rem;
       transition: transform 0.3s ease;
     }
-    .countdown-item:hover {
-      transform: scale(1.03);
-    }
+    .countdown-item:hover { transform: scale(1.03); }
     .countdown-number {
       font-size: 6.4rem;
       font-weight: 200;
-      font-family: 'Noto Serif JP', serif;
+      font-family: var(--font-serif);
       line-height: 1;
       letter-spacing: 0.04em;
     }
@@ -369,10 +308,7 @@
       color: var(--text-secondary);
       margin-top: 0.4rem;
     }
-    .progress-wrapper {
-      max-width: 600px;
-      margin: 2.4rem auto 0;
-    }
+    .progress-wrapper { max-width: 600px; margin: 2.4rem auto 0; }
     .progress-track {
       width: 100%;
       height: 4px;
@@ -398,14 +334,11 @@
       margin-top: 1.6rem;
       font-size: 1.6rem;
       font-weight: 300;
-      font-family: 'Noto Serif JP', serif;
+      font-family: var(--font-serif);
       letter-spacing: 0.04em;
       opacity: 0.8;
     }
-    .sub-message span {
-      color: var(--accent);
-      font-weight: 400;
-    }
+    .sub-message span { color: var(--accent); font-weight: 400; }
 
     /* ============================================================
        9.  TRACKER
@@ -415,30 +348,19 @@
       grid-template-columns: 1fr 1fr;
       gap: 2.4rem;
     }
-    @media (max-width: 700px) {
-      .tracker-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-    .subject-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-    }
+    @media (max-width: 700px) { .tracker-grid { grid-template-columns: 1fr; } }
+    .subject-list { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
     .subject-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0.8rem 1.2rem;
-      background: rgba(255,252,248,0.3);
+      background: rgba(255,252,248,0.2);
       border-radius: 8px;
       border: 1px solid var(--border-color);
       transition: background 0.2s;
     }
-    .subject-item:hover {
-      background: rgba(255,252,248,0.7);
-    }
+    .subject-item:hover { background: rgba(255,252,248,0.4); }
     .subject-item label {
       display: flex;
       align-items: center;
@@ -451,11 +373,9 @@
       width: 18px;
       height: 18px;
       accent-color: var(--accent);
+      cursor: pointer;
     }
-    .subject-hours {
-      font-size: 1.3rem;
-      color: var(--text-secondary);
-    }
+    .subject-hours { font-size: 1.3rem; color: var(--text-secondary); }
     .study-stats {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -465,27 +385,23 @@
     .stat-card {
       text-align: center;
       padding: 1.2rem;
-      background: rgba(255,252,248,0.3);
+      background: rgba(255,252,248,0.2);
       border-radius: 8px;
       border: 1px solid var(--border-color);
     }
     .stat-number {
       font-size: 3.2rem;
       font-weight: 200;
-      font-family: 'Noto Serif JP', serif;
+      font-family: var(--font-serif);
     }
-    .stat-label {
-      font-size: 1.2rem;
-      letter-spacing: 0.08em;
-      color: var(--text-secondary);
-    }
+    .stat-label { font-size: 1.2rem; letter-spacing: 0.08em; color: var(--text-secondary); }
 
     /* ============================================================
-       10. RESOURCES
+       10. RESOURCES & NOTES & MOTIVATION
        ============================================================ */
     .resources-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 1.6rem;
     }
     .resource-card {
@@ -496,22 +412,14 @@
       text-decoration: none;
       color: var(--text-primary);
       transition: all 0.3s ease;
+      display: block;
     }
     .resource-card:hover {
       transform: translateY(-4px);
       box-shadow: 0 8px 30px var(--shadow-hover);
-      background: var(--bg-card);
     }
-    .resource-card .title {
-      font-weight: 500;
-      font-size: 1.6rem;
-      font-family: 'Noto Serif JP', serif;
-    }
-    .resource-card .desc {
-      font-size: 1.3rem;
-      color: var(--text-secondary);
-      margin-top: 0.4rem;
-    }
+    .resource-card .title { font-weight: 600; font-size: 1.6rem; font-family: var(--font-serif); }
+    .resource-card .desc { font-size: 1.3rem; color: var(--text-secondary); margin-top: 0.4rem; }
     .resource-card .tag {
       display: inline-block;
       margin-top: 1.2rem;
@@ -522,9 +430,6 @@
       color: var(--text-primary);
     }
 
-    /* ============================================================
-       11. NOTES
-       ============================================================ */
     .notes-input-group {
       display: flex;
       gap: 0.8rem;
@@ -538,7 +443,7 @@
       border: 1px solid var(--border-color);
       border-radius: 8px;
       font-size: 1.5rem;
-      background: rgba(255,252,248,0.5);
+      background: rgba(255,252,248,0.3);
       outline: none;
       transition: border 0.2s;
       color: var(--text-primary);
@@ -547,6 +452,55 @@
       border-color: var(--accent);
       box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
     }
+    .notes-list { display: flex; flex-direction: column; gap: 0.8rem; }
+    .note-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 1.6rem;
+      background: rgba(255,252,248,0.2);
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+    .note-item .note-text { flex: 1; font-size: 1.5rem; }
+    .note-item .note-time { font-size: 1.2rem; color: var(--text-secondary); white-space: nowrap; margin-left: 1.2rem; }
+
+    .quote-box {
+      padding: 2.4rem;
+      border-radius: var(--radius);
+      background: var(--bg-card);
+      border: 1px solid var(--accent-light);
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .quote-box::before { content: '「'; font-size: 6rem; color: var(--accent); opacity: 0.15; position: absolute; top: -0.8rem; left: 1.6rem; font-family: var(--font-serif); }
+    .quote-box::after { content: '」'; font-size: 6rem; color: var(--accent); opacity: 0.15; position: absolute; bottom: -1.6rem; right: 1.6rem; font-family: var(--font-serif); }
+    .quote-text { font-size: 2.2rem; font-weight: 300; font-family: var(--font-serif); line-height: 1.6; }
+    .quote-author { margin-top: 1.2rem; font-size: 1.4rem; color: var(--text-secondary); letter-spacing: 0.08em; }
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1.6rem;
+      margin-top: 2.4rem;
+    }
+    .tip-card {
+      padding: 1.6rem;
+      border-radius: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+    .tip-card:hover { transform: translateY(-3px); }
+    .tip-card .emoji { font-size: 3.2rem; display: block; margin-bottom: 0.4rem; }
+    .tip-card .tip-title { font-weight: 600; font-size: 1.5rem; font-family: var(--font-serif); }
+    .tip-card .tip-desc { font-size: 1.3rem; color: var(--text-secondary); }
+
+    /* ============================================================
+       11. BUTTONS & UTILITY
+       ============================================================ */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -561,161 +515,73 @@
       cursor: pointer;
       transition: all 0.25s ease;
       letter-spacing: 0.04em;
+      font-family: var(--font-sans);
     }
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px var(--shadow-hover);
-    }
-    .btn-gold {
-      background: var(--accent);
-      color: var(--text-primary);
-    }
-    .btn-gold:hover {
-      background: #dbb95c;
-    }
-    .btn-vermilion {
-      background: #b33939;
-      color: #fff;
-    }
-    .btn-vermilion:hover {
-      background: #c94a4a;
-    }
-    .btn-outline {
-      background: transparent;
-      color: var(--text-primary);
-      border: 1px solid var(--border-color);
-    }
-    .btn-outline:hover {
-      background: rgba(0,0,0,0.03);
-      transform: none;
-      box-shadow: none;
-    }
-    .btn-sm {
-      padding: 0.4rem 1.2rem;
-      font-size: 1.2rem;
-    }
-    .notes-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-    }
-    .note-item {
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 16px var(--shadow-hover); }
+    .btn-gold { background: var(--accent); color: var(--text-primary); }
+    .btn-gold:hover { background: #dbb95c; }
+    .btn-vermilion { background: #b33939; color: #fff; }
+    .btn-vermilion:hover { background: #c94a4a; }
+    .btn-outline { background: transparent; color: var(--text-primary); border: 1px solid var(--border-color); }
+    .btn-outline:hover { background: rgba(0,0,0,0.03); transform: none; box-shadow: none; }
+    .btn-sm { padding: 0.4rem 1.2rem; font-size: 1.2rem; }
+    .text-center { text-align: center; }
+    .mt-md { margin-top: 1.6rem; }
+    .mb-md { margin-bottom: 1.6rem; }
+    .gap-sm { gap: 0.8rem; }
+    .flex { display: flex; }
+    .flex-wrap { flex-wrap: wrap; }
+    .items-center { align-items: center; }
+    .justify-between { justify-content: space-between; }
+
+    /* ============================================================
+       12. ONBOARDING MODAL
+       ============================================================ */
+    #onboarding-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 999;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 0.8rem 1.6rem;
-      background: rgba(255,252,248,0.3);
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-    }
-    .note-item .note-text {
-      flex: 1;
-      font-size: 1.5rem;
-    }
-    .note-item .note-time {
-      font-size: 1.2rem;
-      color: var(--text-secondary);
-      white-space: nowrap;
-      margin-left: 1.2rem;
-    }
-
-    /* ============================================================
-       12. QUOTES
-       ============================================================ */
-    .quote-box {
+      justify-content: center;
       padding: 2.4rem;
-      border-radius: 16px;
-      background: var(--bg-card);
+      transition: opacity 0.6s ease;
+    }
+    #onboarding-modal.hidden { opacity: 0; pointer-events: none; }
+    .onboarding-card {
+      max-width: 480px;
+      width: 100%;
+      background: var(--bg-primary);
+      border-radius: 24px;
+      padding: 3.2rem;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+      text-align: center;
       border: 1px solid var(--accent-light);
-      text-align: center;
-      max-width: 700px;
-      margin: 0 auto;
-      position: relative;
     }
-    .quote-box::before {
-      content: '「';
-      font-size: 6rem;
-      color: var(--accent);
-      opacity: 0.15;
-      position: absolute;
-      top: -0.8rem;
-      left: 1.6rem;
-      font-family: 'Noto Serif JP', serif;
-    }
-    .quote-box::after {
-      content: '」';
-      font-size: 6rem;
-      color: var(--accent);
-      opacity: 0.15;
-      position: absolute;
-      bottom: -1.6rem;
-      right: 1.6rem;
-      font-family: 'Noto Serif JP', serif;
-    }
-    .quote-text {
-      font-size: 2.2rem;
-      font-weight: 300;
-      font-family: 'Noto Serif JP', serif;
-      line-height: 1.6;
-    }
-    .quote-author {
-      margin-top: 1.2rem;
-      font-size: 1.4rem;
-      color: var(--text-secondary);
-      letter-spacing: 0.08em;
-    }
-    .tips-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 1.6rem;
-      margin-top: 2.4rem;
-    }
-    .tip-card {
-      padding: 1.6rem;
-      border-radius: 12px;
-      background: var(--bg-card);
+    .onboarding-card h2 { font-family: var(--font-serif); font-weight: 300; font-size: 3.2rem; margin-bottom: 0.8rem; }
+    .onboarding-card p { color: var(--text-secondary); margin-bottom: 2.4rem; }
+    .onboarding-card input {
+      width: 100%;
+      padding: 1.2rem 1.6rem;
       border: 1px solid var(--border-color);
-      text-align: center;
-      transition: transform 0.3s ease;
+      border-radius: 12px;
+      font-size: 1.6rem;
+      background: rgba(255,252,248,0.5);
+      margin-bottom: 1.6rem;
+      outline: none;
+      color: var(--text-primary);
     }
-    .tip-card:hover {
-      transform: translateY(-3px);
-    }
-    .tip-card .emoji {
-      font-size: 3.2rem;
-      display: block;
-      margin-bottom: 0.4rem;
-    }
-    .tip-card .tip-title {
-      font-weight: 500;
-      font-size: 1.5rem;
-      font-family: 'Noto Serif JP', serif;
-    }
-    .tip-card .tip-desc {
-      font-size: 1.3rem;
-      color: var(--text-secondary);
-    }
+    .onboarding-card input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(201,168,76,0.15); }
+    .onboarding-card .btn { width: 100%; justify-content: center; }
 
     /* ============================================================
-       13. FOOTER
-       ============================================================ */
-    .site-footer {
-      padding: 2.4rem 0 1.6rem;
-      border-top: 1px solid var(--border-color);
-      margin-top: 4.8rem;
-      text-align: center;
-      font-size: 1.3rem;
-      color: var(--text-secondary);
-    }
-    .footer-divider {
-      width: 60px;
-      height: 1px;
-      background: var(--accent-light);
-      margin: 0 auto 0.8rem;
-    }
-
-    /* ============================================================
-       14. TOAST
+       13. TOAST
        ============================================================ */
     .toast {
       position: fixed;
@@ -733,90 +599,107 @@
       z-index: 200;
       pointer-events: none;
       max-width: 400px;
+      font-family: var(--font-sans);
     }
-    .toast.show {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-    }
+    .toast.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
     /* ============================================================
-       15. SEASON / TIME INDICATOR (top bar)
-       ============================================================ */
-    .season-indicator {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 1.3rem;
-      color: var(--text-secondary);
-      background: var(--bg-card);
-      padding: 0.3rem 1.6rem;
-      border-radius: 40px;
-      border: 1px solid var(--border-color);
-      backdrop-filter: blur(4px);
-      font-family: 'Noto Serif JP', serif;
-      letter-spacing: 0.04em;
-    }
-    .season-indicator .icon {
-      font-size: 1.8rem;
-    }
-
-    /* ============================================================
-       16. RESPONSIVE TWEAKS
+       14. RESPONSIVE
        ============================================================ */
     @media (max-width: 500px) {
-      .countdown-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.8rem;
-      }
-      .countdown-number {
-        font-size: 4.8rem;
-      }
-      .study-stats {
-        grid-template-columns: 1fr 1fr;
-      }
-      .resources-grid {
-        grid-template-columns: 1fr;
-      }
-      .tips-grid {
-        grid-template-columns: 1fr 1fr;
-      }
+      .countdown-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+      .countdown-number { font-size: 4.8rem; }
+      .study-stats { grid-template-columns: 1fr 1fr; }
+      .resources-grid { grid-template-columns: 1fr; }
+      .tips-grid { grid-template-columns: 1fr 1fr; }
+      .onboarding-card { padding: 2.4rem; }
+      h1 { font-size: 3.6rem; }
     }
     @media (max-width: 380px) {
-      .countdown-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-      .study-stats {
-        grid-template-columns: 1fr;
-      }
-      .tips-grid {
-        grid-template-columns: 1fr;
-      }
+      .countdown-grid { grid-template-columns: 1fr 1fr; }
+      .countdown-number { font-size: 3.6rem; }
+      .study-stats { grid-template-columns: 1fr; }
+      .tips-grid { grid-template-columns: 1fr; }
     }
 
     /* ============================================================
-       17. PULSE ANIMATION
+       15. PULSE ANIMATION
        ============================================================ */
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.04); }
-      100% { transform: scale(1); }
-    }
-    .countdown-item.pulse .countdown-number {
-      animation: pulse 0.3s ease;
-    }
+    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.04); } 100% { transform: scale(1); } }
+    .countdown-item.pulse .countdown-number { animation: pulse 0.3s ease; }
 
     /* ============================================================
-       18. PRINT HIDE
+       16. FOOTER
+       ============================================================ */
+    .site-footer {
+      padding: 2.4rem 0 1.6rem;
+      border-top: 1px solid var(--border-color);
+      margin-top: 4.8rem;
+      text-align: center;
+      font-size: 1.3rem;
+      color: var(--text-secondary);
+    }
+    .footer-divider { width: 60px; height: 1px; background: var(--accent-light); margin: 0 auto 0.8rem; }
+
+    /* ============================================================
+       17. PRINT
        ============================================================ */
     @media print {
-      .site-header, .site-footer, .btn, .notes-input-group { display: none; }
-      .page { padding: 0; }
-      .card { box-shadow: none !important; border: 1px solid #ccc; }
+      #tree-container, .site-header, .site-footer, .btn, .notes-input-group { display: none !important; }
+      .page { padding: 0 !important; }
+      .glass { box-shadow: none !important; border: 1px solid #ccc !important; background: #fff !important; }
+      body { background: #fff !important; }
     }
   </style>
 </head>
 <body>
+
+  <!-- ============================================================
+  TREE BACKGROUND
+  ============================================================ -->
+  <div id="tree-container">
+    <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid meet" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Main Trunk -->
+      <path d="M180 480 C170 400, 160 360, 190 300 C210 260, 220 220, 200 180 C185 150, 160 140, 150 120 C140 100, 150 80, 170 70 C190 60, 210 65, 220 80 C230 95, 225 115, 210 130 C195 145, 180 150, 190 170 C200 190, 230 210, 250 240 C270 270, 280 300, 260 340 C240 380, 220 420, 220 480" stroke="url(#trunkGrad)" stroke-width="18" stroke-linecap="round" fill="none"/>
+      <!-- Branch Left -->
+      <path d="M190 180 C170 160, 130 140, 100 120 C80 110, 60 115, 50 130" stroke="url(#trunkGrad)" stroke-width="12" stroke-linecap="round" fill="none"/>
+      <path d="M100 120 C90 100, 80 80, 70 70" stroke="url(#trunkGrad)" stroke-width="8" stroke-linecap="round" fill="none"/>
+      <path d="M130 140 C120 120, 110 100, 115 85" stroke="url(#trunkGrad)" stroke-width="6" stroke-linecap="round" fill="none"/>
+      <!-- Branch Right -->
+      <path d="M220 200 C250 180, 290 160, 320 150 C340 145, 360 150, 370 165" stroke="url(#trunkGrad)" stroke-width="12" stroke-linecap="round" fill="none"/>
+      <path d="M320 150 C330 130, 340 110, 335 90" stroke="url(#trunkGrad)" stroke-width="8" stroke-linecap="round" fill="none"/>
+      <path d="M290 160 C300 140, 310 120, 300 100" stroke="url(#trunkGrad)" stroke-width="6" stroke-linecap="round" fill="none"/>
+      <!-- Branch Top -->
+      <path d="M200 180 C200 150, 210 120, 230 100 C250 80, 270 75, 280 85" stroke="url(#trunkGrad)" stroke-width="10" stroke-linecap="round" fill="none"/>
+      <path d="M230 100 C240 80, 245 60, 240 45" stroke="url(#trunkGrad)" stroke-width="6" stroke-linecap="round" fill="none"/>
+      <path d="M210 140 C220 120, 225 100, 215 85" stroke="url(#trunkGrad)" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <!-- Roots -->
+      <path d="M180 480 C160 490, 140 495, 120 500" stroke="url(#trunkGrad)" stroke-width="14" stroke-linecap="round" fill="none"/>
+      <path d="M220 480 C240 490, 260 495, 280 500" stroke="url(#trunkGrad)" stroke-width="14" stroke-linecap="round" fill="none"/>
+      <defs>
+        <linearGradient id="trunkGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#5a3a2a" />
+          <stop offset="50%" stop-color="#3d2b1a" />
+          <stop offset="100%" stop-color="#2a1a10" />
+        </linearGradient>
+      </defs>
+    </svg>
+    <canvas id="tree-canvas"></canvas>
+  </div>
+
+  <!-- ============================================================
+  ONBOARDING MODAL
+  ============================================================ -->
+  <div id="onboarding-modal">
+    <div class="onboarding-card glass">
+      <h2>🌸 静 · NEET 2027</h2>
+      <p>Begin your journey with the wisdom of the peach tree.<br />Every day, grow stronger.</p>
+      <input type="text" id="user-name-input" placeholder="What is your name?" value="Aspirant" />
+      <input type="date" id="target-date-input" />
+      <button class="btn btn-gold" id="start-journey-btn">Start Your Journey</button>
+      <p style="font-size:1.2rem;color:var(--text-secondary);margin-top:1.6rem;">Your data is saved locally. Privacy first.</p>
+    </div>
+  </div>
 
   <!-- ============================================================
   TOAST
@@ -824,271 +707,169 @@
   <div id="toast" class="toast"></div>
 
   <!-- ============================================================
-  HEADER
+  APP UI
   ============================================================ -->
-  <header class="site-header" id="siteHeader">
-    <div class="container header-inner">
-      <a href="#" class="logo">
-        <span class="logo-icon">静</span>
-        <span>NEET 2027</span>
-        <span style="font-weight:200;font-size:1.4rem;opacity:0.5;">· 和</span>
-      </a>
+  <div id="app-overlay">
+    <div class="app-container">
 
-      <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
-
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#" class="active" data-page="home">Countdown</a></li>
-        <li><a href="#" data-page="tracker">Tracker</a></li>
-        <li><a href="#" data-page="resources">Resources</a></li>
-        <li><a href="#" data-page="notes">Notes</a></li>
-        <li><a href="#" data-page="motivation">Motivation</a></li>
-      </ul>
-    </div>
-  </header>
-
-  <!-- ============================================================
-  MAIN CONTENT
-  ============================================================ -->
-  <main class="container" id="mainContent">
-
-    <!-- Season / Time indicator (top) -->
-    <div style="display:flex;justify-content:center;margin:1.2rem 0 0.8rem;">
-      <div class="season-indicator" id="seasonIndicator">
-        <span class="icon" id="seasonIcon">🌸</span>
-        <span id="seasonLabel">Spring · Day</span>
-      </div>
-    </div>
-
-    <!-- ============================================================
-    PAGE: HOME (Countdown)
-    ============================================================ -->
-    <section class="page active" id="page-home">
-      <div class="hero-section">
-        <div class="phase-badge" id="phaseBadge">📖 Preparation</div>
-        <h1>Countdown</h1>
-        <p class="subtitle">NEET 2027 · Serene Determination</p>
-        <div style="width:60px;height:2px;background:var(--accent);margin:1.2rem auto;opacity:0.4;"></div>
-
-        <div class="countdown-grid" id="countdownGrid">
-          <div class="countdown-item" id="cd-days">
-            <span class="countdown-number" id="days">00</span>
-            <span class="countdown-label">Days</span>
-          </div>
-          <div class="countdown-item" id="cd-hours">
-            <span class="countdown-number" id="hours">00</span>
-            <span class="countdown-label">Hours</span>
-          </div>
-          <div class="countdown-item" id="cd-minutes">
-            <span class="countdown-number" id="minutes">00</span>
-            <span class="countdown-label">Minutes</span>
-          </div>
-          <div class="countdown-item" id="cd-seconds">
-            <span class="countdown-number" id="seconds">00</span>
-            <span class="countdown-label">Seconds</span>
-          </div>
+      <!-- Header -->
+      <header class="site-header glass">
+        <a href="#" class="logo">
+          <span class="logo-icon">静</span>
+          NEET 2027
+          <span>· 和</span>
+        </a>
+        <div style="display:flex;align-items:center;gap:0.8rem;">
+          <span class="season-badge" id="seasonBadge">
+            <span id="seasonIcon">🌸</span>
+            <span id="seasonLabel">Spring · Day</span>
+          </span>
+          <button class="menu-toggle" id="menuToggle">☰</button>
         </div>
+        <ul class="nav-links" id="navLinks">
+          <li><a class="active" data-page="home">Home</a></li>
+          <li><a data-page="tracker">Tracker</a></li>
+          <li><a data-page="resources">Resources</a></li>
+          <li><a data-page="notes">Notes</a></li>
+          <li><a data-page="motivation">Motivation</a></li>
+        </ul>
+      </header>
 
-        <div class="progress-wrapper">
-          <div class="progress-track">
-            <div class="progress-fill" id="progressFill" style="width:0%;"></div>
-          </div>
-          <div class="progress-label">
-            <span id="progressLabelLeft">Prep 0%</span>
-            <span id="progressLabelRight">Target 2027</span>
-          </div>
-        </div>
+      <!-- Pages -->
+      <main>
 
-        <p class="sub-message" id="subMessage">
-          Quietly, steadily. <span>One day</span> at a time.
-        </p>
-      </div>
+        <!-- ===== HOME ===== -->
+        <section class="page active" id="page-home">
+          <div class="hero-section">
+            <div class="phase-badge" id="phaseBadge">📖 Preparation</div>
+            <h1>Countdown</h1>
+            <p class="subtitle" style="color:var(--text-secondary);letter-spacing:0.12em;text-transform:uppercase;font-size:1.4rem;">NEET 2027 · Serene Determination</p>
+            <div style="width:60px;height:2px;background:var(--accent);margin:1.2rem auto;opacity:0.4;"></div>
 
-      <!-- Quick stats -->
-      <div class="card" style="margin-top:1.6rem;">
-        <div class="study-stats" style="grid-template-columns:repeat(3,1fr);">
-          <div class="stat-card">
-            <div class="stat-number" id="studyDays">0</div>
-            <div class="stat-label">Study Days</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number" id="studyStreak">0</div>
-            <div class="stat-label">Streak 🔥</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number" id="totalHours">0</div>
-            <div class="stat-label">Total Hours</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================
-    PAGE: TRACKER
-    ============================================================ -->
-    <section class="page" id="page-tracker">
-      <h2>📊 Progress Tracker</h2>
-      <p class="subtitle">Log today's study and visualise your consistency</p>
-      <div style="width:60px;height:2px;background:var(--accent);margin:1.2rem 0;opacity:0.4;"></div>
-
-      <div class="tracker-grid">
-        <div class="card">
-          <h3>📚 Subjects</h3>
-          <p style="font-size:1.3rem;color:var(--text-secondary);margin-bottom:0.8rem;">
-            Check to mark completed for today
-          </p>
-          <ul class="subject-list" id="subjectList">
-            <li class="subject-item">
-              <label><input type="checkbox" data-subject="physics" /> Physics</label>
-              <span class="subject-hours" id="hours-physics">0h</span>
-            </li>
-            <li class="subject-item">
-              <label><input type="checkbox" data-subject="chemistry" /> Chemistry</label>
-              <span class="subject-hours" id="hours-chemistry">0h</span>
-            </li>
-            <li class="subject-item">
-              <label><input type="checkbox" data-subject="biology" /> Biology</label>
-              <span class="subject-hours" id="hours-biology">0h</span>
-            </li>
-            <li class="subject-item">
-              <label><input type="checkbox" data-subject="botany" /> Botany</label>
-              <span class="subject-hours" id="hours-botany">0h</span>
-            </li>
-            <li class="subject-item">
-              <label><input type="checkbox" data-subject="zoology" /> Zoology</label>
-              <span class="subject-hours" id="hours-zoology">0h</span>
-            </li>
-          </ul>
-          <div style="margin-top:1.2rem;display:flex;gap:0.8rem;flex-wrap:wrap;">
-            <button class="btn btn-gold btn-sm" id="addStudyHour">+1 Hour</button>
-            <button class="btn btn-outline btn-sm" id="resetStudyHours">Reset Today</button>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>📈 Today's Stats</h3>
-          <div class="study-stats" style="grid-template-columns:1fr 1fr;margin-top:0.8rem;">
-            <div class="stat-card">
-              <div class="stat-number" id="todaySubjects">0</div>
-              <div class="stat-label">Subjects Done</div>
+            <div class="countdown-grid" id="countdownGrid">
+              <div class="countdown-item"><span class="countdown-number" id="days">00</span><span class="countdown-label">Days</span></div>
+              <div class="countdown-item"><span class="countdown-number" id="hours">00</span><span class="countdown-label">Hours</span></div>
+              <div class="countdown-item"><span class="countdown-number" id="minutes">00</span><span class="countdown-label">Minutes</span></div>
+              <div class="countdown-item"><span class="countdown-number" id="seconds">00</span><span class="countdown-label">Seconds</span></div>
             </div>
-            <div class="stat-card">
-              <div class="stat-number" id="todayHours">0</div>
-              <div class="stat-label">Hours Today</div>
+
+            <div class="progress-wrapper">
+              <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%;"></div></div>
+              <div class="progress-label"><span id="progressLabelLeft">Prep 0%</span><span id="progressLabelRight">Target 2027</span></div>
+            </div>
+            <p class="sub-message" id="subMessage">Quietly, steadily. <span>One day</span> at a time.</p>
+          </div>
+
+          <div class="glass card" style="margin-top:1.6rem;">
+            <div class="study-stats" style="grid-template-columns:repeat(3,1fr);">
+              <div class="stat-card"><div class="stat-number" id="studyDays">0</div><div class="stat-label">Study Days</div></div>
+              <div class="stat-card"><div class="stat-number" id="studyStreak">0</div><div class="stat-label">Streak 🔥</div></div>
+              <div class="stat-card"><div class="stat-number" id="totalHours">0</div><div class="stat-label">Total Hours</div></div>
             </div>
           </div>
-          <p style="font-size:1.3rem;color:var(--text-secondary);margin-top:1.2rem;">
-            💡 Small steps every day build momentum.
-          </p>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <!-- ============================================================
-    PAGE: RESOURCES
-    ============================================================ -->
-    <section class="page" id="page-resources">
-      <h2>📖 Resource Library</h2>
-      <p class="subtitle">Curated materials for NEET preparation</p>
-      <div style="width:60px;height:2px;background:var(--accent);margin:1.2rem 0;opacity:0.4;"></div>
+        <!-- ===== TRACKER ===== -->
+        <section class="page" id="page-tracker">
+          <h2 style="font-family:var(--font-serif);font-weight:300;">📊 Progress Tracker</h2>
+          <p class="subtitle" style="color:var(--text-secondary);letter-spacing:0.08em;font-size:1.4rem;">Log today's study & visualise consistency</p>
+          <div style="width:60px;height:2px;background:var(--accent);margin:1.2rem 0;opacity:0.4;"></div>
 
-      <div class="resources-grid" id="resourcesGrid">
-        <a href="#" class="resource-card" onclick="return false;">
-          <div class="title">📘 NCERT Textbooks</div>
-          <div class="desc">Foundation for all subjects.</div>
-          <span class="tag">Essential</span>
-        </a>
-        <a href="#" class="resource-card" onclick="return false;">
-          <div class="title">📗 Past Papers (10 yrs)</div>
-          <div class="desc">Understand trends and practice.</div>
-          <span class="tag">Practice</span>
-        </a>
-        <a href="#" class="resource-card" onclick="return false;">
-          <div class="title">📕 Top Reference Books</div>
-          <div class="desc">Physics, Chemistry, Biology picks.</div>
-          <span class="tag">Recommended</span>
-        </a>
-        <a href="#" class="resource-card" onclick="return false;">
-          <div class="title">🧪 Lab & Practical Notes</div>
-          <div class="desc">For experiment‑based questions.</div>
-          <span class="tag">Practical</span>
-        </a>
-        <a href="#" class="resource-card" onclick="return false;">
-          <div class="title">📝 Mock Tests (50 sets)</div>
-          <div class="desc">Simulate exam conditions.</div>
-          <span class="tag">Mock</span>
-        </a>
-        <a href="#" class="resource-card" onclick="return false;">
-          <div class="title">🎯 Formula Sheets</div>
-          <div class="desc">Quick revision of key formulas.</div>
-          <span class="tag">Memorise</span>
-        </a>
-      </div>
-    </section>
+          <div class="tracker-grid">
+            <div class="glass card">
+              <h3 style="font-family:var(--font-serif);font-weight:400;">📚 Subjects</h3>
+              <p style="font-size:1.3rem;color:var(--text-secondary);margin-bottom:0.8rem;">Check to mark completed for today</p>
+              <ul class="subject-list" id="subjectList">
+                <li class="subject-item"><label><input type="checkbox" data-subject="physics" /> Physics</label><span class="subject-hours" id="hours-physics">0h</span></li>
+                <li class="subject-item"><label><input type="checkbox" data-subject="chemistry" /> Chemistry</label><span class="subject-hours" id="hours-chemistry">0h</span></li>
+                <li class="subject-item"><label><input type="checkbox" data-subject="biology" /> Biology</label><span class="subject-hours" id="hours-biology">0h</span></li>
+                <li class="subject-item"><label><input type="checkbox" data-subject="botany" /> Botany</label><span class="subject-hours" id="hours-botany">0h</span></li>
+                <li class="subject-item"><label><input type="checkbox" data-subject="zoology" /> Zoology</label><span class="subject-hours" id="hours-zoology">0h</span></li>
+              </ul>
+              <div style="margin-top:1.2rem;display:flex;gap:0.8rem;flex-wrap:wrap;">
+                <button class="btn btn-gold btn-sm" id="addStudyHour">+1 Hour</button>
+                <button class="btn btn-outline btn-sm" id="resetStudyHours">Reset Today</button>
+                <button class="btn btn-vermilion btn-sm" id="resetJourneyBtn" style="margin-left:auto;">⟳ Reset Journey</button>
+              </div>
+            </div>
 
-    <!-- ============================================================
-    PAGE: NOTES
-    ============================================================ -->
-    <section class="page" id="page-notes">
-      <h2>📝 Notes</h2>
-      <p class="subtitle">Jot down ideas, reminders, or insights</p>
-      <div style="width:60px;height:2px;background:var(--accent);margin:1.2rem 0;opacity:0.4;"></div>
-
-      <div class="card">
-        <div class="notes-input-group">
-          <input type="text" id="noteInput" placeholder="Write a new note..." maxlength="200" />
-          <button class="btn btn-gold" id="addNoteBtn">➕ Add</button>
-        </div>
-        <div class="notes-list" id="notesList">
-          <div style="text-align:center;padding:1.6rem;color:var(--text-secondary);font-size:1.4rem;">
-            No notes yet. Start your first one.
+            <div class="glass card">
+              <h3 style="font-family:var(--font-serif);font-weight:400;">📈 Today's Stats</h3>
+              <div class="study-stats" style="grid-template-columns:1fr 1fr;margin-top:0.8rem;">
+                <div class="stat-card"><div class="stat-number" id="todaySubjects">0</div><div class="stat-label">Subjects Done</div></div>
+                <div class="stat-card"><div class="stat-number" id="todayHours">0</div><div class="stat-label">Hours Today</div></div>
+              </div>
+              <p style="font-size:1.3rem;color:var(--text-secondary);margin-top:1.2rem;">💡 Small steps every day build momentum.</p>
+            </div>
           </div>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <!-- ============================================================
-    PAGE: MOTIVATION
-    ============================================================ -->
-    <section class="page" id="page-motivation">
-      <h2>🌸 Motivation</h2>
-      <p class="subtitle">Words to calm the mind and move forward</p>
-      <div style="width:60px;height:2px;background:var(--accent);margin:1.2rem 0;opacity:0.4;"></div>
+        <!-- ===== RESOURCES ===== -->
+        <section class="page" id="page-resources">
+          <h2 style="font-family:var(--font-serif);font-weight:300;">📖 Resource Library</h2>
+          <p class="subtitle" style="color:var(--text-secondary);letter-spacing:0.08em;font-size:1.4rem;">Curated materials for NEET preparation</p>
+          <div style="width:60px;height:2px;background:var(--accent);margin:1.2rem 0;opacity:0.4;"></div>
+          <div class="resources-grid">
+            <div class="resource-card"><div class="title">📘 NCERT Textbooks</div><div class="desc">Foundation for all subjects.</div><span class="tag">Essential</span></div>
+            <div class="resource-card"><div class="title">📗 Past Papers (10 yrs)</div><div class="desc">Understand trends and practice.</div><span class="tag">Practice</span></div>
+            <div class="resource-card"><div class="title">📕 Top Reference Books</div><div class="desc">Physics, Chemistry, Biology picks.</div><span class="tag">Recommended</span></div>
+            <div class="resource-card"><div class="title">🧪 Lab & Practical Notes</div><div class="desc">For experiment‑based questions.</div><span class="tag">Practical</span></div>
+            <div class="resource-card"><div class="title">📝 Mock Tests (50 sets)</div><div class="desc">Simulate exam conditions.</div><span class="tag">Mock</span></div>
+            <div class="resource-card"><div class="title">🎯 Formula Sheets</div><div class="desc">Quick revision of key formulas.</div><span class="tag">Memorise</span></div>
+          </div>
+        </section>
 
-      <div class="quote-box" id="quoteBox">
-        <p class="quote-text" id="quoteText">Success is the sum of small efforts repeated daily.</p>
-        <p class="quote-author" id="quoteAuthor">— Robert Collier</p>
-      </div>
+        <!-- ===== NOTES ===== -->
+        <section class="page" id="page-notes">
+          <h2 style="font-family:var(--font-serif);font-weight:300;">📝 Notes</h2>
+          <p class="subtitle" style="color:var(--text-secondary);letter-spacing:0.08em;font-size:1.4rem;">Jot down ideas, reminders, or insights</p>
+          <div style="width:60px;height:2px;background:var(--accent);margin:1.2rem 0;opacity:0.4;"></div>
+          <div class="glass card">
+            <div class="notes-input-group">
+              <input type="text" id="noteInput" placeholder="Write a new note..." maxlength="200" />
+              <button class="btn btn-gold" id="addNoteBtn">➕ Add</button>
+            </div>
+            <div class="notes-list" id="notesList">
+              <div style="text-align:center;padding:1.6rem;color:var(--text-secondary);font-size:1.4rem;">No notes yet. Start your first one.</div>
+            </div>
+          </div>
+        </section>
 
-      <div style="text-align:center;margin-top:1.6rem;">
-        <button class="btn btn-gold btn-sm" id="newQuoteBtn">🔄 Another Quote</button>
-      </div>
+        <!-- ===== MOTIVATION ===== -->
+        <section class="page" id="page-motivation">
+          <h2 style="font-family:var(--font-serif);font-weight:300;">🌸 Motivation</h2>
+          <p class="subtitle" style="color:var(--text-secondary);letter-spacing:0.08em;font-size:1.4rem;">Words to calm the mind and move forward</p>
+          <div style="width:60px;height:2px;background:var(--accent);margin:1.2rem 0;opacity:0.4;"></div>
+          <div class="quote-box" id="quoteBox">
+            <p class="quote-text" id="quoteText">Success is the sum of small efforts repeated daily.</p>
+            <p class="quote-author" id="quoteAuthor">— Robert Collier</p>
+          </div>
+          <div style="text-align:center;margin-top:1.6rem;"><button class="btn btn-gold btn-sm" id="newQuoteBtn">🔄 Another Quote</button></div>
+          <div class="tips-grid">
+            <div class="tip-card"><span class="emoji">🌅</span><div class="tip-title">Early Rise</div><div class="tip-desc">Quiet mornings sharpen focus.</div></div>
+            <div class="tip-card"><span class="emoji">🧘</span><div class="tip-title">Mindfulness</div><div class="tip-desc">5 minutes of breathing calms the mind.</div></div>
+            <div class="tip-card"><span class="emoji">📆</span><div class="tip-title">Plan Weekly</div><div class="tip-desc">Write down weekly goals.</div></div>
+            <div class="tip-card"><span class="emoji">💤</span><div class="tip-title">Rest Well</div><div class="tip-desc">7 hours of sleep consolidates memory.</div></div>
+            <div class="tip-card"><span class="emoji">📝</span><div class="tip-title">Output</div><div class="tip-desc">Teach to learn deeply.</div></div>
+            <div class="tip-card"><span class="emoji">🎯</span><div class="tip-title">Clear Goal</div><div class="tip-desc">Remember your 'why'.</div></div>
+          </div>
+        </section>
 
-      <div class="tips-grid">
-        <div class="tip-card"><span class="emoji">🌅</span><div class="tip-title">Early Rise</div><div class="tip-desc">Quiet mornings sharpen focus.</div></div>
-        <div class="tip-card"><span class="emoji">🧘</span><div class="tip-title">Mindfulness</div><div class="tip-desc">5 minutes of breathing calms the mind.</div></div>
-        <div class="tip-card"><span class="emoji">📆</span><div class="tip-title">Plan Weekly</div><div class="tip-desc">Write down weekly goals.</div></div>
-        <div class="tip-card"><span class="emoji">💤</span><div class="tip-title">Rest Well</div><div class="tip-desc">7 hours of sleep consolidates memory.</div></div>
-        <div class="tip-card"><span class="emoji">📝</span><div class="tip-title">Output</div><div class="tip-desc">Teach to learn deeply.</div></div>
-        <div class="tip-card"><span class="emoji">🎯</span><div class="tip-title">Clear Goal</div><div class="tip-desc">Remember your 'why'.</div></div>
-      </div>
-    </section>
+      </main>
 
-  </main>
+      <!-- Footer -->
+      <footer class="site-footer">
+        <div class="footer-divider"></div>
+        <p style="font-family:var(--font-serif);letter-spacing:0.08em;">和 · NEET 2027 · The Peach Tree</p>
+        <p style="font-size:1.2rem;opacity:0.6;">Quiet effort opens the future.</p>
+        <p style="font-size:1.1rem;opacity:0.4;margin-top:0.4rem;">© 2026 · Every moment matters</p>
+      </footer>
 
-  <!-- ============================================================
-  FOOTER
-  ============================================================ -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-divider"></div>
-      <p style="font-family:'Noto Serif JP',serif;letter-spacing:0.08em;">和 · NEET 2027 Countdown</p>
-      <p style="font-size:1.2rem;opacity:0.6;">Quiet effort opens the future.</p>
-      <p style="font-size:1.1rem;opacity:0.4;margin-top:0.4rem;">© 2026 · Every moment matters</p>
     </div>
-  </footer>
+  </div>
 
   <!-- ============================================================
-  JAVASCRIPT – Full Application Logic + Dynamic Theming
+  JAVASCRIPT — Full Application Logic + Tree Engine
   ============================================================ -->
   <script>
     (function() {
@@ -1099,16 +880,17 @@
       // ============================================================
       const CONFIG = {
         PREP_END: new Date(2026, 11, 31, 23, 59, 59),
-        REVISION_START: new Date(2027, 0, 1, 0, 0, 0),
         REVISION_END: new Date(2027, 3, 30, 23, 59, 59),
-        TARGET_DATE: new Date(2027, 4, 1, 0, 0, 0),
-        STORAGE_KEY: 'neet2027_data',
+        STORAGE_KEY: 'neet2027_peach_tree_data',
+        APP_VERSION: '2.0.0',
       };
 
       // ============================================================
       // 2.  STATE
       // ============================================================
       let state = {
+        userName: 'Aspirant',
+        targetDate: '2027-05-01',
         phase: 'preparation',
         studyDays: 0,
         streak: 0,
@@ -1119,6 +901,7 @@
         subjectChecked: { physics: false, chemistry: false, biology: false, botany: false, zoology: false },
         notes: [],
         lastStudyDate: null,
+        journeyStarted: false,
       };
 
       // ============================================================
@@ -1154,229 +937,361 @@
         navAnchors: $$('.nav-links a'),
         addHourBtn: $('#addStudyHour'),
         resetHoursBtn: $('#resetStudyHours'),
+        resetJourneyBtn: $('#resetJourneyBtn'),
         countdownItems: $$('.countdown-item'),
         seasonIcon: $('#seasonIcon'),
         seasonLabel: $('#seasonLabel'),
         root: document.documentElement,
+        onboardingModal: $('#onboarding-modal'),
+        userNameInput: $('#user-name-input'),
+        targetDateInput: $('#target-date-input'),
+        startJourneyBtn: $('#start-journey-btn'),
+        canvas: $('#tree-canvas'),
+        ctx: $('#tree-canvas').getContext('2d'),
+        treeContainer: $('#tree-container'),
       };
 
       // ============================================================
-      // 4.  THEMING ENGINE (Season + Time of day)
+      // 4.  TREE ENGINE (Canvas Particle System)
       // ============================================================
-      function getSeasonAndTime() {
-        const now = new Date();
-        const month = now.getMonth(); // 0=Jan
-        const hours = now.getHours();
-        const isDay = hours >= 6 && hours < 18;
+      const TreeEngine = {
+        particles: [],
+        animationId: null,
+        width: 0,
+        height: 0,
+        season: 'summer',
+        isDay: true,
 
-        let season = '';
-        let icon = '';
-        let label = '';
+        init() {
+          this.resize();
+          window.addEventListener('resize', () => this.resize());
+          this.generateParticles();
+          this.animate();
+        },
 
-        if (month >= 2 && month <= 5) { // Mar–Jun
-          season = 'summer';
-          icon = '☀️';
-          label = 'Summer';
-        } else if (month >= 6 && month <= 8) { // Jul–Sep
-          season = 'monsoon';
-          icon = '🌧️';
-          label = 'Monsoon';
-        } else if (month >= 9 && month <= 10) { // Oct–Nov
-          season = 'autumn';
-          icon = '🍂';
-          label = 'Autumn';
-        } else { // Dec–Feb
-          season = 'winter';
-          icon = '❄️';
-          label = 'Winter';
+        resize() {
+          const rect = dom.treeContainer.getBoundingClientRect();
+          this.width = rect.width;
+          this.height = rect.height;
+          dom.canvas.width = this.width;
+          dom.canvas.height = this.height;
+        },
+
+        getSeason() {
+          const month = new Date().getMonth();
+          if (month >= 2 && month <= 5) return 'summer';
+          if (month >= 6 && month <= 8) return 'monsoon';
+          if (month >= 9 && month <= 10) return 'autumn';
+          return 'winter';
+        },
+
+        isDayTime() {
+          const hours = new Date().getHours();
+          return hours >= 6 && hours < 18;
+        },
+
+        generateParticles() {
+          this.season = this.getSeason();
+          this.isDay = this.isDayTime();
+          this.particles = [];
+          const count = this.season === 'winter' ? 80 : this.season === 'monsoon' ? 120 : 60;
+
+          for (let i = 0; i < count; i++) {
+            let x = Math.random() * this.width;
+            let y = Math.random() * this.height * 0.8;
+            let size = 0;
+            let color = '';
+            let speed = 0;
+            let type = '';
+
+            switch (this.season) {
+              case 'summer':
+                type = 'leaf';
+                size = 4 + Math.random() * 6;
+                color = `hsl(${120 + Math.random() * 30}, 60%, ${40 + Math.random() * 30}%)`;
+                speed = 0.2 + Math.random() * 0.3;
+                break;
+              case 'monsoon':
+                type = 'rain';
+                size = 1 + Math.random() * 2;
+                color = `rgba(180, 210, 230, ${0.3 + Math.random() * 0.4})`;
+                speed = 4 + Math.random() * 6;
+                break;
+              case 'autumn':
+                type = 'leaf';
+                size = 3 + Math.random() * 5;
+                color = `hsl(${20 + Math.random() * 40}, 70%, ${50 + Math.random() * 30}%)`;
+                speed = 0.5 + Math.random() * 0.8;
+                break;
+              case 'winter':
+                type = 'snow';
+                size = 2 + Math.random() * 4;
+                color = `rgba(255, 255, 255, ${0.6 + Math.random() * 0.4})`;
+                speed = 0.3 + Math.random() * 0.6;
+                break;
+            }
+
+            this.particles.push({
+              x,
+              y,
+              size,
+              color,
+              speed,
+              type,
+              drift: (Math.random() - 0.5) * 0.5,
+              sway: Math.random() * Math.PI * 2,
+              life: Math.random(),
+              maxLife: 0.5 + Math.random() * 0.5,
+            });
+          }
+        },
+
+        animate() {
+          const ctx = dom.ctx;
+          const W = this.width;
+          const H = this.height;
+
+          ctx.clearRect(0, 0, W, H);
+
+          // Draw ambient background for night / monsoon
+          if (!this.isDay) {
+            ctx.fillStyle = 'rgba(0,0,20,0.05)';
+            ctx.fillRect(0, 0, W, H);
+          }
+          if (this.season === 'monsoon') {
+            ctx.fillStyle = 'rgba(30, 40, 60, 0.03)';
+            ctx.fillRect(0, 0, W, H);
+          }
+
+          // Update & draw particles
+          for (const p of this.particles) {
+            p.x += p.drift + Math.sin(p.sway) * 0.2;
+            p.y += p.speed;
+
+            if (p.type === 'rain') {
+              p.x += p.speed * 0.3;
+            }
+
+            // Reset if off screen
+            if (p.y > H + 50) {
+              p.y = -20;
+              p.x = Math.random() * W;
+              p.speed = this.season === 'monsoon' ? 4 + Math.random() * 6 : 0.5 + Math.random() * 0.8;
+            }
+            if (p.x < -50) p.x = W + 50;
+            if (p.x > W + 50) p.x = -50;
+
+            // Draw
+            ctx.beginPath();
+            if (p.type === 'leaf') {
+              ctx.ellipse(p.x, p.y, p.size * 0.6, p.size * 0.8, Math.random() * Math.PI, 0, Math.PI * 2);
+              ctx.fillStyle = p.color;
+              ctx.fill();
+              // Add a small stem or detail
+              ctx.fillStyle = 'rgba(0,0,0,0.1)';
+              ctx.ellipse(p.x - 2, p.y - 2, 1, 2, 0, 0, Math.PI * 2);
+              ctx.fill();
+            } else if (p.type === 'snow') {
+              ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+              ctx.fillStyle = p.color;
+              ctx.fill();
+              ctx.shadowColor = 'rgba(255,255,255,0.3)';
+              ctx.shadowBlur = 10;
+              ctx.fill();
+              ctx.shadowBlur = 0;
+            } else if (p.type === 'rain') {
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p.x - p.size * 2, p.y + p.size * 10);
+              ctx.strokeStyle = p.color;
+              ctx.lineWidth = 1.5;
+              ctx.stroke();
+            } else {
+              // fallback
+              ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+              ctx.fillStyle = p.color;
+              ctx.fill();
+            }
+
+            // Sway update
+            p.sway += 0.02;
+          }
+
+          this.animationId = requestAnimationFrame(() => this.animate());
+        },
+
+        updateSeason() {
+          const newSeason = this.getSeason();
+          const newDay = this.isDayTime();
+          if (newSeason !== this.season || newDay !== this.isDay) {
+            this.season = newSeason;
+            this.isDay = newDay;
+            this.generateParticles();
+          }
         }
-
-        label += isDay ? ' · Day' : ' · Night';
-        return { season, icon, label, isDay };
-      }
-
-      function applyTheme(season, isDay) {
-        const root = dom.root;
-        // Base colours per season (light mode day, dark mode night)
-        let bg, card, text, textSec, accent, accentLight, border, shadow, badgeBg, badgeText, patternColor;
-
-        const dayPalette = {
-          summer: {
-            bg: '#fdf6ed',
-            card: 'rgba(255, 248, 235, 0.7)',
-            text: '#3d2b1a',
-            textSec: '#7a5a3a',
-            accent: '#d4a373',
-            accentLight: '#f0d5b0',
-            border: 'rgba(61, 43, 26, 0.1)',
-            shadow: 'rgba(61, 43, 26, 0.08)',
-            badgeBg: '#f0d5b0',
-            badgeText: '#3d2b1a',
-            patternColor: '#3d2b1a',
-          },
-          monsoon: {
-            bg: '#e8f0f0',
-            card: 'rgba(235, 245, 245, 0.7)',
-            text: '#1a2e3a',
-            textSec: '#3a5a6a',
-            accent: '#4a7a8a',
-            accentLight: '#a0c4d4',
-            border: 'rgba(26, 46, 58, 0.1)',
-            shadow: 'rgba(26, 46, 58, 0.08)',
-            badgeBg: '#a0c4d4',
-            badgeText: '#1a2e3a',
-            patternColor: '#1a2e3a',
-          },
-          autumn: {
-            bg: '#f5efe6',
-            card: 'rgba(245, 235, 220, 0.7)',
-            text: '#3a2a1a',
-            textSec: '#7a5a3a',
-            accent: '#b87c4a',
-            accentLight: '#e0c4a0',
-            border: 'rgba(58, 42, 26, 0.1)',
-            shadow: 'rgba(58, 42, 26, 0.08)',
-            badgeBg: '#e0c4a0',
-            badgeText: '#3a2a1a',
-            patternColor: '#3a2a1a',
-          },
-          winter: {
-            bg: '#f0f2f5',
-            card: 'rgba(240, 242, 245, 0.7)',
-            text: '#1a1a2e',
-            textSec: '#4a4a6a',
-            accent: '#7a8a9a',
-            accentLight: '#b0c0d0',
-            border: 'rgba(26, 26, 46, 0.1)',
-            shadow: 'rgba(26, 26, 46, 0.08)',
-            badgeBg: '#b0c0d0',
-            badgeText: '#1a1a2e',
-            patternColor: '#1a1a2e',
-          }
-        };
-
-        const nightPalette = {
-          summer: {
-            bg: '#1e1a16',
-            card: 'rgba(40, 35, 30, 0.7)',
-            text: '#e8ddd0',
-            textSec: '#b0a090',
-            accent: '#d4a373',
-            accentLight: '#b08050',
-            border: 'rgba(200, 180, 160, 0.15)',
-            shadow: 'rgba(0,0,0,0.4)',
-            badgeBg: '#b08050',
-            badgeText: '#e8ddd0',
-            patternColor: '#e8ddd0',
-          },
-          monsoon: {
-            bg: '#141c20',
-            card: 'rgba(25, 35, 40, 0.7)',
-            text: '#d0e0e8',
-            textSec: '#90aab0',
-            accent: '#6a9aaa',
-            accentLight: '#4a7a8a',
-            border: 'rgba(160, 190, 200, 0.15)',
-            shadow: 'rgba(0,0,0,0.4)',
-            badgeBg: '#4a7a8a',
-            badgeText: '#d0e0e8',
-            patternColor: '#d0e0e8',
-          },
-          autumn: {
-            bg: '#1e1814',
-            card: 'rgba(40, 32, 26, 0.7)',
-            text: '#e8ddd0',
-            textSec: '#b0a090',
-            accent: '#b87c4a',
-            accentLight: '#8a5a3a',
-            border: 'rgba(200, 170, 140, 0.15)',
-            shadow: 'rgba(0,0,0,0.4)',
-            badgeBg: '#8a5a3a',
-            badgeText: '#e8ddd0',
-            patternColor: '#e8ddd0',
-          },
-          winter: {
-            bg: '#1a1c20',
-            card: 'rgba(30, 34, 40, 0.7)',
-            text: '#e0e4ea',
-            textSec: '#909aa8',
-            accent: '#8a9aaa',
-            accentLight: '#6a7a8a',
-            border: 'rgba(160, 170, 180, 0.15)',
-            shadow: 'rgba(0,0,0,0.4)',
-            badgeBg: '#6a7a8a',
-            badgeText: '#e0e4ea',
-            patternColor: '#e0e4ea',
-          }
-        };
-
-        const palette = isDay ? dayPalette[season] : nightPalette[season];
-
-        bg = palette.bg;
-        card = palette.card;
-        text = palette.text;
-        textSec = palette.textSec;
-        accent = palette.accent;
-        accentLight = palette.accentLight;
-        border = palette.border;
-        shadow = palette.shadow;
-        badgeBg = palette.badgeBg;
-        badgeText = palette.badgeText;
-        patternColor = palette.patternColor;
-
-        // Apply to CSS variables
-        root.style.setProperty('--bg-primary', bg);
-        root.style.setProperty('--bg-card', card);
-        root.style.setProperty('--text-primary', text);
-        root.style.setProperty('--text-secondary', textSec);
-        root.style.setProperty('--accent', accent);
-        root.style.setProperty('--accent-light', accentLight);
-        root.style.setProperty('--border-color', border);
-        root.style.setProperty('--shadow', shadow);
-        root.style.setProperty('--badge-bg', badgeBg);
-        root.style.setProperty('--badge-text', badgeText);
-
-        // Update pattern with new colour
-        const encoded = encodeURIComponent(patternColor);
-        const pattern = `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='${encoded}' fill-opacity='0.04'%3E%3Cpath d='M20 0v40M0 20h40'/%3E%3C/g%3E%3C/svg%3E")`;
-        root.style.setProperty('--pattern-url', pattern);
-
-        // Update season indicator
-        const info = getSeasonAndTime();
-        dom.seasonIcon.textContent = info.icon;
-        dom.seasonLabel.textContent = info.label;
-
-        // Also update badge background for phase
-        // will be done in render
-      }
+      };
 
       // ============================================================
-      // 5.  STORAGE
+      // 5.  THEME ENGINE (CSS Variables)
+      // ============================================================
+      const ThemeEngine = {
+        apply(season, isDay) {
+          const root = dom.root;
+          let bg, card, text, textSec, accent, accentLight, border, shadow, glassBorder;
+
+          const palettes = {
+            summer: {
+              day: {
+                bg: '#fdf6ed',
+                card: 'rgba(255, 248, 235, 0.50)',
+                text: '#3d2b1a',
+                textSec: '#7a5a3a',
+                accent: '#d4a373',
+                accentLight: '#f0d5b0',
+                border: 'rgba(61, 43, 26, 0.10)',
+                shadow: 'rgba(61, 43, 26, 0.08)',
+                glassBorder: 'rgba(255, 255, 255, 0.35)',
+              },
+              night: {
+                bg: '#1e1a16',
+                card: 'rgba(40, 35, 30, 0.60)',
+                text: '#e8ddd0',
+                textSec: '#b0a090',
+                accent: '#d4a373',
+                accentLight: '#b08050',
+                border: 'rgba(200, 180, 160, 0.15)',
+                shadow: 'rgba(0,0,0,0.40)',
+                glassBorder: 'rgba(255, 255, 255, 0.10)',
+              }
+            },
+            monsoon: {
+              day: {
+                bg: '#e8f0f0',
+                card: 'rgba(235, 245, 245, 0.50)',
+                text: '#1a2e3a',
+                textSec: '#3a5a6a',
+                accent: '#4a7a8a',
+                accentLight: '#a0c4d4',
+                border: 'rgba(26, 46, 58, 0.10)',
+                shadow: 'rgba(26, 46, 58, 0.08)',
+                glassBorder: 'rgba(255, 255, 255, 0.35)',
+              },
+              night: {
+                bg: '#141c20',
+                card: 'rgba(25, 35, 40, 0.60)',
+                text: '#d0e0e8',
+                textSec: '#90aab0',
+                accent: '#6a9aaa',
+                accentLight: '#4a7a8a',
+                border: 'rgba(160, 190, 200, 0.15)',
+                shadow: 'rgba(0,0,0,0.40)',
+                glassBorder: 'rgba(255, 255, 255, 0.10)',
+              }
+            },
+            autumn: {
+              day: {
+                bg: '#f5efe6',
+                card: 'rgba(245, 235, 220, 0.50)',
+                text: '#3a2a1a',
+                textSec: '#7a5a3a',
+                accent: '#b87c4a',
+                accentLight: '#e0c4a0',
+                border: 'rgba(58, 42, 26, 0.10)',
+                shadow: 'rgba(58, 42, 26, 0.08)',
+                glassBorder: 'rgba(255, 255, 255, 0.35)',
+              },
+              night: {
+                bg: '#1e1814',
+                card: 'rgba(40, 32, 26, 0.60)',
+                text: '#e8ddd0',
+                textSec: '#b0a090',
+                accent: '#b87c4a',
+                accentLight: '#8a5a3a',
+                border: 'rgba(200, 170, 140, 0.15)',
+                shadow: 'rgba(0,0,0,0.40)',
+                glassBorder: 'rgba(255, 255, 255, 0.10)',
+              }
+            },
+            winter: {
+              day: {
+                bg: '#f0f2f5',
+                card: 'rgba(240, 242, 245, 0.50)',
+                text: '#1a1a2e',
+                textSec: '#4a4a6a',
+                accent: '#7a8a9a',
+                accentLight: '#b0c0d0',
+                border: 'rgba(26, 26, 46, 0.10)',
+                shadow: 'rgba(26, 26, 46, 0.08)',
+                glassBorder: 'rgba(255, 255, 255, 0.35)',
+              },
+              night: {
+                bg: '#1a1c20',
+                card: 'rgba(30, 34, 40, 0.60)',
+                text: '#e0e4ea',
+                textSec: '#909aa8',
+                accent: '#8a9aaa',
+                accentLight: '#6a7a8a',
+                border: 'rgba(160, 170, 180, 0.15)',
+                shadow: 'rgba(0,0,0,0.40)',
+                glassBorder: 'rgba(255, 255, 255, 0.10)',
+              }
+            }
+          };
+
+          const palette = palettes[season][isDay ? 'day' : 'night'];
+
+          root.style.setProperty('--bg-primary', palette.bg);
+          root.style.setProperty('--bg-card', palette.card);
+          root.style.setProperty('--text-primary', palette.text);
+          root.style.setProperty('--text-secondary', palette.textSec);
+          root.style.setProperty('--accent', palette.accent);
+          root.style.setProperty('--accent-light', palette.accentLight);
+          root.style.setProperty('--border-color', palette.border);
+          root.style.setProperty('--shadow', palette.shadow);
+          root.style.setProperty('--glass-border', palette.glassBorder);
+
+          // Update badge
+          const iconMap = { summer: '☀️', monsoon: '🌧️', autumn: '🍂', winter: '❄️' };
+          const labelMap = { summer: 'Summer', monsoon: 'Monsoon', autumn: 'Autumn', winter: 'Winter' };
+          dom.seasonIcon.textContent = iconMap[season];
+          dom.seasonLabel.textContent = `${labelMap[season]} · ${isDay ? 'Day' : 'Night'}`;
+        }
+      };
+
+      // ============================================================
+      // 6.  STORAGE & STATE MANAGEMENT
       // ============================================================
       function loadState() {
         try {
           const raw = localStorage.getItem(CONFIG.STORAGE_KEY);
           if (raw) {
             const saved = JSON.parse(raw);
-            Object.assign(state, saved);
-            if (!state.subjectHours) state.subjectHours = { physics: 0, chemistry: 0, biology: 0, botany: 0, zoology: 0 };
-            if (!state.subjectChecked) state.subjectChecked = { physics: false, chemistry: false, biology: false, botany: false,
-              zoology: false };
-            if (!state.notes) state.notes = [];
-            if (state.lastStudyDate) state.lastStudyDate = new Date(state.lastStudyDate);
-            updateTodayStats();
-            return true;
+            if (saved.version === CONFIG.APP_VERSION) {
+              Object.assign(state, saved);
+              if (state.lastStudyDate) state.lastStudyDate = new Date(state.lastStudyDate);
+              if (!state.subjectHours) state.subjectHours = { physics: 0, chemistry: 0, biology: 0, botany: 0, zoology: 0 };
+              if (!state.subjectChecked) state.subjectChecked = { physics: false, chemistry: false, biology: false,
+                botany: false, zoology: false };
+              if (!state.notes) state.notes = [];
+              updateTodayStats();
+              return true;
+            }
           }
-        } catch (e) {}
+        } catch (e) { /* ignore */ }
         return false;
       }
 
       function saveState() {
         try {
-          const toSave = { ...state };
+          const toSave = { ...state, version: CONFIG.APP_VERSION };
           if (toSave.lastStudyDate) toSave.lastStudyDate = toSave.lastStudyDate.toISOString();
           localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(toSave));
-        } catch (e) {}
+        } catch (e) { /* ignore */ }
+      }
+
+      function resetJourney() {
+        if (!confirm('Are you sure you want to reset your entire journey? All data will be lost.')) return;
+        localStorage.removeItem(CONFIG.STORAGE_KEY);
+        window.location.reload();
       }
 
       function updateTodayStats() {
@@ -1391,7 +1306,7 @@
       }
 
       // ============================================================
-      // 6.  COUNTDOWN
+      // 7.  COUNTDOWN ENGINE
       // ============================================================
       function getPhase() {
         const now = new Date();
@@ -1407,7 +1322,7 @@
         const target = getCountdownTarget();
         const diff = target - now;
         if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0, progress: 100 };
-        const days = Math.floor(diff / (86400000));
+        const days = Math.floor(diff / 86400000);
         const hours = Math.floor((diff % 86400000) / 3600000);
         const minutes = Math.floor((diff % 3600000) / 60000);
         const seconds = Math.floor((diff % 60000) / 1000);
@@ -1483,7 +1398,7 @@
       }
 
       // ============================================================
-      // 7.  NOTES
+      // 8.  NOTES
       // ============================================================
       function renderNotes() {
         const list = dom.notesList;
@@ -1531,7 +1446,7 @@
       }
 
       // ============================================================
-      // 8.  STUDY TRACKER
+      // 9.  STUDY TRACKER
       // ============================================================
       function toggleSubject(subject, checked) {
         state.subjectChecked[subject] = checked;
@@ -1591,7 +1506,7 @@
       }
 
       // ============================================================
-      // 9.  QUOTES
+      // 10. QUOTES
       // ============================================================
       const QUOTES = [
         { text: 'Success is the sum of small efforts repeated daily.', author: '— Robert Collier' },
@@ -1604,6 +1519,8 @@
         { text: 'Discipline is the bridge between goals and accomplishment.', author: '— Jim Rohn' },
         { text: 'The secret of getting ahead is getting started.', author: '— Mark Twain' },
         { text: 'He who has a why can endure any how.', author: '— Friedrich Nietzsche' },
+        { text: 'The best time to plant a tree was 20 years ago. The second best time is now.', author: '— Chinese Proverb' },
+        { text: 'A journey of a thousand miles begins with a single step.', author: '— Lao Tzu' },
       ];
       let currentQuote = 0;
 
@@ -1614,7 +1531,6 @@
         const q = QUOTES[idx];
         dom.quoteText.textContent = q.text;
         dom.quoteAuthor.textContent = q.author;
-        // subtle fade
         dom.quoteText.style.opacity = '0';
         dom.quoteAuthor.style.opacity = '0';
         setTimeout(() => {
@@ -1624,7 +1540,7 @@
       }
 
       // ============================================================
-      // 10. TOAST
+      // 11. TOAST
       // ============================================================
       let toastTimeout = null;
 
@@ -1637,7 +1553,7 @@
       }
 
       // ============================================================
-      // 11. NAVIGATION
+      // 12. NAVIGATION
       // ============================================================
       function navigateTo(pageId) {
         dom.navAnchors.forEach(a => a.classList.toggle('active', a.dataset.page === pageId));
@@ -1651,23 +1567,80 @@
       }
 
       // ============================================================
-      // 12. INIT
+      // 13. ONBOARDING
+      // ============================================================
+      function startJourney() {
+        const name = dom.userNameInput.value.trim() || 'Aspirant';
+        const target = dom.targetDateInput.value;
+        if (!target) {
+          showToast('⚠️ Please select your target exam date.');
+          return;
+        }
+        state.userName = name;
+        state.targetDate = target;
+        state.journeyStarted = true;
+        state.studyDays = 0;
+        state.streak = 0;
+        state.totalHours = 0;
+        state.todayHours = 0;
+        state.todaySubjects = 0;
+        state.subjectHours = { physics: 0, chemistry: 0, biology: 0, botany: 0, zoology: 0 };
+        state.subjectChecked = { physics: false, chemistry: false, biology: false, botany: false, zoology: false };
+        state.notes = [];
+        state.lastStudyDate = null;
+        saveState();
+        dom.onboardingModal.classList.add('hidden');
+        renderCountdown();
+        showToast(`🌸 Welcome, ${state.userName}! Let's grow.`);
+      }
+
+      // ============================================================
+      // 14. INITIALIZATION
       // ============================================================
       function init() {
         // Load state
-        loadState();
+        const hasState = loadState();
 
-        // Apply theme (season + time)
-        const { season, isDay, icon, label } = getSeasonAndTime();
-        applyTheme(season, isDay);
-        dom.seasonIcon.textContent = icon;
-        dom.seasonLabel.textContent = label;
+        // Set default target date
+        dom.targetDateInput.value = '2027-05-01';
+
+        // If no state, show onboarding
+        if (!hasState || !state.journeyStarted) {
+          dom.onboardingModal.classList.remove('hidden');
+          dom.userNameInput.value = 'Aspirant';
+        } else {
+          dom.onboardingModal.classList.add('hidden');
+          dom.userNameInput.value = state.userName || 'Aspirant';
+        }
+
+        // Init Tree Engine
+        TreeEngine.init();
+
+        // Apply initial theme
+        const season = TreeEngine.getSeason();
+        const isDay = TreeEngine.isDayTime();
+        ThemeEngine.apply(season, isDay);
 
         // Render countdown
         renderCountdown();
         setInterval(renderCountdown, 1000);
 
-        // Event listeners
+        // Update tree season & theme every minute
+        setInterval(() => {
+          const newSeason = TreeEngine.getSeason();
+          const newDay = TreeEngine.isDayTime();
+          ThemeEngine.apply(newSeason, newDay);
+          TreeEngine.updateSeason();
+        }, 30000);
+
+        // ---- Event Listeners ----
+
+        // Onboarding
+        dom.startJourneyBtn.addEventListener('click', startJourney);
+        dom.targetDateInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') startJourney(); });
+        dom.userNameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') startJourney(); });
+
+        // Navigation
         dom.navAnchors.forEach(a => {
           a.addEventListener('click', function(e) {
             e.preventDefault();
@@ -1681,15 +1654,19 @@
           this.textContent = open ? '✕' : '☰';
         });
 
+        // Subject checkboxes
         document.querySelectorAll('input[data-subject]').forEach(cb => {
           cb.addEventListener('change', function() {
             toggleSubject(this.dataset.subject, this.checked);
           });
         });
 
+        // Study buttons
         dom.addHourBtn.addEventListener('click', addStudyHour);
         dom.resetHoursBtn.addEventListener('click', resetStudyHours);
+        dom.resetJourneyBtn.addEventListener('click', resetJourney);
 
+        // Notes
         dom.addNoteBtn.addEventListener('click', function() {
           const val = dom.noteInput.value;
           if (addNote(val)) dom.noteInput.value = '';
@@ -1699,6 +1676,7 @@
           if (e.key === 'Enter') dom.addNoteBtn.click();
         });
 
+        // Quotes
         dom.newQuoteBtn.addEventListener('click', showRandomQuote);
         showRandomQuote();
 
@@ -1714,25 +1692,19 @@
           else if (key === 'm') navigateTo('motivation');
         });
 
-        // Re-apply theme on hour change (every 30 min) – just to be safe
-        setInterval(() => {
-          const { season, isDay, icon, label } = getSeasonAndTime();
-          // only update if changed
-          const currentIcon = dom.seasonIcon.textContent;
-          if (currentIcon !== icon) {
-            applyTheme(season, isDay);
-            dom.seasonIcon.textContent = icon;
-            dom.seasonLabel.textContent = label;
-          }
-        }, 60000); // every minute
+        // Show welcome toast if already onboarded
+        if (hasState && state.journeyStarted) {
+          setTimeout(() => {
+            showToast(`🌸 Welcome back, ${state.userName || 'Aspirant'}. Stay focused.`);
+          }, 600);
+        }
 
-        showToast('🌸 Welcome. Quiet effort begins now.');
-        console.log('🌸 NEET 2027 · Seasonal Japanese Aesthetic');
+        console.log('🌸 NEET 2027 · The Peach Tree');
         console.log('⌨️ Shortcuts: H=Home, T=Tracker, R=Resources, N=Notes, M=Motivation');
       }
 
       // ============================================================
-      // 13. START
+      // 15. START
       // ============================================================
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
@@ -1742,5 +1714,6 @@
 
     })();
   </script>
+
 </body>
 </html>
