@@ -1,1759 +1,2154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>NEET 2027 · The Threefold Path</title>
-  <meta name="theme-color" content="#0a0a12" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=Noto+Serif+JP:wght@200;400;600;700&family=Noto+Serif+SC:wght@300;600;700&family=Noto+Sans+Devanagari:wght@300;400;700&display=swap" rel="stylesheet" />
-  <style>
-    /* ============================================================
-       0.  CSS VARIABLES — The Threefold Palette
-       ============================================================ */
-    :root {
-      --bg-primary: #0a0a12;
-      --bg-card: rgba(14, 14, 28, 0.7);
-      --bg-card-hover: rgba(24, 24, 44, 0.8);
-      --text-primary: #e8e2da;
-      --text-secondary: #b0a8a0;
-      --text-muted: #6a6a7a;
-      /* Chinese — Gold / Vermilion */
-      --cn-gold: #d4a843;
-      --cn-gold-light: #f0d5a0;
-      --cn-gold-dark: #a8893a;
-      --cn-vermilion: #b33939;
-      --cn-vermilion-light: #d46060;
-      /* Japanese — Jade / Indigo */
-      --jp-jade: #4a8a7a;
-      --jp-jade-light: #80c0b0;
-      --jp-jade-dark: #2a5a4a;
-      --jp-indigo: #2a2a5a;
-      --jp-indigo-light: #5a5a8a;
-      /* Indian — Saffron / Sandalwood */
-      --in-saffron: #e8a830;
-      --in-saffron-light: #f0c060;
-      --in-sandalwood: #c4a080;
-      --in-sandalwood-light: #e0c8b0;
-      /* Shared */
-      --border-color: rgba(200, 180, 160, 0.06);
-      --shadow: rgba(0, 0, 0, 0.5);
-      --shadow-hover: rgba(0, 0, 0, 0.7);
-      --glass-border: rgba(255, 255, 255, 0.05);
-      --radius: 16px;
-      --radius-sm: 8px;
-      --transition: 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      --font-sans: 'Inter', -apple-system, sans-serif;
-      --font-jp: 'Noto Serif JP', serif;
-      --font-cn: 'Noto Serif SC', serif;
-      --font-in: 'Noto Sans Devanagari', 'Inter', sans-serif;
-      --star-opacity: 0.5;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>NEET 2027 · The Art of Focus</title>
+    <meta name="theme-color" content="#0a0a12" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+    <style>
+        /* ============================================================
+           0.  CSS VARIABLES
+           ============================================================ */
+        :root {
+            --bg-primary: #0c0a0e;
+            --bg-card: rgba(18, 14, 22, 0.75);
+            --bg-card-hover: rgba(28, 22, 34, 0.85);
+            --text-primary: #eae4dc;
+            --text-secondary: #b0a89e;
+            --text-muted: #6a6260;
 
-    /* ============================================================
-       1.  RESET & BASE
-       ============================================================ */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    html {
-      font-size: 62.5%;
-      scroll-behavior: smooth;
-    }
-    body {
-      font-family: var(--font-sans);
-      font-size: 1.6rem;
-      line-height: 1.6;
-      color: var(--text-primary);
-      background: var(--bg-primary);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-    ::-webkit-scrollbar { width: 4px; height: 4px; }
-    ::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
-    ::-webkit-scrollbar-thumb { background: var(--cn-gold); border-radius: 20px; }
+            /* Chinese — Red & Gold */
+            --cn-red: #8b1a1a;
+            --cn-red-light: #b33a3a;
+            --cn-gold: #d4a843;
+            --cn-gold-light: #f0d5a0;
+            --cn-ink: #1a1410;
 
-    /* ============================================================
-       2.  CINEMATIC COSMIC BACKGROUND
-       ============================================================ */
-    #cosmic-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-      background: radial-gradient(ellipse at 25% 15%, #120820 0%, #0a0a12 50%, #040408 100%);
-    }
-    /* stars layer */
-    #cosmic-bg .stars {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image:
-        radial-gradient(1px 1px at 10% 20%, rgba(255,255,240,0.8), transparent),
-        radial-gradient(1px 1px at 30% 60%, rgba(255,255,240,0.6), transparent),
-        radial-gradient(1.5px 1.5px at 50% 10%, rgba(255,255,240,0.9), transparent),
-        radial-gradient(1px 1px at 70% 40%, rgba(255,255,240,0.5), transparent),
-        radial-gradient(1px 1px at 90% 70%, rgba(255,255,240,0.7), transparent),
-        radial-gradient(1.2px 1.2px at 15% 80%, rgba(255,255,240,0.4), transparent),
-        radial-gradient(1px 1px at 45% 90%, rgba(255,255,240,0.6), transparent),
-        radial-gradient(1px 1px at 75% 85%, rgba(255,255,240,0.5), transparent),
-        radial-gradient(1.5px 1.5px at 55% 45%, rgba(255,255,240,0.8), transparent),
-        radial-gradient(1px 1px at 85% 15%, rgba(255,255,240,0.4), transparent),
-        radial-gradient(1px 1px at 5% 45%, rgba(255,255,240,0.5), transparent),
-        radial-gradient(1.2px 1.2px at 95% 55%, rgba(255,255,240,0.3), transparent),
-        radial-gradient(1px 1px at 35% 35%, rgba(255,255,240,0.6), transparent),
-        radial-gradient(1.3px 1.3px at 65% 75%, rgba(255,255,240,0.4), transparent);
-      background-size: 200px 200px, 300px 300px, 400px 400px, 250px 250px, 350px 350px,
-        150px 150px, 280px 280px, 320px 320px, 180px 180px, 220px 220px,
-        270px 270px, 340px 340px, 160px 160px, 190px 190px;
-      opacity: var(--star-opacity);
-      animation: twinkle 5s ease-in-out infinite alternate;
-    }
-    @keyframes twinkle {
-      0% { opacity: 0.4; }
-      100% { opacity: 0.9; }
-    }
+            /* Japanese — Indigo & Jade */
+            --jp-indigo: #1a1a3a;
+            --jp-indigo-light: #3a3a6a;
+            --jp-jade: #4a8a7a;
+            --jp-jade-light: #80c0b0;
+            --jp-cream: #e8e0d8;
 
-    /* Cultural symbols as design elements */
-    #cosmic-bg .cultural-symbol {
-      position: absolute;
-      opacity: 0.035;
-      font-size: 10rem;
-      pointer-events: none;
-      transition: opacity 0.8s ease;
-    }
-    #cosmic-bg .cultural-symbol.cn-sym { font-family: var(--font-cn); color: var(--cn-gold); }
-    #cosmic-bg .cultural-symbol.jp-sym { font-family: var(--font-jp); color: var(--jp-jade-light); }
-    #cosmic-bg .cultural-symbol.in-sym { font-family: var(--font-in); color: var(--in-saffron); }
+            /* Indian — Saffron & Sandalwood */
+            --in-saffron: #e8a830;
+            --in-saffron-light: #f0c060;
+            --in-sandalwood: #c4a080;
+            --in-sandalwood-light: #e0c8b0;
+            --in-crimson: #8b1a3a;
 
-    #cosmic-bg .cs1 { top: 6%; right: 6%; transform: rotate(12deg); font-size: 8rem; }
-    #cosmic-bg .cs2 { bottom: 8%; left: 4%; transform: rotate(-6deg); font-size: 9rem; }
-    #cosmic-bg .cs3 { top: 45%; left: 50%; transform: translateX(-50%) rotate(0deg); font-size: 5rem; opacity: 0.025; }
+            /* Shared */
+            --border-color: rgba(200, 180, 160, 0.05);
+            --shadow: rgba(0, 0, 0, 0.6);
+            --shadow-hover: rgba(0, 0, 0, 0.8);
+            --glass-border: rgba(255, 255, 255, 0.04);
+            --radius: 16px;
+            --radius-sm: 8px;
+            --transition: 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --font-sans: 'Inter', -apple-system, sans-serif;
+            --font-serif: 'Playfair Display', 'Georgia', serif;
+        }
 
-    /* Mandala ring */
-    #cosmic-bg .mandala-ring {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 500px;
-      height: 500px;
-      border-radius: 50%;
-      border: 1px solid rgba(212, 168, 67, 0.04);
-      animation: spinSlow 80s linear infinite;
-    }
-    #cosmic-bg .mandala-ring::before {
-      content: '';
-      position: absolute;
-      top: 10%;
-      left: 10%;
-      width: 80%;
-      height: 80%;
-      border-radius: 50%;
-      border: 1px solid rgba(74, 138, 122, 0.04);
-    }
-    #cosmic-bg .mandala-ring::after {
-      content: '';
-      position: absolute;
-      top: 20%;
-      left: 20%;
-      width: 60%;
-      height: 60%;
-      border-radius: 50%;
-      border: 1px solid rgba(232, 168, 48, 0.03);
-    }
-    @keyframes spinSlow {
-      0% { transform: translate(-50%, -50%) rotate(0deg); }
-      100% { transform: translate(-50%, -50%) rotate(360deg); }
-    }
+        /* ============================================================
+           1.  RESET & BASE
+           ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            font-size: 62.5%;
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: var(--font-sans);
+            font-size: 1.6rem;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--cn-gold);
+            border-radius: 20px;
+        }
 
-    /* Decorative rings */
-    #cosmic-bg .ring {
-      position: absolute;
-      border: 1px solid rgba(212, 168, 67, 0.025);
-      border-radius: 50%;
-      animation: floatRing 20s ease-in-out infinite alternate;
-    }
-    #cosmic-bg .ring.r1 { width: 380px; height: 380px; top: 18%; left: 12%; }
-    #cosmic-bg .ring.r2 { width: 460px; height: 460px; bottom: 10%; right: 8%; animation-delay: -8s; }
-    #cosmic-bg .ring.r3 { width: 240px; height: 240px; top: 60%; left: 60%; animation-delay: -14s; }
+        /* ============================================================
+           2.  ARTISTIC BACKGROUND — Three Cultural Visuals
+           ============================================================ */
+        #art-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            background: radial-gradient(ellipse at 30% 20%, #12080e 0%, #0c0a0e 50%, #060408 100%);
+        }
 
-    @keyframes floatRing {
-      0% { transform: translateY(0px) scale(1); }
-      100% { transform: translateY(-20px) scale(1.02); }
-    }
+        /* --- Chinese: Ink Wash Mountains & Clouds --- */
+        #art-bg .chinese-mountains {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            opacity: 0.08;
+        }
+        #art-bg .chinese-mountains .peak {
+            position: absolute;
+            bottom: 0;
+            border-style: solid;
+            border-color: transparent transparent var(--cn-ink) transparent;
+        }
+        #art-bg .chinese-mountains .p1 {
+            left: -5%;
+            border-width: 0 180px 260px 180px;
+            border-bottom-color: rgba(26, 20, 16, 0.25);
+            animation: floatMountain 20s ease-in-out infinite alternate;
+        }
+        #art-bg .chinese-mountains .p2 {
+            left: 15%;
+            border-width: 0 120px 200px 120px;
+            border-bottom-color: rgba(26, 20, 16, 0.18);
+            animation: floatMountain 25s ease-in-out infinite alternate-reverse;
+        }
+        #art-bg .chinese-mountains .p3 {
+            right: 10%;
+            border-width: 0 160px 220px 160px;
+            border-bottom-color: rgba(26, 20, 16, 0.22);
+            animation: floatMountain 22s ease-in-out infinite alternate;
+        }
+        #art-bg .chinese-mountains .p4 {
+            right: 35%;
+            border-width: 0 90px 150px 90px;
+            border-bottom-color: rgba(26, 20, 16, 0.15);
+            animation: floatMountain 28s ease-in-out infinite alternate-reverse;
+        }
+        @keyframes floatMountain {
+            0% {
+                transform: translateY(0px) scale(1);
+            }
+            100% {
+                transform: translateY(-15px) scale(1.02);
+            }
+        }
 
-    /* ============================================================
-       3.  UI OVERLAY
-       ============================================================ */
-    #app-overlay {
-      position: relative;
-      z-index: 10;
-      min-height: 100vh;
-      padding: 1.6rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .app-container {
-      width: 100%;
-      max-width: 960px;
-      margin: 0 auto;
-    }
+        /* Chinese: Cloud wisps */
+        #art-bg .cloud-wisp {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.04;
+            animation: wispDrift 30s ease-in-out infinite alternate;
+        }
+        #art-bg .cloud-wisp.c1 {
+            width: 300px;
+            height: 120px;
+            top: 15%;
+            left: 5%;
+            background: var(--jp-cream);
+        }
+        #art-bg .cloud-wisp.c2 {
+            width: 400px;
+            height: 150px;
+            top: 40%;
+            right: 2%;
+            background: var(--jp-cream);
+            animation-delay: -12s;
+        }
+        #art-bg .cloud-wisp.c3 {
+            width: 200px;
+            height: 80px;
+            bottom: 20%;
+            left: 25%;
+            background: var(--jp-cream);
+            animation-delay: -20s;
+        }
+        @keyframes wispDrift {
+            0% {
+                transform: translateX(-30px) scale(1);
+            }
+            100% {
+                transform: translateX(30px) scale(1.1);
+            }
+        }
 
-    /* ============================================================
-       4.  GLASS COMPONENTS — Cinematic Frost
-       ============================================================ */
-    .glass {
-      background: var(--bg-card);
-      backdrop-filter: blur(24px) saturate(1.4);
-      -webkit-backdrop-filter: blur(24px) saturate(1.4);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius);
-      box-shadow: 0 8px 32px var(--shadow);
-      transition: all var(--transition);
-    }
-    .glass:hover {
-      box-shadow: 0 12px 48px var(--shadow-hover);
-      background: var(--bg-card-hover);
-    }
-    .card {
-      padding: 2.4rem;
-    }
+        /* --- Japanese: Wave Pattern (Seigaiha) --- */
+        #art-bg .wave-pattern {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50%;
+            height: 50%;
+            opacity: 0.04;
+            background: repeating-conic-gradient(from 0deg at 50% 50%,
+                    transparent 0deg,
+                    var(--jp-indigo-light) 2deg,
+                    transparent 4deg,
+                    transparent 6deg);
+            background-size: 80px 80px;
+            mask-image: radial-gradient(ellipse at 70% 90%, black 0%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at 70% 90%, black 0%, transparent 70%);
+        }
 
-    /* ============================================================
-       5.  HEADER — The Threefold Way
-       ============================================================ */
-    .site-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1.2rem;
-      padding: 1.2rem 2.4rem;
-      margin-bottom: 2.4rem;
-      background: var(--bg-card);
-      backdrop-filter: blur(24px) saturate(1.4);
-      -webkit-backdrop-filter: blur(24px) saturate(1.4);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius);
-      box-shadow: 0 4px 24px var(--shadow);
-    }
+        /* Japanese: Zen circle (Enso) — artistic */
+        #art-bg .enso-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid rgba(74, 138, 122, 0.04);
+            opacity: 0.3;
+        }
+        #art-bg .enso-ring.e1 {
+            width: 300px;
+            height: 300px;
+            top: 15%;
+            left: 10%;
+            animation: ensoBreath 8s ease-in-out infinite alternate;
+        }
+        #art-bg .enso-ring.e2 {
+            width: 200px;
+            height: 200px;
+            bottom: 20%;
+            right: 15%;
+            border-color: rgba(212, 168, 67, 0.03);
+            animation: ensoBreath 12s ease-in-out infinite alternate-reverse;
+        }
+        @keyframes ensoBreath {
+            0% {
+                transform: scale(1) rotate(0deg);
+            }
+            100% {
+                transform: scale(1.05) rotate(8deg);
+            }
+        }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      text-decoration: none;
-      color: var(--text-primary);
-    }
-    .logo .three-symbols {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 2rem;
-      font-weight: 200;
-      letter-spacing: 0.06em;
-    }
-    .logo .three-symbols .cn { font-family: var(--font-cn); color: var(--cn-gold); }
-    .logo .three-symbols .jp { font-family: var(--font-jp); color: var(--jp-jade-light); }
-    .logo .three-symbols .in { font-family: var(--font-in); color: var(--in-saffron); }
-    .logo .divider { opacity: 0.2; font-weight: 100; }
-    .logo .brand-text {
-      font-size: 1.6rem;
-      font-weight: 200;
-      letter-spacing: 0.12em;
-      opacity: 0.6;
-    }
+        /* Japanese: Subtle wave lines */
+        #art-bg .wave-line {
+            position: absolute;
+            width: 200%;
+            height: 2px;
+            background: repeating-linear-gradient(90deg,
+                    transparent 0px,
+                    rgba(74, 138, 122, 0.03) 30px,
+                    transparent 60px);
+            animation: waveFlow 15s linear infinite;
+        }
+        #art-bg .wave-line.w1 {
+            top: 30%;
+            left: -50%;
+            transform: rotate(-3deg);
+        }
+        #art-bg .wave-line.w2 {
+            top: 55%;
+            left: -50%;
+            transform: rotate(2deg);
+            animation-duration: 20s;
+            animation-delay: -5s;
+        }
+        @keyframes waveFlow {
+            0% {
+                transform: translateX(0px) rotate(var(--rot, 0deg));
+            }
+            100% {
+                transform: translateX(120px) rotate(var(--rot, 0deg));
+            }
+        }
+        #art-bg .wave-line.w1 {
+            --rot: -3deg;
+        }
+        #art-bg .wave-line.w2 {
+            --rot: 2deg;
+        }
 
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-    }
-    .cosmic-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 1.1rem;
-      color: var(--text-secondary);
-      background: rgba(0,0,0,0.3);
-      padding: 0.4rem 1.4rem;
-      border-radius: 40px;
-      border: 1px solid var(--glass-border);
-      letter-spacing: 0.06em;
-      white-space: nowrap;
-      font-weight: 300;
-    }
-    .cosmic-badge .icon { font-size: 1.4rem; }
+        /* --- Indian: Mandala / Rangoli motifs --- */
+        #art-bg .mandala-motif {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(232, 168, 48, 0.03);
+            opacity: 0.2;
+        }
+        #art-bg .mandala-motif.m1 {
+            width: 450px;
+            height: 450px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: mandalaSpin 60s linear infinite;
+        }
+        #art-bg .mandala-motif.m1::before {
+            content: '';
+            position: absolute;
+            inset: 15%;
+            border-radius: 50%;
+            border: 1px solid rgba(232, 168, 48, 0.03);
+        }
+        #art-bg .mandala-motif.m1::after {
+            content: '';
+            position: absolute;
+            inset: 30%;
+            border-radius: 50%;
+            border: 1px solid rgba(232, 168, 48, 0.025);
+        }
+        #art-bg .mandala-motif.m2 {
+            width: 200px;
+            height: 200px;
+            top: 10%;
+            right: 5%;
+            border-color: rgba(196, 160, 128, 0.03);
+            animation: mandalaSpin 40s linear infinite reverse;
+        }
+        #art-bg .mandala-motif.m3 {
+            width: 250px;
+            height: 250px;
+            bottom: 5%;
+            left: 5%;
+            border-color: rgba(179, 26, 58, 0.025);
+            animation: mandalaSpin 50s linear infinite;
+        }
+        @keyframes mandalaSpin {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+        #art-bg .mandala-motif.m2 {
+            transform: none;
+            animation-name: mandalaSpin2;
+        }
+        #art-bg .mandala-motif.m3 {
+            transform: none;
+            animation-name: mandalaSpin2;
+        }
+        @keyframes mandalaSpin2 {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
 
-    .menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 2.8rem;
-      cursor: pointer;
-      color: var(--text-primary);
-      padding: 0.4rem 0.8rem;
-      border-radius: var(--radius-sm);
-      transition: background 0.2s;
-    }
-    .menu-toggle:hover { background: rgba(255,255,255,0.04); }
+        /* Indian: Rangoli dots pattern */
+        #art-bg .rangoli-dots {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.025;
+            background-image:
+                radial-gradient(circle at 10% 20%, var(--in-saffron) 1px, transparent 1px),
+                radial-gradient(circle at 30% 40%, var(--in-saffron) 1px, transparent 1px),
+                radial-gradient(circle at 50% 10%, var(--in-saffron) 1px, transparent 1px),
+                radial-gradient(circle at 70% 60%, var(--in-saffron) 1px, transparent 1px),
+                radial-gradient(circle at 90% 30%, var(--in-saffron) 1px, transparent 1px),
+                radial-gradient(circle at 20% 80%, var(--in-saffron) 1px, transparent 1px),
+                radial-gradient(circle at 60% 90%, var(--in-saffron) 1px, transparent 1px),
+                radial-gradient(circle at 85% 80%, var(--in-saffron) 1px, transparent 1px);
+            background-size: 120px 120px, 150px 150px, 100px 100px, 180px 180px, 200px 200px, 140px 140px, 160px 160px,
+                130px 130px;
+        }
 
-    .nav-links {
-      display: flex;
-      list-style: none;
-      gap: 0.4rem;
-      flex-wrap: wrap;
-    }
-    .nav-links a {
-      display: inline-block;
-      padding: 0.6rem 1.6rem;
-      border-radius: 40px;
-      font-size: 1.3rem;
-      font-weight: 400;
-      color: var(--text-secondary);
-      text-decoration: none;
-      transition: all 0.25s ease;
-      position: relative;
-      cursor: pointer;
-      letter-spacing: 0.06em;
-    }
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: 2px;
-      left: 50%;
-      width: 0;
-      height: 2px;
-      background: var(--cn-gold);
-      transition: width 0.3s ease, left 0.3s ease;
-      border-radius: 4px;
-    }
-    .nav-links a:hover::after,
-    .nav-links a.active::after {
-      width: 60%;
-      left: 20%;
-    }
-    .nav-links a:hover { color: var(--text-primary); }
-    .nav-links a.active {
-      color: var(--text-primary);
-      background: rgba(212, 168, 67, 0.06);
-    }
+        /* ============================================================
+           3.  UI OVERLAY
+           ============================================================ */
+        #app-overlay {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            padding: 1.6rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .app-container {
+            width: 100%;
+            max-width: 960px;
+            margin: 0 auto;
+        }
 
-    @media (max-width: 640px) {
-      .menu-toggle { display: block; }
-      .nav-links {
-        display: none;
-        width: 100%;
-        flex-direction: column;
-        align-items: center;
-        padding: 1.2rem 0;
-        gap: 0.4rem;
-        border-top: 1px solid var(--border-color);
-        margin-top: 1.2rem;
-      }
-      .nav-links.open { display: flex; }
-      .nav-links a { width: 100%; text-align: center; padding: 0.8rem; }
-      .site-header { padding: 1.2rem 1.6rem; }
-      .card { padding: 1.6rem; }
-      .logo .three-symbols { font-size: 1.6rem; }
-      .logo .brand-text { font-size: 1.2rem; }
-      .cosmic-badge { font-size: 1rem; padding: 0.2rem 1rem; }
-    }
+        /* ============================================================
+           4.  GLASS COMPONENTS — Artistic Frost
+           ============================================================ */
+        .glass {
+            background: var(--bg-card);
+            backdrop-filter: blur(24px) saturate(1.3);
+            -webkit-backdrop-filter: blur(24px) saturate(1.3);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            box-shadow: 0 8px 32px var(--shadow);
+            transition: all var(--transition);
+        }
+        .glass:hover {
+            box-shadow: 0 12px 48px var(--shadow-hover);
+            background: var(--bg-card-hover);
+        }
+        .card {
+            padding: 2.4rem;
+        }
 
-    /* ============================================================
-       6.  PAGE SYSTEM
-       ============================================================ */
-    .page {
-      display: none;
-      animation: fadeSlide 0.6s ease forwards;
-      padding: 0.8rem 0 2.4rem;
-    }
-    .page.active { display: block; }
-    @keyframes fadeSlide {
-      0% { opacity: 0; transform: translateY(20px) scale(0.98); }
-      100% { opacity: 1; transform: translateY(0) scale(1); }
-    }
+        /* ============================================================
+           5.  HEADER — Artistic
+           ============================================================ */
+        .site-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            padding: 1.2rem 2.4rem;
+            margin-bottom: 2.4rem;
+            background: var(--bg-card);
+            backdrop-filter: blur(24px) saturate(1.3);
+            -webkit-backdrop-filter: blur(24px) saturate(1.3);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            box-shadow: 0 4px 24px var(--shadow);
+        }
 
-    /* ============================================================
-       7.  HOME — COUNTDOWN WITH CULTURAL FLAIR
-       ============================================================ */
-    .hero-section {
-      text-align: center;
-      padding: 0.8rem 0 1.6rem;
-      position: relative;
-    }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        .logo .art-mark {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 1.8rem;
+            font-weight: 200;
+            letter-spacing: 0.06em;
+            font-family: var(--font-serif);
+        }
+        .logo .art-mark .cn-color {
+            color: var(--cn-gold);
+        }
+        .logo .art-mark .jp-color {
+            color: var(--jp-jade-light);
+        }
+        .logo .art-mark .in-color {
+            color: var(--in-saffron);
+        }
+        .logo .art-mark .divider {
+            opacity: 0.15;
+            font-weight: 100;
+        }
+        .logo .brand-text {
+            font-size: 1.4rem;
+            font-weight: 200;
+            letter-spacing: 0.12em;
+            opacity: 0.4;
+            font-family: var(--font-serif);
+        }
 
-    .hero-section .culture-row {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 2.4rem;
-      font-size: 2.4rem;
-      margin-bottom: 1.2rem;
-      opacity: 0.25;
-      font-weight: 200;
-    }
-    .hero-section .culture-row .cn { font-family: var(--font-cn); color: var(--cn-gold); }
-    .hero-section .culture-row .jp { font-family: var(--font-jp); color: var(--jp-jade-light); }
-    .hero-section .culture-row .in { font-family: var(--font-in); color: var(--in-saffron); }
-    .hero-section .culture-row .sep { opacity: 0.2; font-size: 1.6rem; }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+        .art-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.4rem 1.4rem;
+            border-radius: 40px;
+            border: 1px solid var(--glass-border);
+            letter-spacing: 0.06em;
+            white-space: nowrap;
+            font-weight: 300;
+        }
+        .art-badge .icon {
+            font-size: 1.4rem;
+        }
 
-    .phase-badge {
-      display: inline-block;
-      padding: 0.4rem 2.4rem;
-      border-radius: 40px;
-      font-size: 1.2rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      background: rgba(212, 168, 67, 0.08);
-      color: var(--cn-gold);
-      border: 1px solid rgba(212, 168, 67, 0.12);
-      margin-bottom: 1.2rem;
-      font-weight: 400;
-    }
-    .phase-badge.revision {
-      background: rgba(179, 57, 57, 0.1);
-      border-color: rgba(179, 57, 57, 0.15);
-      color: var(--cn-vermilion-light);
-    }
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 2.8rem;
+            cursor: pointer;
+            color: var(--text-primary);
+            padding: 0.4rem 0.8rem;
+            border-radius: var(--radius-sm);
+            transition: background 0.2s;
+        }
+        .menu-toggle:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
 
-    .main-title {
-      font-weight: 200;
-      font-size: 4.8rem;
-      letter-spacing: 0.08em;
-      line-height: 1.2;
-    }
-    .main-title .gold { color: var(--cn-gold); }
-    .main-title .jade { color: var(--jp-jade-light); }
-    .main-title .saffron { color: var(--in-saffron); }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            display: inline-block;
+            padding: 0.6rem 1.8rem;
+            border-radius: 40px;
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.25s ease;
+            position: relative;
+            cursor: pointer;
+            letter-spacing: 0.06em;
+            font-family: var(--font-serif);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--cn-gold);
+            transition: width 0.3s ease, left 0.3s ease;
+            border-radius: 4px;
+        }
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 60%;
+            left: 20%;
+        }
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+        .nav-links a.active {
+            color: var(--text-primary);
+            background: rgba(212, 168, 67, 0.05);
+        }
 
-    .sub-title {
-      color: var(--text-secondary);
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      font-size: 1.2rem;
-      font-weight: 300;
-      margin-top: 0.4rem;
-      opacity: 0.5;
-    }
+        @media (max-width: 640px) {
+            .menu-toggle {
+                display: block;
+            }
+            .nav-links {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+                padding: 1.2rem 0;
+                gap: 0.4rem;
+                border-top: 1px solid var(--border-color);
+                margin-top: 1.2rem;
+            }
+            .nav-links.open {
+                display: flex;
+            }
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+                padding: 0.8rem;
+            }
+            .site-header {
+                padding: 1.2rem 1.6rem;
+            }
+            .card {
+                padding: 1.6rem;
+            }
+            .logo .art-mark {
+                font-size: 1.4rem;
+            }
+            .logo .brand-text {
+                font-size: 1.1rem;
+            }
+            .art-badge {
+                font-size: 0.9rem;
+                padding: 0.2rem 1rem;
+            }
+        }
 
-    .divider-cosmic {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1.6rem;
-      margin: 1.6rem auto;
-      width: 70%;
-      max-width: 360px;
-    }
-    .divider-cosmic .line {
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--cn-gold), transparent);
-      opacity: 0.15;
-    }
-    .divider-cosmic .dot {
-      font-size: 1.2rem;
-      opacity: 0.2;
-      color: var(--cn-gold);
-    }
+        /* ============================================================
+           6.  PAGE SYSTEM
+           ============================================================ */
+        .page {
+            display: none;
+            animation: fadeSlide 0.6s ease forwards;
+            padding: 0.8rem 0 2.4rem;
+        }
+        .page.active {
+            display: block;
+        }
+        @keyframes fadeSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
 
-    .countdown-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.6rem;
-      max-width: 680px;
-      margin: 2.4rem auto;
-    }
-    .countdown-item {
-      background: var(--bg-card);
-      backdrop-filter: blur(8px);
-      border-radius: 12px;
-      border: 1px solid var(--border-color);
-      padding: 1.6rem 0.8rem;
-      transition: all 0.4s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    .countdown-item::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at center, rgba(212,168,67,0.03), transparent 70%);
-      opacity: 0;
-      transition: opacity 0.6s;
-    }
-    .countdown-item:hover::before { opacity: 1; }
-    .countdown-item:hover {
-      transform: scale(1.03);
-      border-color: rgba(212, 168, 67, 0.1);
-    }
-    .countdown-number {
-      font-size: 6.4rem;
-      font-weight: 200;
-      line-height: 1;
-      letter-spacing: 0.04em;
-      background: linear-gradient(135deg, var(--cn-gold), var(--jp-jade-light), var(--in-saffron));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .countdown-label {
-      font-size: 1.1rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      margin-top: 0.4rem;
-      font-weight: 300;
-    }
+        /* ============================================================
+           7.  HOME — COUNTDOWN WITH ARTISTIC FLAIR
+           ============================================================ */
+        .hero-section {
+            text-align: center;
+            padding: 0.8rem 0 1.6rem;
+            position: relative;
+        }
 
-    .progress-wrapper {
-      max-width: 600px;
-      margin: 2.4rem auto 0;
-    }
-    .progress-track {
-      width: 100%;
-      height: 3px;
-      background: rgba(255,255,255,0.04);
-      border-radius: 12px;
-      overflow: hidden;
-      position: relative;
-    }
-    .progress-track::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(212,168,67,0.08), transparent);
-      animation: shimmer 3s infinite;
-    }
-    @keyframes shimmer {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
-    .progress-fill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, var(--cn-gold), var(--jp-jade-light), var(--in-saffron));
-      border-radius: 12px;
-      transition: width 0.8s ease;
-      position: relative;
-      z-index: 2;
-    }
-    .progress-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 1.1rem;
-      color: var(--text-secondary);
-      margin-top: 0.4rem;
-      font-weight: 300;
-      letter-spacing: 0.04em;
-    }
+        .hero-section .art-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2.4rem;
+            font-size: 2rem;
+            margin-bottom: 1.2rem;
+            opacity: 0.15;
+            font-weight: 200;
+            font-family: var(--font-serif);
+            letter-spacing: 0.12em;
+        }
+        .hero-section .art-row .cn {
+            color: var(--cn-gold);
+        }
+        .hero-section .art-row .jp {
+            color: var(--jp-jade-light);
+        }
+        .hero-section .art-row .in {
+            color: var(--in-saffron);
+        }
+        .hero-section .art-row .sep {
+            opacity: 0.2;
+            font-size: 1.4rem;
+        }
 
-    .sub-message {
-      margin-top: 1.6rem;
-      font-size: 1.5rem;
-      font-weight: 300;
-      letter-spacing: 0.04em;
-      opacity: 0.6;
-      font-style: italic;
-    }
-    .sub-message span { color: var(--cn-gold); font-weight: 400; }
+        .phase-badge {
+            display: inline-block;
+            padding: 0.4rem 2.4rem;
+            border-radius: 40px;
+            font-size: 1.2rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            background: rgba(212, 168, 67, 0.06);
+            color: var(--cn-gold);
+            border: 1px solid rgba(212, 168, 67, 0.08);
+            margin-bottom: 1.2rem;
+            font-weight: 400;
+            font-family: var(--font-serif);
+        }
+        .phase-badge.revision {
+            background: rgba(179, 26, 58, 0.08);
+            border-color: rgba(179, 26, 58, 0.12);
+            color: var(--cn-vermilion-light);
+        }
 
-    /* Stats */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.8rem;
-      margin-top: 1.6rem;
-    }
-    .stat-card {
-      text-align: center;
-      padding: 1.2rem 0.8rem;
-      background: rgba(0,0,0,0.2);
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-color);
-      transition: all 0.3s;
-    }
-    .stat-card:hover {
-      background: rgba(212,168,67,0.03);
-      border-color: rgba(212,168,67,0.06);
-    }
-    .stat-number {
-      font-size: 3.2rem;
-      font-weight: 200;
-      line-height: 1.2;
-      color: var(--cn-gold);
-    }
-    .stat-label {
-      font-size: 1.1rem;
-      letter-spacing: 0.08em;
-      color: var(--text-secondary);
-      font-weight: 300;
-    }
+        .main-title {
+            font-family: var(--font-serif);
+            font-weight: 400;
+            font-size: 4.8rem;
+            letter-spacing: 0.04em;
+            line-height: 1.15;
+        }
+        .main-title .g {
+            color: var(--cn-gold);
+        }
+        .main-title .j {
+            color: var(--jp-jade-light);
+        }
+        .main-title .s {
+            color: var(--in-saffron);
+        }
 
-    /* Daily Focus */
-    .focus-area {
-      margin-top: 2.4rem;
-      padding: 1.6rem 2rem;
-      border-radius: var(--radius-sm);
-      background: rgba(0,0,0,0.2);
-      border: 1px dashed var(--border-color);
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-      flex-wrap: wrap;
-    }
-    .focus-area .focus-label {
-      font-weight: 300;
-      font-size: 1.4rem;
-      color: var(--text-secondary);
-      letter-spacing: 0.04em;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-    .focus-area .focus-label .icon { font-size: 1.8rem; }
-    .focus-area input {
-      flex: 1;
-      min-width: 160px;
-      padding: 0.6rem 1.2rem;
-      border: none;
-      border-bottom: 2px solid rgba(212,168,67,0.1);
-      background: transparent;
-      font-size: 1.5rem;
-      color: var(--text-primary);
-      outline: none;
-      transition: border-color 0.3s;
-    }
-    .focus-area input:focus { border-color: var(--cn-gold); }
-    .focus-area input::placeholder {
-      color: var(--text-muted);
-      font-weight: 300;
-    }
-    .focus-area .btn { flex-shrink: 0; }
+        .sub-title {
+            color: var(--text-secondary);
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin-top: 0.4rem;
+            opacity: 0.4;
+            font-family: var(--font-serif);
+        }
 
-    /* Mini quote */
-    .mini-quote {
-      margin-top: 2.4rem;
-      text-align: center;
-      font-weight: 200;
-      font-size: 1.4rem;
-      color: var(--text-secondary);
-      opacity: 0.4;
-      letter-spacing: 0.04em;
-      font-style: italic;
-    }
+        .divider-art {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.6rem;
+            margin: 1.6rem auto;
+            width: 60%;
+            max-width: 320px;
+        }
+        .divider-art .line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--cn-gold), transparent);
+            opacity: 0.1;
+        }
+        .divider-art .dot {
+            font-size: 1.2rem;
+            opacity: 0.15;
+            color: var(--cn-gold);
+        }
 
-    /* ============================================================
-       8.  NOTES
-       ============================================================ */
-    .page-notes-header {
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-      flex-wrap: wrap;
-      margin-bottom: 0.8rem;
-    }
-    .page-notes-header .title {
-      font-weight: 200;
-      font-size: 2.8rem;
-      letter-spacing: 0.08em;
-    }
-    .page-notes-header .title .g { color: var(--cn-gold); }
-    .page-notes-header .title .j { color: var(--jp-jade-light); }
-    .page-notes-header .title .s { color: var(--in-saffron); }
-    .page-notes-header .symbol {
-      font-size: 2.4rem;
-      opacity: 0.2;
-    }
-    .page-notes-header .sub {
-      color: var(--text-secondary);
-      font-weight: 300;
-      font-size: 1.3rem;
-      letter-spacing: 0.04em;
-      margin-left: auto;
-      opacity: 0.6;
-    }
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.6rem;
+            max-width: 680px;
+            margin: 2.4rem auto;
+        }
+        .countdown-item {
+            background: var(--bg-card);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            padding: 1.6rem 0.8rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .countdown-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(212, 168, 67, 0.02), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.6s;
+        }
+        .countdown-item:hover::before {
+            opacity: 1;
+        }
+        .countdown-item:hover {
+            transform: scale(1.03);
+            border-color: rgba(212, 168, 67, 0.06);
+        }
+        .countdown-number {
+            font-size: 6.4rem;
+            font-weight: 200;
+            line-height: 1;
+            letter-spacing: 0.04em;
+            font-family: var(--font-serif);
+            background: linear-gradient(135deg, var(--cn-gold), var(--jp-jade-light), var(--in-saffron));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .countdown-label {
+            font-size: 1.1rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-top: 0.4rem;
+            font-weight: 300;
+        }
 
-    .notes-input-group {
-      display: flex;
-      gap: 0.8rem;
-      flex-wrap: wrap;
-      margin-bottom: 1.6rem;
-    }
-    .notes-input-group input {
-      flex: 1;
-      min-width: 200px;
-      padding: 0.8rem 1.6rem;
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-sm);
-      font-size: 1.5rem;
-      background: rgba(0,0,0,0.2);
-      outline: none;
-      transition: border 0.2s, box-shadow 0.2s;
-      color: var(--text-primary);
-    }
-    .notes-input-group input:focus {
-      border-color: var(--cn-gold);
-      box-shadow: 0 0 0 3px rgba(212,168,67,0.04);
-    }
-    .notes-input-group input::placeholder {
-      color: var(--text-muted);
-      font-weight: 300;
-    }
+        .progress-wrapper {
+            max-width: 600px;
+            margin: 2.4rem auto 0;
+        }
+        .progress-track {
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+        .progress-track::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(212, 168, 67, 0.06), transparent);
+            animation: shimmer 3s infinite;
+        }
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--cn-gold), var(--jp-jade-light), var(--in-saffron));
+            border-radius: 12px;
+            transition: width 0.8s ease;
+            position: relative;
+            z-index: 2;
+        }
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-top: 0.4rem;
+            font-weight: 300;
+            letter-spacing: 0.04em;
+        }
 
-    .notes-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-    }
-    .note-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.8rem 1.6rem;
-      background: rgba(0,0,0,0.12);
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-color);
-      transition: background 0.2s, border-color 0.2s;
-    }
-    .note-item:hover {
-      background: rgba(0,0,0,0.2);
-      border-color: rgba(212,168,67,0.05);
-    }
-    .note-item .note-text {
-      flex: 1;
-      font-size: 1.5rem;
-      font-weight: 300;
-    }
-    .note-item .note-time {
-      font-size: 1.1rem;
-      color: var(--text-secondary);
-      white-space: nowrap;
-      margin-left: 1.2rem;
-      font-weight: 200;
-      opacity: 0.5;
-    }
+        .sub-message {
+            margin-top: 1.6rem;
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 0.04em;
+            opacity: 0.5;
+            font-style: italic;
+            font-family: var(--font-serif);
+        }
+        .sub-message span {
+            color: var(--cn-gold);
+            font-weight: 400;
+        }
 
-    /* ============================================================
-       9.  BUTTONS — Cinematic
-       ============================================================ */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.6rem;
-      padding: 0.8rem 2.4rem;
-      border: none;
-      border-radius: var(--radius-sm);
-      font-size: 1.3rem;
-      font-weight: 400;
-      background: var(--cn-gold);
-      color: #0a0a12;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      letter-spacing: 0.06em;
-      min-height: 4rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-      transition: left 0.6s;
-    }
-    .btn:hover::before { left: 100%; }
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 24px rgba(212,168,67,0.15);
-    }
-    .btn:active { transform: scale(0.97); }
-    .btn-gold { background: var(--cn-gold); color: #0a0a12; }
-    .btn-gold:hover { background: var(--cn-gold-light); }
-    .btn-jade { background: var(--jp-jade); color: #fff; }
-    .btn-jade:hover { background: var(--jp-jade-light); color: #0a0a12; }
-    .btn-vermilion { background: var(--cn-vermilion); color: #fff; }
-    .btn-vermilion:hover { background: var(--cn-vermilion-light); }
-    .btn-outline {
-      background: transparent;
-      color: var(--text-primary);
-      border: 1px solid var(--border-color);
-    }
-    .btn-outline:hover {
-      background: rgba(255,255,255,0.03);
-      transform: none;
-      box-shadow: none;
-    }
-    .btn-sm {
-      padding: 0.4rem 1.2rem;
-      font-size: 1.1rem;
-      min-height: 3.2rem;
-    }
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+            margin-top: 1.6rem;
+        }
+        .stat-card {
+            text-align: center;
+            padding: 1.2rem 0.8rem;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+        .stat-card:hover {
+            background: rgba(212, 168, 67, 0.02);
+            border-color: rgba(212, 168, 67, 0.04);
+        }
+        .stat-number {
+            font-size: 3.2rem;
+            font-weight: 200;
+            line-height: 1.2;
+            font-family: var(--font-serif);
+            color: var(--cn-gold);
+        }
+        .stat-label {
+            font-size: 1.1rem;
+            letter-spacing: 0.08em;
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
 
-    /* ============================================================
-       10. ONBOARDING
-       ============================================================ */
-    #onboarding-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(32px) saturate(1.6);
-      -webkit-backdrop-filter: blur(32px) saturate(1.6);
-      z-index: 999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2.4rem;
-      transition: opacity 0.8s ease;
-    }
-    #onboarding-modal.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
-    .onboarding-card {
-      max-width: 480px;
-      width: 100%;
-      background: linear-gradient(145deg, #12101a, #1a1828);
-      border-radius: 24px;
-      padding: 3.2rem;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.6);
-      text-align: center;
-      border: 1px solid rgba(212,168,67,0.06);
-    }
-    .onboarding-card .culture-icons {
-      font-size: 3.2rem;
-      margin-bottom: 1.2rem;
-      display: flex;
-      justify-content: center;
-      gap: 1.6rem;
-      opacity: 0.4;
-    }
-    .onboarding-card .culture-icons .cn { font-family: var(--font-cn); color: var(--cn-gold); }
-    .onboarding-card .culture-icons .jp { font-family: var(--font-jp); color: var(--jp-jade-light); }
-    .onboarding-card .culture-icons .in { font-family: var(--font-in); color: var(--in-saffron); }
+        /* Daily Focus */
+        .focus-area {
+            margin-top: 2.4rem;
+            padding: 1.6rem 2rem;
+            border-radius: var(--radius-sm);
+            background: rgba(0, 0, 0, 0.15);
+            border: 1px dashed var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+        .focus-area .focus-label {
+            font-weight: 300;
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.04em;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-family: var(--font-serif);
+        }
+        .focus-area .focus-label .icon {
+            font-size: 1.8rem;
+        }
+        .focus-area input {
+            flex: 1;
+            min-width: 160px;
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-bottom: 2px solid rgba(212, 168, 67, 0.08);
+            background: transparent;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            outline: none;
+            transition: border-color 0.3s;
+            font-family: var(--font-serif);
+        }
+        .focus-area input:focus {
+            border-color: var(--cn-gold);
+        }
+        .focus-area input::placeholder {
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+        .focus-area .btn {
+            flex-shrink: 0;
+        }
 
-    .onboarding-card h2 {
-      font-weight: 200;
-      font-size: 3.2rem;
-      letter-spacing: 0.08em;
-      margin-bottom: 0.8rem;
-    }
-    .onboarding-card h2 .g { color: var(--cn-gold); }
-    .onboarding-card h2 .j { color: var(--jp-jade-light); }
-    .onboarding-card h2 .s { color: var(--in-saffron); }
+        /* Mini quote */
+        .mini-quote {
+            margin-top: 2.4rem;
+            text-align: center;
+            font-weight: 200;
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            opacity: 0.3;
+            letter-spacing: 0.04em;
+            font-style: italic;
+            font-family: var(--font-serif);
+        }
 
-    .onboarding-card p {
-      color: var(--text-secondary);
-      margin-bottom: 2.4rem;
-      font-weight: 300;
-      line-height: 1.7;
-      font-size: 1.4rem;
-    }
-    .onboarding-card input {
-      width: 100%;
-      padding: 1.2rem 1.6rem;
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      font-size: 1.6rem;
-      background: rgba(0,0,0,0.3);
-      margin-bottom: 1.2rem;
-      outline: none;
-      color: var(--text-primary);
-      transition: border 0.2s;
-    }
-    .onboarding-card input:focus {
-      border-color: var(--cn-gold);
-      box-shadow: 0 0 0 3px rgba(212,168,67,0.04);
-    }
-    .onboarding-card .btn {
-      width: 100%;
-      justify-content: center;
-      font-size: 1.6rem;
-      padding: 1.2rem;
-    }
-    .onboarding-card .hint {
-      font-size: 1.1rem;
-      color: var(--text-muted);
-      margin-top: 1.6rem;
-      font-weight: 200;
-      letter-spacing: 0.04em;
-    }
+        /* ============================================================
+           8.  NOTES
+           ============================================================ */
+        .page-notes-header {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.8rem;
+        }
+        .page-notes-header .title {
+            font-family: var(--font-serif);
+            font-weight: 400;
+            font-size: 2.8rem;
+            letter-spacing: 0.04em;
+        }
+        .page-notes-header .title .g {
+            color: var(--cn-gold);
+        }
+        .page-notes-header .title .j {
+            color: var(--jp-jade-light);
+        }
+        .page-notes-header .title .s {
+            color: var(--in-saffron);
+        }
+        .page-notes-header .symbol {
+            font-size: 2.4rem;
+            opacity: 0.15;
+        }
+        .page-notes-header .sub {
+            color: var(--text-secondary);
+            font-weight: 300;
+            font-size: 1.3rem;
+            letter-spacing: 0.04em;
+            margin-left: auto;
+            opacity: 0.5;
+            font-family: var(--font-serif);
+            font-style: italic;
+        }
 
-    /* ============================================================
-       11. TOAST
-       ============================================================ */
-    .toast {
-      position: fixed;
-      bottom: 2.4rem;
-      right: 2.4rem;
-      padding: 1.2rem 2.4rem;
-      border-radius: 12px;
-      background: rgba(10,10,18,0.92);
-      color: var(--text-primary);
-      font-size: 1.3rem;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
-      border: 1px solid var(--glass-border);
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.4s ease;
-      z-index: 200;
-      pointer-events: none;
-      max-width: 400px;
-      font-weight: 300;
-      backdrop-filter: blur(12px);
-    }
-    .toast.show {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-    }
+        .notes-input-group {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.6rem;
+        }
+        .notes-input-group input {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.8rem 1.6rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            font-size: 1.5rem;
+            background: rgba(0, 0, 0, 0.15);
+            outline: none;
+            transition: border 0.2s, box-shadow 0.2s;
+            color: var(--text-primary);
+            font-family: var(--font-serif);
+        }
+        .notes-input-group input:focus {
+            border-color: var(--cn-gold);
+            box-shadow: 0 0 0 3px rgba(212, 168, 67, 0.03);
+        }
+        .notes-input-group input::placeholder {
+            color: var(--text-muted);
+            font-weight: 300;
+        }
 
-    /* ============================================================
-       12. FOOTER
-       ============================================================ */
-    .site-footer {
-      padding: 2.4rem 0 1.6rem;
-      border-top: 1px solid var(--border-color);
-      margin-top: 4.8rem;
-      text-align: center;
-      font-size: 1.2rem;
-      color: var(--text-secondary);
-      font-weight: 200;
-    }
-    .footer-divider {
-      width: 60px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--cn-gold), transparent);
-      margin: 0 auto 0.8rem;
-      opacity: 0.15;
-    }
-    .footer-symbols {
-      display: flex;
-      justify-content: center;
-      gap: 1.6rem;
-      font-size: 1.4rem;
-      opacity: 0.15;
-      margin-bottom: 0.8rem;
-    }
-    .footer-symbols .cn { font-family: var(--font-cn); color: var(--cn-gold); }
-    .footer-symbols .jp { font-family: var(--font-jp); color: var(--jp-jade-light); }
-    .footer-symbols .in { font-family: var(--font-in); color: var(--in-saffron); }
+        .notes-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        .note-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.8rem 1.6rem;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .note-item:hover {
+            background: rgba(0, 0, 0, 0.18);
+            border-color: rgba(212, 168, 67, 0.04);
+        }
+        .note-item .note-text {
+            flex: 1;
+            font-size: 1.5rem;
+            font-weight: 300;
+            font-family: var(--font-serif);
+        }
+        .note-item .note-time {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            margin-left: 1.2rem;
+            font-weight: 200;
+            opacity: 0.4;
+        }
 
-    /* ============================================================
-       13. UTILITY
-       ============================================================ */
-    .text-center { text-align: center; }
-    .mt-md { margin-top: 1.6rem; }
-    .mb-md { margin-bottom: 1.6rem; }
-    .gap-sm { gap: 0.8rem; }
-    .flex { display: flex; }
-    .flex-wrap { flex-wrap: wrap; }
-    .items-center { align-items: center; }
-    .justify-between { justify-content: space-between; }
+        /* ============================================================
+           9.  BUTTONS — Artistic
+           ============================================================ */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            padding: 0.8rem 2.4rem;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 1.3rem;
+            font-weight: 400;
+            background: var(--cn-gold);
+            color: #0a0a12;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.06em;
+            min-height: 4rem;
+            position: relative;
+            overflow: hidden;
+            font-family: var(--font-serif);
+        }
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+            transition: left 0.6s;
+        }
+        .btn:hover::before {
+            left: 100%;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 24px rgba(212, 168, 67, 0.12);
+        }
+        .btn:active {
+            transform: scale(0.97);
+        }
+        .btn-gold {
+            background: var(--cn-gold);
+            color: #0a0a12;
+        }
+        .btn-gold:hover {
+            background: var(--cn-gold-light);
+        }
+        .btn-jade {
+            background: var(--jp-jade);
+            color: #fff;
+        }
+        .btn-jade:hover {
+            background: var(--jp-jade-light);
+            color: #0a0a12;
+        }
+        .btn-vermilion {
+            background: var(--cn-red);
+            color: #fff;
+        }
+        .btn-vermilion:hover {
+            background: var(--cn-red-light);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.02);
+            transform: none;
+            box-shadow: none;
+        }
+        .btn-sm {
+            padding: 0.4rem 1.2rem;
+            font-size: 1.1rem;
+            min-height: 3.2rem;
+        }
 
-    /* ============================================================
-       14. PULSE ANIMATION
-       ============================================================ */
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-    .countdown-item.pulse .countdown-number {
-      animation: pulse 0.3s ease;
-    }
+        /* ============================================================
+           10. ONBOARDING
+           ============================================================ */
+        #onboarding-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(32px) saturate(1.6);
+            -webkit-backdrop-filter: blur(32px) saturate(1.6);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2.4rem;
+            transition: opacity 0.8s ease;
+        }
+        #onboarding-modal.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .onboarding-card {
+            max-width: 480px;
+            width: 100%;
+            background: linear-gradient(145deg, #12101a, #1a1828);
+            border-radius: 24px;
+            padding: 3.2rem;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+            text-align: center;
+            border: 1px solid rgba(212, 168, 67, 0.04);
+        }
+        .onboarding-card .art-icons {
+            font-size: 2.8rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            opacity: 0.25;
+            font-family: var(--font-serif);
+            letter-spacing: 0.12em;
+        }
+        .onboarding-card .art-icons .cn {
+            color: var(--cn-gold);
+        }
+        .onboarding-card .art-icons .jp {
+            color: var(--jp-jade-light);
+        }
+        .onboarding-card .art-icons .in {
+            color: var(--in-saffron);
+        }
 
-    /* ============================================================
-       15. RESPONSIVE
-       ============================================================ */
-    @media (max-width: 500px) {
-      .countdown-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
-      .countdown-number { font-size: 4.8rem; }
-      .stats-grid { grid-template-columns: 1fr 1fr; }
-      .onboarding-card { padding: 2.4rem; }
-      .main-title { font-size: 3.6rem; }
-      .focus-area { flex-direction: column; align-items: stretch; }
-      .focus-area input { width: 100%; }
-      .hero-section .culture-row { font-size: 1.8rem; gap: 1.2rem; }
-    }
-    @media (max-width: 380px) {
-      .countdown-grid { grid-template-columns: 1fr 1fr; }
-      .countdown-number { font-size: 3.6rem; }
-      .stats-grid { grid-template-columns: 1fr; }
-    }
+        .onboarding-card h2 {
+            font-family: var(--font-serif);
+            font-weight: 400;
+            font-size: 3.2rem;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.8rem;
+        }
+        .onboarding-card h2 .g {
+            color: var(--cn-gold);
+        }
+        .onboarding-card h2 .j {
+            color: var(--jp-jade-light);
+        }
+        .onboarding-card h2 .s {
+            color: var(--in-saffron);
+        }
 
-    /* ============================================================
-       16. PRINT
-       ============================================================ */
-    @media print {
-      #cosmic-bg, .site-header, .site-footer, .btn, .notes-input-group { display: none !important; }
-      .page { padding: 0 !important; }
-      .glass { box-shadow: none !important; border: 1px solid #444 !important; background: #111 !important; }
-      body { background: #0a0a12 !important; color: #ddd !important; }
-    }
-  </style>
+        .onboarding-card p {
+            color: var(--text-secondary);
+            margin-bottom: 2.4rem;
+            font-weight: 300;
+            line-height: 1.7;
+            font-size: 1.4rem;
+            font-family: var(--font-serif);
+        }
+        .onboarding-card input {
+            width: 100%;
+            padding: 1.2rem 1.6rem;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 1.6rem;
+            background: rgba(0, 0, 0, 0.25);
+            margin-bottom: 1.2rem;
+            outline: none;
+            color: var(--text-primary);
+            transition: border 0.2s;
+            font-family: var(--font-serif);
+        }
+        .onboarding-card input:focus {
+            border-color: var(--cn-gold);
+            box-shadow: 0 0 0 3px rgba(212, 168, 67, 0.03);
+        }
+        .onboarding-card .btn {
+            width: 100%;
+            justify-content: center;
+            font-size: 1.6rem;
+            padding: 1.2rem;
+        }
+        .onboarding-card .hint {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-top: 1.6rem;
+            font-weight: 200;
+            letter-spacing: 0.04em;
+            font-family: var(--font-serif);
+        }
+
+        /* ============================================================
+           11. TOAST
+           ============================================================ */
+        .toast {
+            position: fixed;
+            bottom: 2.4rem;
+            right: 2.4rem;
+            padding: 1.2rem 2.4rem;
+            border-radius: 12px;
+            background: rgba(10, 10, 18, 0.92);
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--glass-border);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+            z-index: 200;
+            pointer-events: none;
+            max-width: 400px;
+            font-weight: 300;
+            backdrop-filter: blur(12px);
+            font-family: var(--font-serif);
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        /* ============================================================
+           12. FOOTER
+           ============================================================ */
+        .site-footer {
+            padding: 2.4rem 0 1.6rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 4.8rem;
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            font-weight: 200;
+        }
+        .footer-divider {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--cn-gold), transparent);
+            margin: 0 auto 0.8rem;
+            opacity: 0.1;
+        }
+        .footer-art {
+            display: flex;
+            justify-content: center;
+            gap: 1.6rem;
+            font-size: 1.4rem;
+            opacity: 0.1;
+            margin-bottom: 0.8rem;
+            font-family: var(--font-serif);
+            letter-spacing: 0.08em;
+        }
+        .footer-art .cn {
+            color: var(--cn-gold);
+        }
+        .footer-art .jp {
+            color: var(--jp-jade-light);
+        }
+        .footer-art .in {
+            color: var(--in-saffron);
+        }
+
+        /* ============================================================
+           13. UTILITY
+           ============================================================ */
+        .text-center {
+            text-align: center;
+        }
+        .mt-md {
+            margin-top: 1.6rem;
+        }
+        .mb-md {
+            margin-bottom: 1.6rem;
+        }
+        .gap-sm {
+            gap: 0.8rem;
+        }
+        .flex {
+            display: flex;
+        }
+        .flex-wrap {
+            flex-wrap: wrap;
+        }
+        .items-center {
+            align-items: center;
+        }
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        /* ============================================================
+           14. PULSE ANIMATION
+           ============================================================ */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        .countdown-item.pulse .countdown-number {
+            animation: pulse 0.3s ease;
+        }
+
+        /* ============================================================
+           15. RESPONSIVE
+           ============================================================ */
+        @media (max-width: 500px) {
+            .countdown-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+            }
+            .countdown-number {
+                font-size: 4.8rem;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .onboarding-card {
+                padding: 2.4rem;
+            }
+            .main-title {
+                font-size: 3.6rem;
+            }
+            .focus-area {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .focus-area input {
+                width: 100%;
+            }
+            .hero-section .art-row {
+                font-size: 1.4rem;
+                gap: 1.2rem;
+            }
+        }
+        @media (max-width: 380px) {
+            .countdown-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .countdown-number {
+                font-size: 3.6rem;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ============================================================
+           16. PRINT
+           ============================================================ */
+        @media print {
+            #art-bg,
+            .site-header,
+            .site-footer,
+            .btn,
+            .notes-input-group {
+                display: none !important;
+            }
+            .page {
+                padding: 0 !important;
+            }
+            .glass {
+                box-shadow: none !important;
+                border: 1px solid #444 !important;
+                background: #111 !important;
+            }
+            body {
+                background: #0a0a12 !important;
+                color: #ddd !important;
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- ============================================================
-  CINEMATIC COSMIC BACKGROUND
-  ============================================================ -->
-  <div id="cosmic-bg">
-    <div class="stars"></div>
-    <div class="mandala-ring"></div>
-    <div class="ring r1"></div>
-    <div class="ring r2"></div>
-    <div class="ring r3"></div>
-
-    <!-- Cultural symbols as cinematic design elements -->
-    <div class="cultural-symbol cn-sym cs1">道</div>
-    <div class="cultural-symbol jp-sym cs2">武</div>
-    <div class="cultural-symbol in-sym cs3">ॐ</div>
-  </div>
-
-  <!-- ============================================================
-  ONBOARDING MODAL
-  ============================================================ -->
-  <div id="onboarding-modal">
-    <div class="onboarding-card">
-      <div class="culture-icons">
-        <span class="cn">道</span>
-        <span class="jp">武</span>
-        <span class="in">विद्या</span>
-      </div>
-      <h2>
-        <span class="g">The</span>
-        <span class="j">Threefold</span>
-        <span class="s">Path</span>
-      </h2>
-      <p>
-        Science · Martial Arts · Cosmos<br />
-        Begin your journey of mastery.
-      </p>
-      <input type="text" id="user-name-input" placeholder="Your name..." value="Aspirant" />
-      <input type="date" id="target-date-input" value="2027-05-01" />
-      <button class="btn btn-gold" id="start-journey-btn">Begin the Path</button>
-      <p class="hint">Your journey is saved locally. 道 · 武 · 学</p>
-    </div>
-  </div>
-
-  <!-- ============================================================
-  TOAST
-  ============================================================ -->
-  <div id="toast" class="toast"></div>
-
-  <!-- ============================================================
-  APP UI
-  ============================================================ -->
-  <div id="app-overlay">
-    <div class="app-container">
-
-      <!-- HEADER -->
-      <header class="site-header">
-        <a href="#" class="logo">
-          <div class="three-symbols">
-            <span class="cn">道</span>
-            <span class="divider">·</span>
-            <span class="jp">武</span>
-            <span class="divider">·</span>
-            <span class="in">विद्या</span>
-          </div>
-          <span class="brand-text">NEET 2027</span>
-        </a>
-        <div class="header-right">
-          <span class="cosmic-badge">
-            <span class="icon" id="cosmicIcon">☯</span>
-            <span id="cosmicLabel">Cosmos · Day</span>
-          </span>
-          <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
+    <!-- ============================================================
+    ARTISTIC BACKGROUND — Three Cultures in Visual Form
+    ============================================================ -->
+    <div id="art-bg">
+        <!-- Chinese: Ink wash mountains -->
+        <div class="chinese-mountains">
+            <div class="peak p1"></div>
+            <div class="peak p2"></div>
+            <div class="peak p3"></div>
+            <div class="peak p4"></div>
         </div>
-        <ul class="nav-links" id="navLinks">
-          <li><a class="active" data-page="home">Home</a></li>
-          <li><a data-page="notes">Notes</a></li>
-        </ul>
-      </header>
+        <!-- Chinese: Cloud wisps -->
+        <div class="cloud-wisp c1"></div>
+        <div class="cloud-wisp c2"></div>
+        <div class="cloud-wisp c3"></div>
 
-      <!-- PAGES -->
-      <main>
+        <!-- Japanese: Wave pattern -->
+        <div class="wave-pattern"></div>
+        <!-- Japanese: Zen circles -->
+        <div class="enso-ring e1"></div>
+        <div class="enso-ring e2"></div>
+        <!-- Japanese: Wave lines -->
+        <div class="wave-line w1"></div>
+        <div class="wave-line w2"></div>
 
-        <!-- ===== HOME ===== -->
-        <section class="page active" id="page-home">
-          <div class="hero-section">
-            <div class="culture-row">
-              <span class="cn">道</span>
-              <span class="sep">·</span>
-              <span class="jp">戦</span>
-              <span class="sep">·</span>
-              <span class="in">विद्या</span>
+        <!-- Indian: Mandala motifs -->
+        <div class="mandala-motif m1"></div>
+        <div class="mandala-motif m2"></div>
+        <div class="mandala-motif m3"></div>
+        <!-- Indian: Rangoli dots -->
+        <div class="rangoli-dots"></div>
+    </div>
+
+    <!-- ============================================================
+    ONBOARDING MODAL
+    ============================================================ -->
+    <div id="onboarding-modal">
+        <div class="onboarding-card">
+            <div class="art-icons">
+                <span class="cn">✦</span>
+                <span class="jp">◈</span>
+                <span class="in">✧</span>
             </div>
-
-            <div class="phase-badge" id="phaseBadge">📖 Preparation</div>
-
-            <h1 class="main-title">
-              <span class="gold">The</span>
-              <span class="jade">Count</span>
-              <span class="saffron">down</span>
-            </h1>
-            <p class="sub-title">Every breath is a step on the path</p>
-
-            <div class="divider-cosmic">
-              <span class="line"></span>
-              <span class="dot">✦</span>
-              <span class="line"></span>
-            </div>
-
-            <div class="countdown-grid" id="countdownGrid">
-              <div class="countdown-item">
-                <span class="countdown-number" id="days">00</span>
-                <span class="countdown-label">Days</span>
-              </div>
-              <div class="countdown-item">
-                <span class="countdown-number" id="hours">00</span>
-                <span class="countdown-label">Hours</span>
-              </div>
-              <div class="countdown-item">
-                <span class="countdown-number" id="minutes">00</span>
-                <span class="countdown-label">Minutes</span>
-              </div>
-              <div class="countdown-item">
-                <span class="countdown-number" id="seconds">00</span>
-                <span class="countdown-label">Seconds</span>
-              </div>
-            </div>
-
-            <div class="progress-wrapper">
-              <div class="progress-track">
-                <div class="progress-fill" id="progressFill" style="width:0%;"></div>
-              </div>
-              <div class="progress-label">
-                <span id="progressLabelLeft">Prep 0%</span>
-                <span id="progressLabelRight">Target 2027</span>
-              </div>
-            </div>
-
-            <p class="sub-message" id="subMessage">
-              "<span>One day</span> at a time. <span>Steady</span> as the stars."
+            <h2>
+                <span class="g">The</span>
+                <span class="j">Art</span>
+                <span class="s">of Focus</span>
+            </h2>
+            <p>
+                Where Chinese ink, Japanese zen, and Indian mandala<br />
+                unite to guide your journey.
             </p>
-          </div>
-
-          <!-- Stats -->
-          <div class="glass card" style="margin-top:1.6rem;">
-            <div class="stats-grid">
-              <div class="stat-card">
-                <div class="stat-number" id="studyDays">0</div>
-                <div class="stat-label">Study Days</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-number" id="studyStreak">0</div>
-                <div class="stat-label">Streak 🔥</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-number" id="totalHours">0</div>
-                <div class="stat-label">Total Hours</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Daily Focus -->
-          <div class="focus-area glass">
-            <span class="focus-label">
-              <span class="icon">⚔️</span> Today's Focus
-            </span>
-            <input type="text" id="dailyFocusInput" placeholder="What will you conquer today?" maxlength="100" />
-            <button class="btn btn-gold btn-sm" id="saveFocusBtn">Set</button>
-          </div>
-
-          <!-- Mini quote -->
-          <div class="mini-quote" id="miniQuote">
-            "The warrior's path is the scholar's way."
-          </div>
-        </section>
-
-        <!-- ===== NOTES ===== -->
-        <section class="page" id="page-notes">
-          <div class="page-notes-header">
-            <div class="title">
-              <span class="g">Notes</span>
-              <span class="j">·</span>
-              <span class="s">Journal</span>
-            </div>
-            <span class="symbol">📜</span>
-            <span class="sub">Insights · Mistakes · Wisdom</span>
-          </div>
-          <div style="width:60px;height:1px;background:linear-gradient(90deg,var(--cn-gold),transparent);margin:0.8rem 0 1.6rem;opacity:0.15;"></div>
-
-          <div class="glass card">
-            <div class="notes-input-group">
-              <input type="text" id="noteInput" placeholder="Write a note..." maxlength="200" />
-              <button class="btn btn-gold" id="addNoteBtn">➕ Add</button>
-            </div>
-            <div class="notes-list" id="notesList">
-              <div style="text-align:center;padding:1.6rem;color:var(--text-secondary);font-size:1.4rem;font-weight:300;">
-                No notes yet. Begin your journal.
-              </div>
-            </div>
-          </div>
-        </section>
-
-      </main>
-
-      <!-- FOOTER -->
-      <footer class="site-footer">
-        <div class="footer-divider"></div>
-        <div class="footer-symbols">
-          <span class="cn">道</span>
-          <span class="jp">· 武 ·</span>
-          <span class="in">विद्या</span>
+            <input type="text" id="user-name-input" placeholder="Your name..." value="Aspirant" />
+            <input type="date" id="target-date-input" value="2027-05-01" />
+            <button class="btn btn-gold" id="start-journey-btn">Begin the Path</button>
+            <p class="hint">Your journey is saved locally. Art · Focus · Mastery</p>
         </div>
-        <p style="letter-spacing:0.08em;font-weight:200;">
-          The Threefold Path · NEET 2027
-        </p>
-        <p style="font-size:1.1rem;opacity:0.4;margin-top:0.4rem;font-weight:200;">
-          Science · Martial Arts · Cosmos
-        </p>
-      </footer>
-
     </div>
-  </div>
 
-  <!-- ============================================================
-  JAVASCRIPT — Full Application
-  ============================================================ -->
-  <script>
-    (function() {
-      'use strict';
+    <!-- ============================================================
+    TOAST
+    ============================================================ -->
+    <div id="toast" class="toast"></div>
 
-      // ============================================================
-      // 1.  CONFIGURATION
-      // ============================================================
-      const CONFIG = {
-        PREP_END: new Date(2026, 11, 31, 23, 59, 59),
-        REVISION_END: new Date(2027, 3, 30, 23, 59, 59),
-        STORAGE_KEY: 'neet2027_threefold_path',
-        APP_VERSION: '3.1.0',
-      };
+    <!-- ============================================================
+    APP UI
+    ============================================================ -->
+    <div id="app-overlay">
+        <div class="app-container">
 
-      // ============================================================
-      // 2.  STATE
-      // ============================================================
-      let state = {
-        userName: 'Aspirant',
-        targetDate: '2027-05-01',
-        phase: 'preparation',
-        studyDays: 0,
-        streak: 0,
-        totalHours: 0,
-        todayHours: 0,
-        notes: [],
-        lastStudyDate: null,
-        journeyStarted: false,
-        dailyFocus: '',
-      };
+            <!-- HEADER -->
+            <header class="site-header">
+                <a href="#" class="logo">
+                    <div class="art-mark">
+                        <span class="cn-color">✦</span>
+                        <span class="divider">·</span>
+                        <span class="jp-color">◈</span>
+                        <span class="divider">·</span>
+                        <span class="in-color">✧</span>
+                    </div>
+                    <span class="brand-text">NEET 2027</span>
+                </a>
+                <div class="header-right">
+                    <span class="art-badge">
+                        <span class="icon" id="artIcon">☯</span>
+                        <span id="artLabel">Cosmos · Day</span>
+                    </span>
+                    <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
+                </div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a class="active" data-page="home">Home</a></li>
+                    <li><a data-page="notes">Notes</a></li>
+                </ul>
+            </header>
 
-      // ============================================================
-      // 3.  DOM REFS
-      // ============================================================
-      const $ = (s) => document.querySelector(s);
-      const $$ = (s) => document.querySelectorAll(s);
-      const dom = {
-        days: $('#days'),
-        hours: $('#hours'),
-        minutes: $('#minutes'),
-        seconds: $('#seconds'),
-        progressFill: $('#progressFill'),
-        progressLabelLeft: $('#progressLabelLeft'),
-        progressLabelRight: $('#progressLabelRight'),
-        phaseBadge: $('#phaseBadge'),
-        subMessage: $('#subMessage'),
-        studyDays: $('#studyDays'),
-        studyStreak: $('#studyStreak'),
-        totalHours: $('#totalHours'),
-        notesList: $('#notesList'),
-        noteInput: $('#noteInput'),
-        addNoteBtn: $('#addNoteBtn'),
-        dailyFocusInput: $('#dailyFocusInput'),
-        saveFocusBtn: $('#saveFocusBtn'),
-        miniQuote: $('#miniQuote'),
-        toast: $('#toast'),
-        menuToggle: $('#menuToggle'),
-        navLinks: $('#navLinks'),
-        pages: $$('.page'),
-        navAnchors: $$('.nav-links a'),
-        countdownItems: $$('.countdown-item'),
-        cosmicIcon: $('#cosmicIcon'),
-        cosmicLabel: $('#cosmicLabel'),
-        root: document.documentElement,
-        onboardingModal: $('#onboarding-modal'),
-        userNameInput: $('#user-name-input'),
-        targetDateInput: $('#target-date-input'),
-        startJourneyBtn: $('#start-journey-btn'),
-        cosmicBg: $('#cosmic-bg'),
-      };
+            <!-- PAGES -->
+            <main>
 
-      // ============================================================
-      // 4.  COSMIC THEME ENGINE
-      // ============================================================
-      const CosmicEngine = {
-        getSeason() {
-          const month = new Date().getMonth();
-          if (month >= 2 && month <= 5) return 'summer';
-          if (month >= 6 && month <= 8) return 'monsoon';
-          if (month >= 9 && month <= 10) return 'autumn';
-          return 'winter';
-        },
-        isDayTime() {
-          const hours = new Date().getHours();
-          return hours >= 6 && hours < 18;
-        },
-        getCosmicState() {
-          const s = this.getSeason();
-          const d = this.isDayTime();
-          const map = {
-            summer: { icon: '☀️', label: 'Summer', bg1: '#0a0a12', bg2: '#1a0a1a', accent: '#d4a843',
-            accentLight: '#f0d5a0' },
-            monsoon: { icon: '🌧️', label: 'Monsoon', bg1: '#080c14', bg2: '#0a1018', accent: '#4a8a7a',
-              accentLight: '#80c0b0' },
-            autumn: { icon: '🍂', label: 'Autumn', bg1: '#0a080a', bg2: '#141010', accent: '#b87c4a',
-              accentLight: '#e0c4a0' },
-            winter: { icon: '❄️', label: 'Winter', bg1: '#0a0a14', bg2: '#0e0e18', accent: '#7a8a9a',
-              accentLight: '#b0c0d0' }
-          };
-          const info = map[s];
-          return {
-            ...info,
-            isDay: d,
-            fullLabel: `${info.label} · ${d ? 'Day' : 'Night'}`,
-            cosmicIcon: d ? '☯' : '🌙',
-          };
-        },
-        apply(info) {
-          const root = dom.root;
-          const bg = info.isDay ? info.bg1 : info.bg2;
-          root.style.setProperty('--bg-primary', bg);
-          const bgCard = info.isDay ? 'rgba(14,14,28,0.7)' : 'rgba(8,8,18,0.8)';
-          root.style.setProperty('--bg-card', bgCard);
-          root.style.setProperty('--bg-card-hover', info.isDay ? 'rgba(24,24,44,0.8)' : 'rgba(12,12,28,0.9)');
+                <!-- ===== HOME ===== -->
+                <section class="page active" id="page-home">
+                    <div class="hero-section">
+                        <div class="art-row">
+                            <span class="cn">Ink</span>
+                            <span class="sep">·</span>
+                            <span class="jp">Zen</span>
+                            <span class="sep">·</span>
+                            <span class="in">Mandala</span>
+                        </div>
 
-          // Update gold accent
-          root.style.setProperty('--cn-gold', info.accent);
-          root.style.setProperty('--cn-gold-light', info.accentLight);
+                        <div class="phase-badge" id="phaseBadge">📖 Preparation</div>
 
-          dom.cosmicIcon.textContent = info.cosmicIcon;
-          dom.cosmicLabel.textContent = info.fullLabel;
+                        <h1 class="main-title">
+                            <span class="g">The</span>
+                            <span class="j">Count</span>
+                            <span class="s">down</span>
+                        </h1>
+                        <p class="sub-title">Where art meets discipline</p>
 
-          const starOpacity = info.isDay ? 0.4 : 0.8;
-          document.documentElement.style.setProperty('--star-opacity', starOpacity);
+                        <div class="divider-art">
+                            <span class="line"></span>
+                            <span class="dot">✦</span>
+                            <span class="line"></span>
+                        </div>
 
-          dom.cosmicBg.style.background =
-            `radial-gradient(ellipse at 25% 15%, ${info.bg2} 0%, ${bg} 50%, #040408 100%)`;
-        },
-        update() {
-          const info = this.getCosmicState();
-          this.apply(info);
-          return info;
-        }
-      };
+                        <div class="countdown-grid" id="countdownGrid">
+                            <div class="countdown-item">
+                                <span class="countdown-number" id="days">00</span>
+                                <span class="countdown-label">Days</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-number" id="hours">00</span>
+                                <span class="countdown-label">Hours</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-number" id="minutes">00</span>
+                                <span class="countdown-label">Minutes</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-number" id="seconds">00</span>
+                                <span class="countdown-label">Seconds</span>
+                            </div>
+                        </div>
 
-      // ============================================================
-      // 5.  STORAGE & STATE
-      // ============================================================
-      function loadState() {
-        try {
-          const raw = localStorage.getItem(CONFIG.STORAGE_KEY);
-          if (raw) {
-            const saved = JSON.parse(raw);
-            if (saved.version === CONFIG.APP_VERSION) {
-              Object.assign(state, saved);
-              if (state.lastStudyDate) state.lastStudyDate = new Date(state.lastStudyDate);
-              if (!state.notes) state.notes = [];
-              if (!state.dailyFocus) state.dailyFocus = '';
-              return true;
+                        <div class="progress-wrapper">
+                            <div class="progress-track">
+                                <div class="progress-fill" id="progressFill" style="width:0%;"></div>
+                            </div>
+                            <div class="progress-label">
+                                <span id="progressLabelLeft">Prep 0%</span>
+                                <span id="progressLabelRight">Target 2027</span>
+                            </div>
+                        </div>
+
+                        <p class="sub-message" id="subMessage">
+                            "<span>One day</span> at a time. <span>Steady</span> as the brush."
+                        </p>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="glass card" style="margin-top:1.6rem;">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-number" id="studyDays">0</div>
+                                <div class="stat-label">Study Days</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number" id="studyStreak">0</div>
+                                <div class="stat-label">Streak 🔥</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number" id="totalHours">0</div>
+                                <div class="stat-label">Total Hours</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Daily Focus -->
+                    <div class="focus-area glass">
+                        <span class="focus-label">
+                            <span class="icon">⚔️</span> Today's Focus
+                        </span>
+                        <input type="text" id="dailyFocusInput" placeholder="What will you master today?" maxlength="100" />
+                        <button class="btn btn-gold btn-sm" id="saveFocusBtn">Set</button>
+                    </div>
+
+                    <!-- Mini quote -->
+                    <div class="mini-quote" id="miniQuote">
+                        "The brush moves as the mind focuses."
+                    </div>
+                </section>
+
+                <!-- ===== NOTES ===== -->
+                <section class="page" id="page-notes">
+                    <div class="page-notes-header">
+                        <div class="title">
+                            <span class="g">Notes</span>
+                            <span class="j">·</span>
+                            <span class="s">Journal</span>
+                        </div>
+                        <span class="symbol">📜</span>
+                        <span class="sub">Insights · Mistakes · Wisdom</span>
+                    </div>
+                    <div style="width:60px;height:1px;background:linear-gradient(90deg,var(--cn-gold),transparent);margin:0.8rem 0 1.6rem;opacity:0.1;"></div>
+
+                    <div class="glass card">
+                        <div class="notes-input-group">
+                            <input type="text" id="noteInput" placeholder="Write a note..." maxlength="200" />
+                            <button class="btn btn-gold" id="addNoteBtn">➕ Add</button>
+                        </div>
+                        <div class="notes-list" id="notesList">
+                            <div style="text-align:center;padding:1.6rem;color:var(--text-secondary);font-size:1.4rem;font-weight:300;font-family:var(--font-serif);">
+                                No notes yet. Begin your journal.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+
+            <!-- FOOTER -->
+            <footer class="site-footer">
+                <div class="footer-divider"></div>
+                <div class="footer-art">
+                    <span class="cn">Ink</span>
+                    <span class="jp">· Zen ·</span>
+                    <span class="in">Mandala</span>
+                </div>
+                <p style="letter-spacing:0.08rem;font-weight:200;font-family:var(--font-serif);">
+                    The Art of Focus · NEET 2027
+                </p>
+                <p style="font-size:1.1rem;opacity:0.3;margin-top:0.4rem;font-weight:200;font-family:var(--font-serif);">
+                    Chinese Ink · Japanese Zen · Indian Mandala
+                </p>
+            </footer>
+
+        </div>
+    </div>
+
+    <!-- ============================================================
+    JAVASCRIPT — Full Application
+    ============================================================ -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ============================================================
+            // 1.  CONFIGURATION
+            // ============================================================
+            const CONFIG = {
+                PREP_END: new Date(2026, 11, 31, 23, 59, 59),
+                REVISION_END: new Date(2027, 3, 30, 23, 59, 59),
+                STORAGE_KEY: 'neet2027_art_of_focus',
+                APP_VERSION: '4.0.0',
+            };
+
+            // ============================================================
+            // 2.  STATE
+            // ============================================================
+            let state = {
+                userName: 'Aspirant',
+                targetDate: '2027-05-01',
+                phase: 'preparation',
+                studyDays: 0,
+                streak: 0,
+                totalHours: 0,
+                todayHours: 0,
+                notes: [],
+                lastStudyDate: null,
+                journeyStarted: false,
+                dailyFocus: '',
+            };
+
+            // ============================================================
+            // 3.  DOM REFS
+            // ============================================================
+            const $ = (s) => document.querySelector(s);
+            const $$ = (s) => document.querySelectorAll(s);
+            const dom = {
+                days: $('#days'),
+                hours: $('#hours'),
+                minutes: $('#minutes'),
+                seconds: $('#seconds'),
+                progressFill: $('#progressFill'),
+                progressLabelLeft: $('#progressLabelLeft'),
+                progressLabelRight: $('#progressLabelRight'),
+                phaseBadge: $('#phaseBadge'),
+                subMessage: $('#subMessage'),
+                studyDays: $('#studyDays'),
+                studyStreak: $('#studyStreak'),
+                totalHours: $('#totalHours'),
+                notesList: $('#notesList'),
+                noteInput: $('#noteInput'),
+                addNoteBtn: $('#addNoteBtn'),
+                dailyFocusInput: $('#dailyFocusInput'),
+                saveFocusBtn: $('#saveFocusBtn'),
+                miniQuote: $('#miniQuote'),
+                toast: $('#toast'),
+                menuToggle: $('#menuToggle'),
+                navLinks: $('#navLinks'),
+                pages: $$('.page'),
+                navAnchors: $$('.nav-links a'),
+                countdownItems: $$('.countdown-item'),
+                artIcon: $('#artIcon'),
+                artLabel: $('#artLabel'),
+                root: document.documentElement,
+                onboardingModal: $('#onboarding-modal'),
+                userNameInput: $('#user-name-input'),
+                targetDateInput: $('#target-date-input'),
+                startJourneyBtn: $('#start-journey-btn'),
+                artBg: $('#art-bg'),
+            };
+
+            // ============================================================
+            // 4.  ART THEME ENGINE
+            // ============================================================
+            const ArtEngine = {
+                getSeason() {
+                    const month = new Date().getMonth();
+                    if (month >= 2 && month <= 5) return 'summer';
+                    if (month >= 6 && month <= 8) return 'monsoon';
+                    if (month >= 9 && month <= 10) return 'autumn';
+                    return 'winter';
+                },
+                isDayTime() {
+                    const hours = new Date().getHours();
+                    return hours >= 6 && hours < 18;
+                },
+                getArtState() {
+                    const s = this.getSeason();
+                    const d = this.isDayTime();
+                    const map = {
+                        summer: { icon: '☀️', label: 'Summer', bg1: '#0c0a0e', bg2: '#12080e', accent: '#d4a843' },
+                        monsoon: { icon: '🌧️', label: 'Monsoon', bg1: '#080a10', bg2: '#0a0c14', accent: '#4a8a7a' },
+                        autumn: { icon: '🍂', label: 'Autumn', bg1: '#0c0808', bg2: '#140c0c', accent: '#b87c4a' },
+                        winter: { icon: '❄️', label: 'Winter', bg1: '#0a0a12', bg2: '#0c0c16', accent: '#7a8a9a' }
+                    };
+                    const info = map[s];
+                    return {
+                        ...info,
+                        isDay: d,
+                        fullLabel: `${info.label} · ${d ? 'Day' : 'Night'}`,
+                        artIcon: d ? '☯' : '🌙',
+                    };
+                },
+                apply(info) {
+                    const root = dom.root;
+                    const bg = info.isDay ? info.bg1 : info.bg2;
+                    root.style.setProperty('--bg-primary', bg);
+                    const bgCard = info.isDay ? 'rgba(14,12,18,0.75)' : 'rgba(8,6,12,0.8)';
+                    root.style.setProperty('--bg-card', bgCard);
+                    root.style.setProperty('--bg-card-hover', info.isDay ? 'rgba(24,20,30,0.85)' : 'rgba(12,10,18,0.9)');
+
+                    // Update gold accent
+                    root.style.setProperty('--cn-gold', info.accent);
+
+                    dom.artIcon.textContent = info.artIcon;
+                    dom.artLabel.textContent = info.fullLabel;
+
+                    const starOpacity = info.isDay ? 0.4 : 0.7;
+                    document.documentElement.style.setProperty('--star-opacity', starOpacity);
+
+                    dom.artBg.style.background =
+                        `radial-gradient(ellipse at 30% 20%, ${info.bg2} 0%, ${bg} 50%, #040408 100%)`;
+                },
+                update() {
+                    const info = this.getArtState();
+                    this.apply(info);
+                    return info;
+                }
+            };
+
+            // ============================================================
+            // 5.  STORAGE & STATE
+            // ============================================================
+            function loadState() {
+                try {
+                    const raw = localStorage.getItem(CONFIG.STORAGE_KEY);
+                    if (raw) {
+                        const saved = JSON.parse(raw);
+                        if (saved.version === CONFIG.APP_VERSION) {
+                            Object.assign(state, saved);
+                            if (state.lastStudyDate) state.lastStudyDate = new Date(state.lastStudyDate);
+                            if (!state.notes) state.notes = [];
+                            if (!state.dailyFocus) state.dailyFocus = '';
+                            return true;
+                        }
+                    }
+                } catch (e) { /* ignore */ }
+                return false;
             }
-          }
-        } catch (e) { /* ignore */ }
-        return false;
-      }
 
-      function saveState() {
-        try {
-          const toSave = { ...state, version: CONFIG.APP_VERSION };
-          if (toSave.lastStudyDate) toSave.lastStudyDate = toSave.lastStudyDate.toISOString();
-          localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(toSave));
-        } catch (e) { /* ignore */ }
-      }
-
-      // ============================================================
-      // 6.  COUNTDOWN
-      // ============================================================
-      function getPhase() {
-        const now = new Date();
-        return now < CONFIG.PREP_END ? 'preparation' : 'revision';
-      }
-
-      function getCountdownTarget() {
-        return getPhase() === 'preparation' ? CONFIG.PREP_END : CONFIG.REVISION_END;
-      }
-
-      function computeCountdown() {
-        const now = new Date();
-        const target = getCountdownTarget();
-        const diff = target - now;
-        if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0, progress: 100 };
-        const days = Math.floor(diff / 86400000);
-        const hours = Math.floor((diff % 86400000) / 3600000);
-        const minutes = Math.floor((diff % 3600000) / 60000);
-        const seconds = Math.floor((diff % 60000) / 1000);
-        let progress = 0;
-        const phase = getPhase();
-        if (phase === 'preparation') {
-          const total = CONFIG.PREP_END - new Date(2026, 0, 1);
-          const elapsed = now - new Date(2026, 0, 1);
-          progress = Math.min(100, Math.max(0, (elapsed / total) * 100));
-        } else {
-          const total = CONFIG.REVISION_END - CONFIG.REVISION_START;
-          const elapsed = now - CONFIG.REVISION_START;
-          progress = Math.min(100, Math.max(0, (elapsed / total) * 100));
-        }
-        return { days, hours, minutes, seconds, progress: Math.round(progress) };
-      }
-
-      let prevCountdown = { days: -1, hours: -1, minutes: -1, seconds: -1 };
-
-      function renderCountdown() {
-        const cd = computeCountdown();
-        const pad = n => String(n).padStart(2, '0');
-        dom.days.textContent = pad(cd.days);
-        dom.hours.textContent = pad(cd.hours);
-        dom.minutes.textContent = pad(cd.minutes);
-        dom.seconds.textContent = pad(cd.seconds);
-        dom.progressFill.style.width = cd.progress + '%';
-
-        const phase = getPhase();
-        const label = phase === 'preparation' ? 'Prep' : 'Revision';
-        dom.progressLabelLeft.textContent = `${label} ${cd.progress}%`;
-        dom.progressLabelRight.textContent = phase === 'preparation' ? 'Target 2027' : 'Final Sprint';
-
-        dom.phaseBadge.textContent = phase === 'preparation' ? '📖 Preparation' : '⚡ Revision';
-        dom.phaseBadge.className = 'phase-badge' + (phase === 'revision' ? ' revision' : '');
-
-        dom.subMessage.innerHTML = phase === 'preparation' ?
-          '"<span>One day</span> at a time. <span>Steady</span> as the stars."' :
-          '"<span>Focus</span> your spirit. <span>Finish</span> with honor."';
-
-        // Pulse
-        if (cd.days !== prevCountdown.days || cd.hours !== prevCountdown.hours ||
-          cd.minutes !== prevCountdown.minutes || cd.seconds !== prevCountdown.seconds) {
-          dom.countdownItems.forEach(el => {
-            el.classList.remove('pulse');
-            void el.offsetWidth;
-            el.classList.add('pulse');
-          });
-          prevCountdown = { days: cd.days, hours: cd.hours, minutes: cd.minutes, seconds: cd.seconds };
-        }
-
-        // Stats
-        dom.studyDays.textContent = state.studyDays || 0;
-        dom.studyStreak.textContent = state.streak || 0;
-        dom.totalHours.textContent = state.totalHours || 0;
-
-        // Daily focus
-        dom.dailyFocusInput.value = state.dailyFocus || '';
-
-        renderNotes();
-        saveState();
-      }
-
-      // ============================================================
-      // 7.  NOTES
-      // ============================================================
-      function renderNotes() {
-        const list = dom.notesList;
-        if (!state.notes || state.notes.length === 0) {
-          list.innerHTML =
-            `<div style="text-align:center;padding:1.6rem;color:var(--text-secondary);font-size:1.4rem;font-weight:300;">No notes yet. Begin your journal.</div>`;
-          return;
-        }
-        list.innerHTML = state.notes.map((note, i) => `
-              <div class="note-item">
-                <span class="note-text">${escapeHtml(note.text)}</span>
-                <span class="note-time">${note.time || ''}</span>
-                <button class="btn btn-vermilion btn-sm delete-note" data-index="${i}">✕</button>
-              </div>
-            `).join('');
-        list.querySelectorAll('.delete-note').forEach(btn => {
-          btn.addEventListener('click', function() {
-            const idx = parseInt(this.dataset.index);
-            if (idx >= 0 && idx < state.notes.length) {
-              state.notes.splice(idx, 1);
-              saveState();
-              renderNotes();
-              showToast('🗑️ Note removed');
+            function saveState() {
+                try {
+                    const toSave = { ...state, version: CONFIG.APP_VERSION };
+                    if (toSave.lastStudyDate) toSave.lastStudyDate = toSave.lastStudyDate.toISOString();
+                    localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(toSave));
+                } catch (e) { /* ignore */ }
             }
-          });
-        });
-      }
 
-      function escapeHtml(str) {
-        const div = document.createElement('div');
-        div.textContent = str;
-        return div.innerHTML;
-      }
+            // ============================================================
+            // 6.  COUNTDOWN
+            // ============================================================
+            function getPhase() {
+                const now = new Date();
+                return now < CONFIG.PREP_END ? 'preparation' : 'revision';
+            }
 
-      function addNote(text) {
-        if (!text || text.trim() === '') return false;
-        const now = new Date();
-        const timeStr = now.toLocaleString('en-IN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-        state.notes.unshift({ text: text.trim(), time: timeStr });
-        if (state.notes.length > 100) state.notes = state.notes.slice(0, 100);
-        saveState();
-        renderNotes();
-        showToast('📝 Note added');
-        return true;
-      }
+            function getCountdownTarget() {
+                return getPhase() === 'preparation' ? CONFIG.PREP_END : CONFIG.REVISION_END;
+            }
 
-      // ============================================================
-      // 8.  STUDY LOG
-      // ============================================================
-      function addStudyHour() {
-        state.totalHours = (state.totalHours || 0) + 1;
-        state.todayHours = (state.todayHours || 0) + 1;
+            function computeCountdown() {
+                const now = new Date();
+                const target = getCountdownTarget();
+                const diff = target - now;
+                if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0, progress: 100 };
+                const days = Math.floor(diff / 86400000);
+                const hours = Math.floor((diff % 86400000) / 3600000);
+                const minutes = Math.floor((diff % 3600000) / 60000);
+                const seconds = Math.floor((diff % 60000) / 1000);
+                let progress = 0;
+                const phase = getPhase();
+                if (phase === 'preparation') {
+                    const total = CONFIG.PREP_END - new Date(2026, 0, 1);
+                    const elapsed = now - new Date(2026, 0, 1);
+                    progress = Math.min(100, Math.max(0, (elapsed / total) * 100));
+                } else {
+                    const total = CONFIG.REVISION_END - CONFIG.REVISION_START;
+                    const elapsed = now - CONFIG.REVISION_START;
+                    progress = Math.min(100, Math.max(0, (elapsed / total) * 100));
+                }
+                return { days, hours, minutes, seconds, progress: Math.round(progress) };
+            }
 
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        if (state.lastStudyDate) {
-          const last = new Date(state.lastStudyDate);
-          last.setHours(0, 0, 0, 0);
-          if (today > last) {
-            state.studyDays = (state.studyDays || 0) + 1;
-            const diffDays = Math.floor((today - last) / 86400000);
-            state.streak = diffDays === 1 ? (state.streak || 0) + 1 : diffDays > 1 ? 1 : state.streak || 0;
-            state.lastStudyDate = new Date();
-          }
-        } else {
-          state.studyDays = (state.studyDays || 0) + 1;
-          state.streak = 1;
-          state.lastStudyDate = new Date();
-        }
-        saveState();
-        renderCountdown();
-        showToast('⚔️ +1 hour of training logged');
-      }
+            let prevCountdown = { days: -1, hours: -1, minutes: -1, seconds: -1 };
 
-      // ============================================================
-      // 9.  DAILY FOCUS
-      // ============================================================
-      function saveDailyFocus() {
-        const val = dom.dailyFocusInput.value.trim();
-        state.dailyFocus = val;
-        saveState();
-        showToast('🎯 Focus set. 道 · 武 · 学');
-      }
+            function renderCountdown() {
+                const cd = computeCountdown();
+                const pad = n => String(n).padStart(2, '0');
+                dom.days.textContent = pad(cd.days);
+                dom.hours.textContent = pad(cd.hours);
+                dom.minutes.textContent = pad(cd.minutes);
+                dom.seconds.textContent = pad(cd.seconds);
+                dom.progressFill.style.width = cd.progress + '%';
 
-      // ============================================================
-      // 10. QUOTES
-      // ============================================================
-      const QUOTES = [
-        '"The warrior\'s path is the scholar\'s way."',
-        '"Know thyself, and the cosmos opens."',
-        '"Discipline is the bridge between goals and accomplishment."',
-        '"The way of the warrior is the way of the scholar."',
-        '"In stillness, the warrior finds clarity."',
-        '"One step, one breath, one victory."',
-        '"The scholar\'s mind, the warrior\'s heart."',
-        '"Patience and persistence have a magical effect."',
-        '"The best time to start was yesterday. The next best is now."',
-        '"道 · 武 · 学 — the threefold path of mastery."',
-        '"Mastery is not perfection. It is the journey."',
-        '"The universe rewards those who move forward."',
-      ];
-      let quoteIdx = 0;
+                const phase = getPhase();
+                const label = phase === 'preparation' ? 'Prep' : 'Revision';
+                dom.progressLabelLeft.textContent = `${label} ${cd.progress}%`;
+                dom.progressLabelRight.textContent = phase === 'preparation' ? 'Target 2027' : 'Final Sprint';
 
-      function updateMiniQuote() {
-        const idx = Math.floor(Math.random() * QUOTES.length);
-        dom.miniQuote.textContent = QUOTES[idx];
-      }
+                dom.phaseBadge.textContent = phase === 'preparation' ? '📖 Preparation' : '⚡ Revision';
+                dom.phaseBadge.className = 'phase-badge' + (phase === 'revision' ? ' revision' : '');
 
-      // ============================================================
-      // 11. TOAST
-      // ============================================================
-      let toastTimeout = null;
+                dom.subMessage.innerHTML = phase === 'preparation' ?
+                    '"<span>One day</span> at a time. <span>Steady</span> as the brush."' :
+                    '"<span>Focus</span> your spirit. <span>Finish</span> with mastery."';
 
-      function showToast(msg) {
-        const el = dom.toast;
-        el.textContent = msg;
-        el.classList.add('show');
-        clearTimeout(toastTimeout);
-        toastTimeout = setTimeout(() => el.classList.remove('show'), 2800);
-      }
+                // Pulse
+                if (cd.days !== prevCountdown.days || cd.hours !== prevCountdown.hours ||
+                    cd.minutes !== prevCountdown.minutes || cd.seconds !== prevCountdown.seconds) {
+                    dom.countdownItems.forEach(el => {
+                        el.classList.remove('pulse');
+                        void el.offsetWidth;
+                        el.classList.add('pulse');
+                    });
+                    prevCountdown = { days: cd.days, hours: cd.hours, minutes: cd.minutes, seconds: cd.seconds };
+                }
 
-      // ============================================================
-      // 12. NAVIGATION
-      // ============================================================
-      function navigateTo(pageId) {
-        dom.navAnchors.forEach(a => a.classList.toggle('active', a.dataset.page === pageId));
-        dom.pages.forEach(p => {
-          p.classList.remove('active');
-          if (p.id === `page-${pageId}`) p.classList.add('active');
-        });
-        dom.navLinks.classList.remove('open');
-        dom.menuToggle.textContent = '☰';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+                // Stats
+                dom.studyDays.textContent = state.studyDays || 0;
+                dom.studyStreak.textContent = state.streak || 0;
+                dom.totalHours.textContent = state.totalHours || 0;
 
-      // ============================================================
-      // 13. ONBOARDING
-      // ============================================================
-      function startJourney() {
-        const name = dom.userNameInput.value.trim() || 'Aspirant';
-        const target = dom.targetDateInput.value;
-        if (!target) {
-          showToast('⚠️ Please select your target exam date.');
-          return;
-        }
-        state.userName = name;
-        state.targetDate = target;
-        state.journeyStarted = true;
-        state.studyDays = 0;
-        state.streak = 0;
-        state.totalHours = 0;
-        state.notes = [];
-        state.lastStudyDate = null;
-        state.dailyFocus = '';
-        saveState();
-        dom.onboardingModal.classList.add('hidden');
-        renderCountdown();
-        updateMiniQuote();
-        showToast(`⚔️ Welcome, ${state.userName}. The path begins.`);
-      }
+                // Daily focus
+                dom.dailyFocusInput.value = state.dailyFocus || '';
 
-      // ============================================================
-      // 14. INITIALIZATION
-      // ============================================================
-      function init() {
-        const hasState = loadState();
+                renderNotes();
+                saveState();
+            }
 
-        dom.targetDateInput.value = '2027-05-01';
+            // ============================================================
+            // 7.  NOTES
+            // ============================================================
+            function renderNotes() {
+                const list = dom.notesList;
+                if (!state.notes || state.notes.length === 0) {
+                    list.innerHTML =
+                        `<div style="text-align:center;padding:1.6rem;color:var(--text-secondary);font-size:1.4rem;font-weight:300;font-family:var(--font-serif);">No notes yet. Begin your journal.</div>`;
+                    return;
+                }
+                list.innerHTML = state.notes.map((note, i) => `
+                      <div class="note-item">
+                        <span class="note-text">${escapeHtml(note.text)}</span>
+                        <span class="note-time">${note.time || ''}</span>
+                        <button class="btn btn-vermilion btn-sm delete-note" data-index="${i}">✕</button>
+                      </div>
+                    `).join('');
+                list.querySelectorAll('.delete-note').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const idx = parseInt(this.dataset.index);
+                        if (idx >= 0 && idx < state.notes.length) {
+                            state.notes.splice(idx, 1);
+                            saveState();
+                            renderNotes();
+                            showToast('🗑️ Note removed');
+                        }
+                    });
+                });
+            }
 
-        if (!hasState || !state.journeyStarted) {
-          dom.onboardingModal.classList.remove('hidden');
-          dom.userNameInput.value = 'Aspirant';
-        } else {
-          dom.onboardingModal.classList.add('hidden');
-          dom.userNameInput.value = state.userName || 'Aspirant';
-        }
+            function escapeHtml(str) {
+                const div = document.createElement('div');
+                div.textContent = str;
+                return div.innerHTML;
+            }
 
-        // Apply cosmic theme
-        CosmicEngine.update();
+            function addNote(text) {
+                if (!text || text.trim() === '') return false;
+                const now = new Date();
+                const timeStr = now.toLocaleString('en-IN', { month: 'short', day: 'numeric', hour: '2-digit',
+                    minute: '2-digit' });
+                state.notes.unshift({ text: text.trim(), time: timeStr });
+                if (state.notes.length > 100) state.notes = state.notes.slice(0, 100);
+                saveState();
+                renderNotes();
+                showToast('📝 Note added');
+                return true;
+            }
 
-        renderCountdown();
-        setInterval(renderCountdown, 1000);
+            // ============================================================
+            // 8.  STUDY LOG
+            // ============================================================
+            function addStudyHour() {
+                state.totalHours = (state.totalHours || 0) + 1;
+                state.todayHours = (state.todayHours || 0) + 1;
 
-        setInterval(() => {
-          CosmicEngine.update();
-        }, 30000);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                if (state.lastStudyDate) {
+                    const last = new Date(state.lastStudyDate);
+                    last.setHours(0, 0, 0, 0);
+                    if (today > last) {
+                        state.studyDays = (state.studyDays || 0) + 1;
+                        const diffDays = Math.floor((today - last) / 86400000);
+                        state.streak = diffDays === 1 ? (state.streak || 0) + 1 : diffDays > 1 ? 1 : state.streak || 0;
+                        state.lastStudyDate = new Date();
+                    }
+                } else {
+                    state.studyDays = (state.studyDays || 0) + 1;
+                    state.streak = 1;
+                    state.lastStudyDate = new Date();
+                }
+                saveState();
+                renderCountdown();
+                showToast('⚔️ +1 hour of training logged');
+            }
 
-        updateMiniQuote();
-        setInterval(updateMiniQuote, 60000);
+            // ============================================================
+            // 9.  DAILY FOCUS
+            // ============================================================
+            function saveDailyFocus() {
+                const val = dom.dailyFocusInput.value.trim();
+                state.dailyFocus = val;
+                saveState();
+                showToast('🎯 Focus set. Art · Focus · Mastery');
+            }
 
-        // ---- Event Listeners ----
+            // ============================================================
+            // 10. QUOTES
+            // ============================================================
+            const QUOTES = [
+                '"The brush moves as the mind focuses."',
+                '"Mastery is not perfection. It is the journey."',
+                '"In stillness, the warrior finds clarity."',
+                '"One step, one breath, one victory."',
+                '"The scholar\'s mind, the warrior\'s heart."',
+                '"Patience and persistence have a magical effect."',
+                '"The best time to start was yesterday. The next best is now."',
+                '"Art is the discipline of the soul."',
+                '"Focus is the gateway to mastery."',
+                '"The universe rewards those who move forward."',
+                '"Ink and spirit flow as one."',
+                '"The mandala of your mind grows with each day."',
+            ];
+            let quoteIdx = 0;
 
-        dom.startJourneyBtn.addEventListener('click', startJourney);
-        dom.targetDateInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') startJourney(); });
-        dom.userNameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') startJourney(); });
+            function updateMiniQuote() {
+                const idx = Math.floor(Math.random() * QUOTES.length);
+                dom.miniQuote.textContent = QUOTES[idx];
+            }
 
-        dom.navAnchors.forEach(a => {
-          a.addEventListener('click', function(e) {
-            e.preventDefault();
-            const page = this.dataset.page;
-            if (page) navigateTo(page);
-          });
-        });
+            // ============================================================
+            // 11. TOAST
+            // ============================================================
+            let toastTimeout = null;
 
-        dom.menuToggle.addEventListener('click', function() {
-          const open = dom.navLinks.classList.toggle('open');
-          this.textContent = open ? '✕' : '☰';
-        });
+            function showToast(msg) {
+                const el = dom.toast;
+                el.textContent = msg;
+                el.classList.add('show');
+                clearTimeout(toastTimeout);
+                toastTimeout = setTimeout(() => el.classList.remove('show'), 2800);
+            }
 
-        dom.addNoteBtn.addEventListener('click', function() {
-          const val = dom.noteInput.value;
-          if (addNote(val)) dom.noteInput.value = '';
-          else showToast('⚠️ Enter a note');
-        });
-        dom.noteInput.addEventListener('keydown', function(e) {
-          if (e.key === 'Enter') dom.addNoteBtn.click();
-        });
+            // ============================================================
+            // 12. NAVIGATION
+            // ============================================================
+            function navigateTo(pageId) {
+                dom.navAnchors.forEach(a => a.classList.toggle('active', a.dataset.page === pageId));
+                dom.pages.forEach(p => {
+                    p.classList.remove('active');
+                    if (p.id === `page-${pageId}`) p.classList.add('active');
+                });
+                dom.navLinks.classList.remove('open');
+                dom.menuToggle.textContent = '☰';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
 
-        dom.saveFocusBtn.addEventListener('click', saveDailyFocus);
-        dom.dailyFocusInput.addEventListener('keydown', function(e) {
-          if (e.key === 'Enter') saveDailyFocus();
-        });
+            // ============================================================
+            // 13. ONBOARDING
+            // ============================================================
+            function startJourney() {
+                const name = dom.userNameInput.value.trim() || 'Aspirant';
+                const target = dom.targetDateInput.value;
+                if (!target) {
+                    showToast('⚠️ Please select your target exam date.');
+                    return;
+                }
+                state.userName = name;
+                state.targetDate = target;
+                state.journeyStarted = true;
+                state.studyDays = 0;
+                state.streak = 0;
+                state.totalHours = 0;
+                state.notes = [];
+                state.lastStudyDate = null;
+                state.dailyFocus = '';
+                saveState();
+                dom.onboardingModal.classList.add('hidden');
+                renderCountdown();
+                updateMiniQuote();
+                showToast(`⚔️ Welcome, ${state.userName}. The art begins.`);
+            }
 
-        // Keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
-          if (e.ctrlKey || e.metaKey || e.altKey) return;
-          if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-          const key = e.key.toLowerCase();
-          if (key === 'h') {
-            e.preventDefault();
-            addStudyHour();
-          } else if (key === 'n') {
-            e.preventDefault();
-            navigateTo('notes');
-          }
-        });
+            // ============================================================
+            // 14. INITIALIZATION
+            // ============================================================
+            function init() {
+                const hasState = loadState();
 
-        // Add study hour button
-        const statsCard = document.querySelector('.stats-grid');
-        if (statsCard) {
-          const hourBtn = document.createElement('button');
-          hourBtn.className = 'btn btn-gold btn-sm';
-          hourBtn.textContent = '⚔️ +1h';
-          hourBtn.style.marginTop = '0.8rem';
-          hourBtn.style.width = '100%';
-          hourBtn.addEventListener('click', addStudyHour);
-          statsCard.parentNode.appendChild(hourBtn);
-        }
+                dom.targetDateInput.value = '2027-05-01';
 
-        if (hasState && state.journeyStarted) {
-          setTimeout(() => {
-            showToast(`⚔️ Welcome back, ${state.userName || 'Aspirant'}. Stay on the path.`);
-          }, 600);
-        }
+                if (!hasState || !state.journeyStarted) {
+                    dom.onboardingModal.classList.remove('hidden');
+                    dom.userNameInput.value = 'Aspirant';
+                } else {
+                    dom.onboardingModal.classList.add('hidden');
+                    dom.userNameInput.value = state.userName || 'Aspirant';
+                }
 
-        console.log('⚔️ NEET 2027 · The Threefold Path');
-        console.log('⌨️ H=log hour, N=Notes');
-      }
+                // Apply art theme
+                ArtEngine.update();
 
-      // ============================================================
-      // 15. START
-      // ============================================================
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-      } else {
-        init();
-      }
+                renderCountdown();
+                setInterval(renderCountdown, 1000);
 
-    })();
-  </script>
+                setInterval(() => {
+                    ArtEngine.update();
+                }, 30000);
+
+                updateMiniQuote();
+                setInterval(updateMiniQuote, 60000);
+
+                // ---- Event Listeners ----
+
+                dom.startJourneyBtn.addEventListener('click', startJourney);
+                dom.targetDateInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') startJourney(); });
+                dom.userNameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') startJourney(); });
+
+                dom.navAnchors.forEach(a => {
+                    a.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const page = this.dataset.page;
+                        if (page) navigateTo(page);
+                    });
+                });
+
+                dom.menuToggle.addEventListener('click', function() {
+                    const open = dom.navLinks.classList.toggle('open');
+                    this.textContent = open ? '✕' : '☰';
+                });
+
+                dom.addNoteBtn.addEventListener('click', function() {
+                    const val = dom.noteInput.value;
+                    if (addNote(val)) dom.noteInput.value = '';
+                    else showToast('⚠️ Enter a note');
+                });
+                dom.noteInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') dom.addNoteBtn.click();
+                });
+
+                dom.saveFocusBtn.addEventListener('click', saveDailyFocus);
+                dom.dailyFocusInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') saveDailyFocus();
+                });
+
+                // Keyboard shortcuts
+                document.addEventListener('keydown', function(e) {
+                    if (e.ctrlKey || e.metaKey || e.altKey) return;
+                    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+                    const key = e.key.toLowerCase();
+                    if (key === 'h') {
+                        e.preventDefault();
+                        addStudyHour();
+                    } else if (key === 'n') {
+                        e.preventDefault();
+                        navigateTo('notes');
+                    }
+                });
+
+                // Add study hour button
+                const statsCard = document.querySelector('.stats-grid');
+                if (statsCard) {
+                    const hourBtn = document.createElement('button');
+                    hourBtn.className = 'btn btn-gold btn-sm';
+                    hourBtn.textContent = '⚔️ +1h';
+                    hourBtn.style.marginTop = '0.8rem';
+                    hourBtn.style.width = '100%';
+                    hourBtn.addEventListener('click', addStudyHour);
+                    statsCard.parentNode.appendChild(hourBtn);
+                }
+
+                if (hasState && state.journeyStarted) {
+                    setTimeout(() => {
+                        showToast(`⚔️ Welcome back, ${state.userName || 'Aspirant'}. Stay on the path.`);
+                    }, 600);
+                }
+
+                console.log('⚔️ NEET 2027 · The Art of Focus');
+                console.log('⌨️ H=log hour, N=Notes');
+            }
+
+            // ============================================================
+            // 15. START
+            // ============================================================
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+
+        })();
+    </script>
 
 </body>
 </html>
