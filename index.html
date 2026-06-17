@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>NEET 2027 · 静 · 和</title>
+  <title>NEET 2027 · 静</title>
   <meta name="theme-color" content="#1a1a2e" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=Noto+Serif+JP:wght@200;300;400;600;700&display=swap" rel="stylesheet" />
   <style>
     /* ============================================================
-       0.  CSS VARIABLES
+       0.  CSS VARIABLES (set by JS theme)
        ============================================================ */
     :root {
       --bg-primary: #f7f2eb;
@@ -23,7 +23,6 @@
       --accent-light: #e8d5a3;
       --accent-dark: #a8893a;
       --border-color: rgba(26, 26, 46, 0.08);
-      --border-light: rgba(26, 26, 46, 0.04);
       --shadow: rgba(26, 26, 46, 0.06);
       --shadow-hover: rgba(26, 26, 46, 0.14);
       --glass-border: rgba(255, 255, 255, 0.3);
@@ -32,8 +31,7 @@
       --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       --font-sans: 'Inter', -apple-system, sans-serif;
       --font-serif: 'Noto Serif JP', 'Inter', serif;
-      --season-gradient: linear-gradient(135deg, #fdf6ed 0%, #f0ebe3 100%);
-      --pattern-opacity: 0.04;
+      --texture-opacity: 0.06;
     }
 
     /* ============================================================
@@ -58,20 +56,12 @@
       overflow-x: hidden;
       transition: background 0.8s ease, color 0.8s ease;
     }
-    ::-webkit-scrollbar {
-      width: 4px;
-      height: 4px;
-    }
-    ::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.02);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: var(--accent);
-      border-radius: 20px;
-    }
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: rgba(0,0,0,0.02); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 20px; }
 
     /* ============================================================
-       2.  BACKGROUND LAYER
+       2.  BACKGROUND LAYER (gradient + texture + ornaments)
        ============================================================ */
     #bg-layer {
       position: fixed;
@@ -84,13 +74,27 @@
       overflow: hidden;
       transition: background 1.2s ease;
     }
+    /* texture overlay – washi paper effect */
+    #bg-layer .texture {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: var(--texture-opacity);
+      background-image: 
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 300px 300px;
+      mix-blend-mode: multiply;
+      transition: opacity 1s ease;
+    }
     #bg-layer .bg-pattern {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      opacity: var(--pattern-opacity);
+      opacity: 0.035;
       background-image:
         radial-gradient(circle at 20% 30%, var(--accent-light) 1px, transparent 1px),
         radial-gradient(circle at 80% 70%, var(--accent-light) 1px, transparent 1px);
@@ -100,49 +104,23 @@
     #bg-layer .bg-ornament {
       position: absolute;
       font-size: 12rem;
-      opacity: 0.04;
+      opacity: 0.035;
       font-family: var(--font-serif);
       letter-spacing: 0.2em;
       transition: all 1.2s ease;
     }
-    #bg-layer .bg-ornament.orn1 {
-      top: 5%;
-      right: 5%;
-      transform: rotate(8deg);
-    }
-    #bg-layer .bg-ornament.orn2 {
-      bottom: 8%;
-      left: 3%;
-      transform: rotate(-4deg);
-    }
-    #bg-layer .bg-ornament.orn3 {
-      top: 40%;
-      left: 50%;
-      transform: translateX(-50%) rotate(0deg);
-      font-size: 6rem;
-      opacity: 0.025;
-    }
+    #bg-layer .bg-ornament.orn1 { top: 5%; right: 5%; transform: rotate(8deg); }
+    #bg-layer .bg-ornament.orn2 { bottom: 8%; left: 3%; transform: rotate(-4deg); }
+    #bg-layer .bg-ornament.orn3 { top: 40%; left: 50%; transform: translateX(-50%) rotate(0deg); font-size: 6rem; opacity: 0.02; }
     #bg-layer .bg-shape {
       position: absolute;
       border-radius: 50%;
       filter: blur(80px);
-      opacity: 0.06;
+      opacity: 0.05;
       transition: all 1.5s ease;
     }
-    #bg-layer .bg-shape.s1 {
-      width: 500px;
-      height: 500px;
-      top: -150px;
-      right: -100px;
-      background: var(--accent);
-    }
-    #bg-layer .bg-shape.s2 {
-      width: 400px;
-      height: 400px;
-      bottom: -100px;
-      left: -100px;
-      background: var(--text-secondary);
-    }
+    #bg-layer .bg-shape.s1 { width: 500px; height: 500px; top: -150px; right: -100px; background: var(--accent); }
+    #bg-layer .bg-shape.s2 { width: 400px; height: 400px; bottom: -100px; left: -100px; background: var(--text-secondary); }
 
     /* ============================================================
        3.  UI OVERLAY
@@ -158,7 +136,7 @@
     }
     .app-container {
       width: 100%;
-      max-width: 1100px;
+      max-width: 900px;
       margin: 0 auto;
     }
 
@@ -312,9 +290,7 @@
     }
 
     @media (max-width: 640px) {
-      .menu-toggle {
-        display: block;
-      }
+      .menu-toggle { display: block; }
       .nav-links {
         display: none;
         width: 100%;
@@ -325,27 +301,12 @@
         border-top: 1px solid var(--border-color);
         margin-top: 1.2rem;
       }
-      .nav-links.open {
-        display: flex;
-      }
-      .nav-links a {
-        width: 100%;
-        text-align: center;
-        padding: 0.8rem;
-      }
-      .site-header {
-        padding: 1.2rem 1.6rem;
-      }
-      .card {
-        padding: 1.6rem;
-      }
-      .season-badge {
-        font-size: 1rem;
-        padding: 0.2rem 1.2rem;
-      }
-      .logo {
-        font-size: 1.8rem;
-      }
+      .nav-links.open { display: flex; }
+      .nav-links a { width: 100%; text-align: center; padding: 0.8rem; }
+      .site-header { padding: 1.2rem 1.6rem; }
+      .card { padding: 1.6rem; }
+      .season-badge { font-size: 1rem; padding: 0.2rem 1.2rem; }
+      .logo { font-size: 1.8rem; }
     }
 
     /* ============================================================
@@ -356,22 +317,14 @@
       animation: fadeSlide 0.5s ease forwards;
       padding: 0.8rem 0 2.4rem;
     }
-    .page.active {
-      display: block;
-    }
+    .page.active { display: block; }
     @keyframes fadeSlide {
-      0% {
-        opacity: 0;
-        transform: translateY(12px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      0% { opacity: 0; transform: translateY(12px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
 
     /* ============================================================
-       7.  COUNTDOWN
+       7.  HOME – COUNTDOWN & STATS
        ============================================================ */
     .hero-section {
       text-align: center;
@@ -438,7 +391,7 @@
     .progress-track {
       width: 100%;
       height: 4px;
-      background: rgba(0, 0, 0, 0.06);
+      background: rgba(0,0,0,0.06);
       border-radius: 12px;
       overflow: hidden;
     }
@@ -471,67 +424,8 @@
       font-weight: 400;
     }
 
-    /* ============================================================
-       8.  TRACKER
-       ============================================================ */
-    .tracker-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2.4rem;
-    }
-    @media (max-width: 700px) {
-      .tracker-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-    .subject-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-    }
-    .subject-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.8rem 1.2rem;
-      background: rgba(255, 252, 248, 0.2);
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-color);
-      transition: background 0.2s, border-color 0.2s;
-    }
-    .subject-item:hover {
-      background: rgba(255, 252, 248, 0.4);
-    }
-    .subject-item label {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      cursor: pointer;
-      flex: 1;
-      font-size: 1.5rem;
-      font-weight: 400;
-    }
-    .subject-item input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      accent-color: var(--accent);
-      cursor: pointer;
-      border-radius: 4px;
-      transition: transform 0.2s;
-    }
-    .subject-item input[type="checkbox"]:checked {
-      transform: scale(1.1);
-    }
-    .subject-hours {
-      font-size: 1.3rem;
-      color: var(--text-secondary);
-      font-weight: 400;
-      min-width: 3.6rem;
-      text-align: right;
-    }
-
-    .study-stats {
+    /* stats cards */
+    .stats-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 0.8rem;
@@ -540,13 +434,13 @@
     .stat-card {
       text-align: center;
       padding: 1.2rem 0.8rem;
-      background: rgba(255, 252, 248, 0.2);
+      background: rgba(255,252,248,0.2);
       border-radius: var(--radius-sm);
       border: 1px solid var(--border-color);
       transition: background 0.3s;
     }
     .stat-card:hover {
-      background: rgba(255, 252, 248, 0.35);
+      background: rgba(255,252,248,0.35);
     }
     .stat-number {
       font-size: 3.2rem;
@@ -561,54 +455,54 @@
       font-weight: 400;
     }
 
-    /* ============================================================
-       9.  RESOURCES
-       ============================================================ */
-    .resources-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 1.6rem;
+    /* daily focus */
+    .focus-area {
+      margin-top: 2.4rem;
+      padding: 1.6rem 2rem;
+      border-radius: var(--radius-sm);
+      background: rgba(255,252,248,0.15);
+      border: 1px dashed var(--border-color);
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
     }
-    .resource-card {
-      padding: 1.6rem;
-      border-radius: 12px;
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      text-decoration: none;
-      color: var(--text-primary);
-      transition: all 0.3s ease;
-      display: block;
-      cursor: default;
-    }
-    .resource-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 30px var(--shadow-hover);
-      background: var(--bg-secondary);
-    }
-    .resource-card .title {
-      font-weight: 600;
-      font-size: 1.6rem;
+    .focus-area label {
       font-family: var(--font-serif);
-    }
-    .resource-card .desc {
-      font-size: 1.3rem;
+      font-weight: 300;
+      font-size: 1.5rem;
       color: var(--text-secondary);
-      margin-top: 0.4rem;
-    }
-    .resource-card .tag {
-      display: inline-block;
-      margin-top: 1.2rem;
-      font-size: 1.1rem;
-      padding: 0.2rem 1.2rem;
-      border-radius: 40px;
-      background: var(--accent-light);
-      color: var(--text-primary);
-      font-weight: 400;
       letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .focus-area input {
+      flex: 1;
+      min-width: 160px;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-bottom: 2px solid var(--accent-light);
+      background: transparent;
+      font-size: 1.5rem;
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color 0.3s;
+      font-family: var(--font-sans);
+    }
+    .focus-area input:focus {
+      border-color: var(--accent);
+    }
+    .focus-area input::placeholder {
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+    .focus-area .btn {
+      flex-shrink: 0;
     }
 
     /* ============================================================
-       10. NOTES
+       8.  NOTES PAGE
        ============================================================ */
     .notes-input-group {
       display: flex;
@@ -623,7 +517,7 @@
       border: 1px solid var(--border-color);
       border-radius: var(--radius-sm);
       font-size: 1.5rem;
-      background: rgba(255, 252, 248, 0.3);
+      background: rgba(255,252,248,0.3);
       outline: none;
       transition: border 0.2s, box-shadow 0.2s;
       color: var(--text-primary);
@@ -631,10 +525,11 @@
     }
     .notes-input-group input:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.12);
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
     }
     .notes-input-group input::placeholder {
       color: var(--text-muted);
+      font-weight: 300;
     }
 
     .notes-list {
@@ -647,13 +542,13 @@
       align-items: center;
       justify-content: space-between;
       padding: 0.8rem 1.6rem;
-      background: rgba(255, 252, 248, 0.2);
+      background: rgba(255,252,248,0.2);
       border-radius: var(--radius-sm);
       border: 1px solid var(--border-color);
       transition: background 0.2s;
     }
     .note-item:hover {
-      background: rgba(255, 252, 248, 0.35);
+      background: rgba(255,252,248,0.35);
     }
     .note-item .note-text {
       flex: 1;
@@ -669,93 +564,7 @@
     }
 
     /* ============================================================
-       11. MOTIVATION
-       ============================================================ */
-    .quote-box {
-      padding: 2.4rem 3.2rem;
-      border-radius: var(--radius);
-      background: var(--bg-card);
-      border: 1px solid var(--accent-light);
-      text-align: center;
-      max-width: 720px;
-      margin: 0 auto;
-      position: relative;
-      transition: background 0.4s;
-    }
-    .quote-box::before {
-      content: '「';
-      font-size: 6rem;
-      color: var(--accent);
-      opacity: 0.12;
-      position: absolute;
-      top: -0.4rem;
-      left: 1.6rem;
-      font-family: var(--font-serif);
-      line-height: 1;
-    }
-    .quote-box::after {
-      content: '」';
-      font-size: 6rem;
-      color: var(--accent);
-      opacity: 0.12;
-      position: absolute;
-      bottom: -1.2rem;
-      right: 1.6rem;
-      font-family: var(--font-serif);
-      line-height: 1;
-    }
-    .quote-text {
-      font-size: 2.2rem;
-      font-weight: 300;
-      font-family: var(--font-serif);
-      line-height: 1.7;
-      transition: opacity 0.4s ease;
-    }
-    .quote-author {
-      margin-top: 1.2rem;
-      font-size: 1.4rem;
-      color: var(--text-secondary);
-      letter-spacing: 0.08em;
-      font-weight: 300;
-    }
-
-    .tips-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 1.6rem;
-      margin-top: 2.4rem;
-    }
-    .tip-card {
-      padding: 1.6rem 1.2rem;
-      border-radius: 12px;
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      text-align: center;
-      transition: transform 0.3s ease, background 0.3s;
-    }
-    .tip-card:hover {
-      transform: translateY(-3px);
-      background: var(--bg-secondary);
-    }
-    .tip-card .emoji {
-      font-size: 3.2rem;
-      display: block;
-      margin-bottom: 0.4rem;
-    }
-    .tip-card .tip-title {
-      font-weight: 600;
-      font-size: 1.4rem;
-      font-family: var(--font-serif);
-    }
-    .tip-card .tip-desc {
-      font-size: 1.2rem;
-      color: var(--text-secondary);
-      margin-top: 0.2rem;
-      font-weight: 300;
-    }
-
-    /* ============================================================
-       12. BUTTONS
+       9.  BUTTONS
        ============================================================ */
     .btn {
       display: inline-flex;
@@ -797,16 +606,6 @@
     .btn-vermilion:hover {
       background: #c94a4a;
     }
-    .btn-outline {
-      background: transparent;
-      color: var(--text-primary);
-      border: 1px solid var(--border-color);
-    }
-    .btn-outline:hover {
-      background: rgba(0, 0, 0, 0.03);
-      transform: none;
-      box-shadow: none;
-    }
     .btn-sm {
       padding: 0.4rem 1.2rem;
       font-size: 1.2rem;
@@ -814,7 +613,7 @@
     }
 
     /* ============================================================
-       13. ONBOARDING MODAL
+       10. ONBOARDING MODAL
        ============================================================ */
     #onboarding-modal {
       position: fixed;
@@ -822,7 +621,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0,0,0,0.5);
       backdrop-filter: blur(16px) saturate(1.4);
       -webkit-backdrop-filter: blur(16px) saturate(1.4);
       z-index: 999;
@@ -842,7 +641,7 @@
       background: var(--bg-primary);
       border-radius: 24px;
       padding: 3.2rem;
-      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.25);
       text-align: center;
       border: 1px solid var(--accent-light);
     }
@@ -864,7 +663,7 @@
       border: 1px solid var(--border-color);
       border-radius: 12px;
       font-size: 1.6rem;
-      background: rgba(255, 252, 248, 0.4);
+      background: rgba(255,252,248,0.4);
       margin-bottom: 1.2rem;
       outline: none;
       color: var(--text-primary);
@@ -873,7 +672,7 @@
     }
     .onboarding-card input:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.12);
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
     }
     .onboarding-card .btn {
       width: 100%;
@@ -889,7 +688,7 @@
     }
 
     /* ============================================================
-       14. TOAST
+       11. TOAST
        ============================================================ */
     .toast {
       position: fixed;
@@ -917,7 +716,7 @@
     }
 
     /* ============================================================
-       15. FOOTER
+       12. FOOTER
        ============================================================ */
     .site-footer {
       padding: 2.4rem 0 1.6rem;
@@ -937,130 +736,65 @@
     }
 
     /* ============================================================
-       16. UTILITY
+       13. UTILITY
        ============================================================ */
-    .text-center {
-      text-align: center;
-    }
-    .mt-md {
-      margin-top: 1.6rem;
-    }
-    .mb-md {
-      margin-bottom: 1.6rem;
-    }
-    .gap-sm {
-      gap: 0.8rem;
-    }
-    .flex {
-      display: flex;
-    }
-    .flex-wrap {
-      flex-wrap: wrap;
-    }
-    .items-center {
-      align-items: center;
-    }
-    .justify-between {
-      justify-content: space-between;
-    }
+    .text-center { text-align: center; }
+    .mt-md { margin-top: 1.6rem; }
+    .mb-md { margin-bottom: 1.6rem; }
+    .gap-sm { gap: 0.8rem; }
+    .flex { display: flex; }
+    .flex-wrap { flex-wrap: wrap; }
+    .items-center { align-items: center; }
+    .justify-between { justify-content: space-between; }
 
     /* ============================================================
-       17. PULSE ANIMATION
+       14. PULSE ANIMATION
        ============================================================ */
     @keyframes pulse {
-      0% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.05);
-      }
-      100% {
-        transform: scale(1);
-      }
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
     }
     .countdown-item.pulse .countdown-number {
       animation: pulse 0.3s ease;
     }
 
     /* ============================================================
-       18. RESPONSIVE
+       15. RESPONSIVE
        ============================================================ */
     @media (max-width: 500px) {
-      .countdown-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.8rem;
-      }
-      .countdown-number {
-        font-size: 4.8rem;
-      }
-      .study-stats {
-        grid-template-columns: 1fr 1fr;
-      }
-      .resources-grid {
-        grid-template-columns: 1fr;
-      }
-      .tips-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-      .onboarding-card {
-        padding: 2.4rem;
-      }
-      h1 {
-        font-size: 3.6rem;
-      }
-      .quote-box {
-        padding: 2rem 1.6rem;
-      }
-      .quote-text {
-        font-size: 1.8rem;
-      }
+      .countdown-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+      .countdown-number { font-size: 4.8rem; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .onboarding-card { padding: 2.4rem; }
+      h1 { font-size: 3.6rem; }
+      .focus-area { flex-direction: column; align-items: stretch; }
+      .focus-area input { width: 100%; }
     }
     @media (max-width: 380px) {
-      .countdown-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-      .countdown-number {
-        font-size: 3.6rem;
-      }
-      .study-stats {
-        grid-template-columns: 1fr;
-      }
-      .tips-grid {
-        grid-template-columns: 1fr;
-      }
+      .countdown-grid { grid-template-columns: 1fr 1fr; }
+      .countdown-number { font-size: 3.6rem; }
+      .stats-grid { grid-template-columns: 1fr; }
     }
 
     /* ============================================================
-       19. PRINT
+       16. PRINT
        ============================================================ */
     @media print {
-      #bg-layer,
-      .site-header,
-      .site-footer,
-      .btn,
-      .notes-input-group {
-        display: none !important;
-      }
-      .page {
-        padding: 0 !important;
-      }
-      .glass {
-        box-shadow: none !important;
-        border: 1px solid #ccc !important;
-        background: #fff !important;
-      }
-      body {
-        background: #fff !important;
-      }
+      #bg-layer, .site-header, .site-footer, .btn, .notes-input-group { display: none !important; }
+      .page { padding: 0 !important; }
+      .glass { box-shadow: none !important; border: 1px solid #ccc !important; background: #fff !important; }
+      body { background: #fff !important; }
     }
   </style>
 </head>
 <body>
 
   <!-- ============================================================
-  BACKGROUND LAYER
+  BACKGROUND LAYER (gradient + texture + ornaments)
   ============================================================ -->
   <div id="bg-layer">
+    <div class="texture"></div>
     <div class="bg-pattern"></div>
     <div class="bg-shape s1"></div>
     <div class="bg-shape s2"></div>
@@ -1110,10 +844,7 @@
         </div>
         <ul class="nav-links" id="navLinks">
           <li><a class="active" data-page="home">Home</a></li>
-          <li><a data-page="tracker">Tracker</a></li>
-          <li><a data-page="resources">Resources</a></li>
           <li><a data-page="notes">Notes</a></li>
-          <li><a data-page="motivation">Motivation</a></li>
         </ul>
       </header>
 
@@ -1125,7 +856,7 @@
           <div class="hero-section">
             <div class="phase-badge" id="phaseBadge">📖 Preparation</div>
             <h1>Countdown</h1>
-            <p class="subtitle" style="color:var(--text-secondary);letter-spacing:0.12em;text-transform:uppercase;font-size:1.3rem;font-weight:400;">NEET 2027 · Serene Determination</p>
+            <p style="color:var(--text-secondary);letter-spacing:0.12em;text-transform:uppercase;font-size:1.3rem;font-weight:400;margin-top:0.2rem;">NEET 2027 · Serene Determination</p>
             <div style="width:60px;height:2px;background:var(--accent);margin:1.2rem auto;opacity:0.3;border-radius:4px;"></div>
 
             <div class="countdown-grid" id="countdownGrid">
@@ -1142,70 +873,34 @@
             <p class="sub-message" id="subMessage">Quietly, steadily. <span>One day</span> at a time.</p>
           </div>
 
+          <!-- Stats -->
           <div class="glass card" style="margin-top:1.6rem;">
-            <div class="study-stats" style="grid-template-columns:repeat(3,1fr);">
+            <div class="stats-grid">
               <div class="stat-card"><div class="stat-number" id="studyDays">0</div><div class="stat-label">Study Days</div></div>
               <div class="stat-card"><div class="stat-number" id="studyStreak">0</div><div class="stat-label">Streak 🔥</div></div>
               <div class="stat-card"><div class="stat-number" id="totalHours">0</div><div class="stat-label">Total Hours</div></div>
             </div>
           </div>
-        </section>
 
-        <!-- ===== TRACKER ===== -->
-        <section class="page" id="page-tracker">
-          <h2 style="font-family:var(--font-serif);font-weight:300;font-size:2.8rem;">📊 Progress Tracker</h2>
-          <p style="color:var(--text-secondary);letter-spacing:0.08em;font-size:1.4rem;font-weight:300;">Log today's study & visualise consistency</p>
-          <div style="width:60px;height:2px;background:var(--accent);margin:1.2rem 0;opacity:0.3;border-radius:4px;"></div>
-
-          <div class="tracker-grid">
-            <div class="glass card">
-              <h3 style="font-family:var(--font-serif);font-weight:400;font-size:1.8rem;">📚 Subjects</h3>
-              <p style="font-size:1.3rem;color:var(--text-secondary);margin-bottom:0.8rem;font-weight:300;">Check to mark completed for today</p>
-              <ul class="subject-list" id="subjectList">
-                <li class="subject-item"><label><input type="checkbox" data-subject="physics" /> Physics</label><span class="subject-hours" id="hours-physics">0h</span></li>
-                <li class="subject-item"><label><input type="checkbox" data-subject="chemistry" /> Chemistry</label><span class="subject-hours" id="hours-chemistry">0h</span></li>
-                <li class="subject-item"><label><input type="checkbox" data-subject="biology" /> Biology</label><span class="subject-hours" id="hours-biology">0h</span></li>
-                <li class="subject-item"><label><input type="checkbox" data-subject="botany" /> Botany</label><span class="subject-hours" id="hours-botany">0h</span></li>
-                <li class="subject-item"><label><input type="checkbox" data-subject="zoology" /> Zoology</label><span class="subject-hours" id="hours-zoology">0h</span></li>
-              </ul>
-              <div style="margin-top:1.2rem;display:flex;gap:0.8rem;flex-wrap:wrap;">
-                <button class="btn btn-gold btn-sm" id="addStudyHour">+1 Hour</button>
-                <button class="btn btn-outline btn-sm" id="resetStudyHours">Reset Today</button>
-                <button class="btn btn-vermilion btn-sm" id="resetJourneyBtn" style="margin-left:auto;">⟳ Reset Journey</button>
-              </div>
-            </div>
-
-            <div class="glass card">
-              <h3 style="font-family:var(--font-serif);font-weight:400;font-size:1.8rem;">📈 Today's Stats</h3>
-              <div class="study-stats" style="grid-template-columns:1fr 1fr;margin-top:0.8rem;">
-                <div class="stat-card"><div class="stat-number" id="todaySubjects">0</div><div class="stat-label">Subjects Done</div></div>
-                <div class="stat-card"><div class="stat-number" id="todayHours">0</div><div class="stat-label">Hours Today</div></div>
-              </div>
-              <p style="font-size:1.3rem;color:var(--text-secondary);margin-top:1.2rem;font-weight:300;">💡 Small steps every day build momentum.</p>
-            </div>
+          <!-- Daily Focus -->
+          <div class="focus-area glass" style="background:var(--bg-card);">
+            <label for="dailyFocusInput">🎯 Today's Focus</label>
+            <input type="text" id="dailyFocusInput" placeholder="e.g., Revise Electrostatics" maxlength="100" />
+            <button class="btn btn-gold btn-sm" id="saveFocusBtn">Save</button>
           </div>
-        </section>
 
-        <!-- ===== RESOURCES ===== -->
-        <section class="page" id="page-resources">
-          <h2 style="font-family:var(--font-serif);font-weight:300;font-size:2.8rem;">📖 Resource Library</h2>
-          <p style="color:var(--text-secondary);letter-spacing:0.08em;font-size:1.4rem;font-weight:300;">Curated materials for NEET preparation</p>
-          <div style="width:60px;height:2px;background:var(--accent);margin:1.2rem 0;opacity:0.3;border-radius:4px;"></div>
-          <div class="resources-grid">
-            <div class="resource-card"><div class="title">📘 NCERT Textbooks</div><div class="desc">Foundation for all subjects.</div><span class="tag">Essential</span></div>
-            <div class="resource-card"><div class="title">📗 Past Papers (10 yrs)</div><div class="desc">Understand trends and practice.</div><span class="tag">Practice</span></div>
-            <div class="resource-card"><div class="title">📕 Top Reference Books</div><div class="desc">Physics, Chemistry, Biology picks.</div><span class="tag">Recommended</span></div>
-            <div class="resource-card"><div class="title">🧪 Lab & Practical Notes</div><div class="desc">For experiment‑based questions.</div><span class="tag">Practical</span></div>
-            <div class="resource-card"><div class="title">📝 Mock Tests (50 sets)</div><div class="desc">Simulate exam conditions.</div><span class="tag">Mock</span></div>
-            <div class="resource-card"><div class="title">🎯 Formula Sheets</div><div class="desc">Quick revision of key formulas.</div><span class="tag">Memorise</span></div>
+          <!-- Mini quote -->
+          <div style="margin-top:2.4rem;text-align:center;font-family:var(--font-serif);font-weight:300;font-size:1.4rem;color:var(--text-secondary);opacity:0.7;letter-spacing:0.04em;">
+            <span id="miniQuote">"Focus on the step, not the staircase."</span>
           </div>
         </section>
 
         <!-- ===== NOTES ===== -->
         <section class="page" id="page-notes">
           <h2 style="font-family:var(--font-serif);font-weight:300;font-size:2.8rem;">📝 Notes</h2>
-          <p style="color:var(--text-secondary);letter-spacing:0.08em;font-size:1.4rem;font-weight:300;">Jot down ideas, reminders, or insights</p>
+          <p style="color:var(--text-secondary);letter-spacing:0.08em;font-size:1.4rem;font-weight:300;">Capture insights, mistakes, or daily reflections</p>
           <div style="width:60px;height:2px;background:var(--accent);margin:1.2rem 0;opacity:0.3;border-radius:4px;"></div>
+
           <div class="glass card">
             <div class="notes-input-group">
               <input type="text" id="noteInput" placeholder="Write a new note..." maxlength="200" />
@@ -1214,26 +909,6 @@
             <div class="notes-list" id="notesList">
               <div style="text-align:center;padding:1.6rem;color:var(--text-secondary);font-size:1.4rem;font-weight:300;">No notes yet. Start your first one.</div>
             </div>
-          </div>
-        </section>
-
-        <!-- ===== MOTIVATION ===== -->
-        <section class="page" id="page-motivation">
-          <h2 style="font-family:var(--font-serif);font-weight:300;font-size:2.8rem;">🌸 Motivation</h2>
-          <p style="color:var(--text-secondary);letter-spacing:0.08em;font-size:1.4rem;font-weight:300;">Words to calm the mind and move forward</p>
-          <div style="width:60px;height:2px;background:var(--accent);margin:1.2rem 0;opacity:0.3;border-radius:4px;"></div>
-          <div class="quote-box" id="quoteBox">
-            <p class="quote-text" id="quoteText">Success is the sum of small efforts repeated daily.</p>
-            <p class="quote-author" id="quoteAuthor">— Robert Collier</p>
-          </div>
-          <div style="text-align:center;margin-top:1.6rem;"><button class="btn btn-gold btn-sm" id="newQuoteBtn">🔄 Another Quote</button></div>
-          <div class="tips-grid">
-            <div class="tip-card"><span class="emoji">🌅</span><div class="tip-title">Early Rise</div><div class="tip-desc">Quiet mornings sharpen focus.</div></div>
-            <div class="tip-card"><span class="emoji">🧘</span><div class="tip-title">Mindfulness</div><div class="tip-desc">5 minutes of breathing calms the mind.</div></div>
-            <div class="tip-card"><span class="emoji">📆</span><div class="tip-title">Plan Weekly</div><div class="tip-desc">Write down weekly goals.</div></div>
-            <div class="tip-card"><span class="emoji">💤</span><div class="tip-title">Rest Well</div><div class="tip-desc">7 hours of sleep consolidates memory.</div></div>
-            <div class="tip-card"><span class="emoji">📝</span><div class="tip-title">Output</div><div class="tip-desc">Teach to learn deeply.</div></div>
-            <div class="tip-card"><span class="emoji">🎯</span><div class="tip-title">Clear Goal</div><div class="tip-desc">Remember your 'why'.</div></div>
           </div>
         </section>
 
@@ -1263,8 +938,8 @@
       const CONFIG = {
         PREP_END: new Date(2026, 11, 31, 23, 59, 59),
         REVISION_END: new Date(2027, 3, 30, 23, 59, 59),
-        STORAGE_KEY: 'neet2027_quiet_focus_data',
-        APP_VERSION: '2.1.0',
+        STORAGE_KEY: 'neet2027_quiet_focus_v2',
+        APP_VERSION: '2.2.0',
       };
 
       // ============================================================
@@ -1284,6 +959,7 @@
         notes: [],
         lastStudyDate: null,
         journeyStarted: false,
+        dailyFocus: '',
       };
 
       // ============================================================
@@ -1304,22 +980,17 @@
         studyDays: $('#studyDays'),
         studyStreak: $('#studyStreak'),
         totalHours: $('#totalHours'),
-        todaySubjects: $('#todaySubjects'),
-        todayHours: $('#todayHours'),
         notesList: $('#notesList'),
         noteInput: $('#noteInput'),
         addNoteBtn: $('#addNoteBtn'),
-        quoteText: $('#quoteText'),
-        quoteAuthor: $('#quoteAuthor'),
-        newQuoteBtn: $('#newQuoteBtn'),
+        dailyFocusInput: $('#dailyFocusInput'),
+        saveFocusBtn: $('#saveFocusBtn'),
+        miniQuote: $('#miniQuote'),
         toast: $('#toast'),
         menuToggle: $('#menuToggle'),
         navLinks: $('#navLinks'),
         pages: $$('.page'),
         navAnchors: $$('.nav-links a'),
-        addHourBtn: $('#addStudyHour'),
-        resetHoursBtn: $('#resetStudyHours'),
-        resetJourneyBtn: $('#resetJourneyBtn'),
         countdownItems: $$('.countdown-item'),
         seasonIcon: $('#seasonIcon'),
         seasonLabel: $('#seasonLabel'),
@@ -1329,6 +1000,7 @@
         targetDateInput: $('#target-date-input'),
         startJourneyBtn: $('#start-journey-btn'),
         bgLayer: $('#bg-layer'),
+        resetJourneyBtn: $('#resetJourneyBtn'), // not used but kept for consistency
       };
 
       // ============================================================
@@ -1374,7 +1046,6 @@
           const root = dom.root;
           const isDay = info.isDay;
 
-          // Background colours (slightly darker for night)
           const bg1 = isDay ? info.bg1 : this.darken(info.bg1, 0.7);
           const bg2 = isDay ? info.bg2 : this.darken(info.bg2, 0.7);
           const text = isDay ? info.text : '#e8e0d8';
@@ -1399,35 +1070,29 @@
           root.style.setProperty('--shadow', shadow);
           root.style.setProperty('--shadow-hover', isDay ? 'rgba(26,26,46,0.14)' : 'rgba(0,0,0,0.30)');
 
-          // Background layer gradient
-          const grad = `linear-gradient(135deg, ${bg1} 0%, ${bg2} 100%)`;
-          dom.bgLayer.style.background = grad;
+          dom.bgLayer.style.background = `linear-gradient(135deg, ${bg1} 0%, ${bg2} 100%)`;
 
-          // Season badge
           dom.seasonIcon.textContent = info.icon;
           dom.seasonLabel.textContent = info.fullLabel;
 
           // Ornament colours
           const orns = dom.bgLayer.querySelectorAll('.bg-ornament');
-          orns.forEach(el => {
-            el.style.color = accent;
-          });
+          orns.forEach(el => { el.style.color = accent; });
           const shapes = dom.bgLayer.querySelectorAll('.bg-shape');
           shapes.forEach(el => {
             el.style.background = accent;
             el.style.opacity = isDay ? '0.06' : '0.08';
           });
 
-          // Pattern opacity
-          const pattern = dom.bgLayer.querySelector('.bg-pattern');
-          pattern.style.opacity = isDay ? '0.04' : '0.06';
+          // texture opacity
+          const texture = dom.bgLayer.querySelector('.texture');
+          texture.style.opacity = isDay ? '0.06' : '0.08';
         },
 
         darken(hex, factor) {
-          // Simple darken for night mode
-          let r = parseInt(hex.slice(1, 3), 16);
-          let g = parseInt(hex.slice(3, 5), 16);
-          let b = parseInt(hex.slice(5, 7), 16);
+          let r = parseInt(hex.slice(1,3), 16);
+          let g = parseInt(hex.slice(3,5), 16);
+          let b = parseInt(hex.slice(5,7), 16);
           r = Math.floor(r * factor);
           g = Math.floor(g * factor);
           b = Math.floor(b * factor);
@@ -1456,6 +1121,8 @@
               if (!state.subjectChecked) state.subjectChecked = { physics: false, chemistry: false, biology: false,
                 botany: false, zoology: false };
               if (!state.notes) state.notes = [];
+              if (!state.dailyFocus) state.dailyFocus = '';
+              // For backward compatibility, we don't have subject tracking now but keep it for stats
               updateTodayStats();
               return true;
             }
@@ -1472,21 +1139,17 @@
         } catch (e) { /* ignore */ }
       }
 
-      function resetJourney() {
-        if (!confirm('Are you sure you want to reset your entire journey? All data will be lost.')) return;
-        localStorage.removeItem(CONFIG.STORAGE_KEY);
-        window.location.reload();
-      }
-
       function updateTodayStats() {
-        let count = 0;
+        // We no longer track subjects, but keep total hours etc.
+        // We'll keep subjectHours for compatibility, but we won't use checkboxes
+        // Instead, we'll use a simple "study hour" increment
         let hours = 0;
-        for (const key of Object.keys(state.subjectChecked)) {
-          if (state.subjectChecked[key]) count++;
+        for (const key of Object.keys(state.subjectHours)) {
           hours += state.subjectHours[key] || 0;
         }
-        state.todaySubjects = count;
         state.todayHours = hours;
+        // Today subjects not used anymore
+        state.todaySubjects = 0;
       }
 
       // ============================================================
@@ -1562,20 +1225,9 @@
         dom.studyDays.textContent = state.studyDays || 0;
         dom.studyStreak.textContent = state.streak || 0;
         dom.totalHours.textContent = state.totalHours || 0;
-        dom.todaySubjects.textContent = state.todaySubjects || 0;
-        dom.todayHours.textContent = state.todayHours || 0;
 
-        // Subject hours
-        for (const key of Object.keys(state.subjectHours)) {
-          const el = document.getElementById(`hours-${key}`);
-          if (el) el.textContent = state.subjectHours[key] + 'h';
-        }
-
-        // Checkboxes
-        for (const key of Object.keys(state.subjectChecked)) {
-          const cb = document.querySelector(`input[data-subject="${key}"]`);
-          if (cb) cb.checked = state.subjectChecked[key];
-        }
+        // Daily focus
+        dom.dailyFocusInput.value = state.dailyFocus || '';
 
         renderNotes();
         saveState();
@@ -1630,103 +1282,66 @@
       }
 
       // ============================================================
-      // 8.  STUDY TRACKER
+      // 8.  STUDY TRACKER (simplified – only total hours and days)
       // ============================================================
-      function toggleSubject(subject, checked) {
-        state.subjectChecked[subject] = checked;
-        updateTodayStats();
-
-        if (checked) {
-          const today = new Date();
-          today.setHours(0, 0, 0, 0);
-          if (state.lastStudyDate) {
-            const last = new Date(state.lastStudyDate);
-            last.setHours(0, 0, 0, 0);
-            if (today > last) {
-              state.studyDays = (state.studyDays || 0) + 1;
-              const diffDays = Math.floor((today - last) / 86400000);
-              state.streak = diffDays === 1 ? (state.streak || 0) + 1 : diffDays > 1 ? 1 : state.streak || 0;
-              state.lastStudyDate = new Date();
-            }
-          } else {
+      function addStudyHour() {
+        // Add 1 hour to total and today
+        state.totalHours = (state.totalHours || 0) + 1;
+        state.todayHours = (state.todayHours || 0) + 1;
+        // Update study days / streak
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        if (state.lastStudyDate) {
+          const last = new Date(state.lastStudyDate);
+          last.setHours(0, 0, 0, 0);
+          if (today > last) {
             state.studyDays = (state.studyDays || 0) + 1;
-            state.streak = 1;
+            const diffDays = Math.floor((today - last) / 86400000);
+            state.streak = diffDays === 1 ? (state.streak || 0) + 1 : diffDays > 1 ? 1 : state.streak || 0;
             state.lastStudyDate = new Date();
           }
+        } else {
+          state.studyDays = (state.studyDays || 0) + 1;
+          state.streak = 1;
+          state.lastStudyDate = new Date();
         }
         saveState();
         renderCountdown();
-      }
-
-      function addStudyHour() {
-        let added = false;
-        for (const key of Object.keys(state.subjectChecked)) {
-          if (state.subjectChecked[key]) {
-            state.subjectHours[key] = (state.subjectHours[key] || 0) + 1;
-            state.totalHours = (state.totalHours || 0) + 1;
-            state.todayHours = (state.todayHours || 0) + 1;
-            added = true;
-          }
-        }
-        if (!added) {
-          showToast('⚠️ Check at least one subject first');
-          return;
-        }
-        saveState();
-        renderCountdown();
-        showToast('⏱️ +1 hour added');
-      }
-
-      function resetStudyHours() {
-        if (!confirm('Reset today\'s hours and checks?')) return;
-        for (const key of Object.keys(state.subjectHours)) state.subjectHours[key] = 0;
-        state.todayHours = 0;
-        state.todaySubjects = 0;
-        for (const key of Object.keys(state.subjectChecked)) state.subjectChecked[key] = false;
-        document.querySelectorAll('input[data-subject]').forEach(cb => cb.checked = false);
-        saveState();
-        renderCountdown();
-        showToast('🔄 Reset today');
+        showToast('⏱️ +1 hour logged');
       }
 
       // ============================================================
-      // 9.  QUOTES
+      // 9.  DAILY FOCUS
       // ============================================================
-      const QUOTES = [
-        { text: 'Success is the sum of small efforts repeated daily.', author: '— Robert Collier' },
-        { text: 'Quiet endurance is the key to mastery.', author: '— Japanese Proverb' },
-        { text: 'The only way to do great work is to love what you do.', author: '— Steve Jobs' },
-        { text: 'Patience and diligence, like faith, remove mountains.', author: '— William Penn' },
-        { text: 'It does not matter how slowly you go as long as you do not stop.', author: '— Confucius' },
-        { text: 'Fall seven times, stand up eight.', author: '— Japanese Proverb' },
-        { text: 'Believe you can and you\'re halfway there.', author: '— Theodore Roosevelt' },
-        { text: 'Discipline is the bridge between goals and accomplishment.', author: '— Jim Rohn' },
-        { text: 'The secret of getting ahead is getting started.', author: '— Mark Twain' },
-        { text: 'He who has a why can endure any how.', author: '— Friedrich Nietzsche' },
-        { text: 'The best time to plant a tree was 20 years ago. The second best time is now.', author: '— Chinese Proverb' },
-        { text: 'A journey of a thousand miles begins with a single step.', author: '— Lao Tzu' },
-        { text: 'In the middle of difficulty lies opportunity.', author: '— Albert Einstein' },
-        { text: 'What you get by achieving your goals is not as important as what you become.', author: '— Zig Ziglar' },
+      function saveDailyFocus() {
+        const val = dom.dailyFocusInput.value.trim();
+        state.dailyFocus = val;
+        saveState();
+        showToast('🎯 Daily focus updated');
+      }
+
+      // ============================================================
+      // 10. QUOTES (mini quote on home)
+      // ============================================================
+      const MINI_QUOTES = [
+        '"Focus on the step, not the staircase."',
+        '"Success is the sum of small efforts repeated daily."',
+        '"Patience and persistence have a magical effect."',
+        '"The secret of getting ahead is getting started."',
+        '"Discipline is the bridge between goals and accomplishment."',
+        '"It does not matter how slowly you go as long as you do not stop."',
+        '"Believe you can and you\'re halfway there."',
+        '"The best time to start was yesterday. The next best is now."',
       ];
-      let currentQuote = 0;
+      let quoteIndex = 0;
 
-      function showRandomQuote() {
-        let idx = Math.floor(Math.random() * QUOTES.length);
-        if (idx === currentQuote && QUOTES.length > 1) idx = (idx + 1) % QUOTES.length;
-        currentQuote = idx;
-        const q = QUOTES[idx];
-        dom.quoteText.style.opacity = '0';
-        dom.quoteAuthor.style.opacity = '0';
-        setTimeout(() => {
-          dom.quoteText.textContent = q.text;
-          dom.quoteAuthor.textContent = q.author;
-          dom.quoteText.style.opacity = '1';
-          dom.quoteAuthor.style.opacity = '1';
-        }, 200);
+      function updateMiniQuote() {
+        const idx = Math.floor(Math.random() * MINI_QUOTES.length);
+        dom.miniQuote.textContent = MINI_QUOTES[idx];
       }
 
       // ============================================================
-      // 10. TOAST
+      // 11. TOAST
       // ============================================================
       let toastTimeout = null;
 
@@ -1739,7 +1354,7 @@
       }
 
       // ============================================================
-      // 11. NAVIGATION
+      // 12. NAVIGATION
       // ============================================================
       function navigateTo(pageId) {
         dom.navAnchors.forEach(a => a.classList.toggle('active', a.dataset.page === pageId));
@@ -1753,7 +1368,7 @@
       }
 
       // ============================================================
-      // 12. ONBOARDING
+      // 13. ONBOARDING
       // ============================================================
       function startJourney() {
         const name = dom.userNameInput.value.trim() || 'Aspirant';
@@ -1769,19 +1384,29 @@
         state.streak = 0;
         state.totalHours = 0;
         state.todayHours = 0;
-        state.todaySubjects = 0;
         state.subjectHours = { physics: 0, chemistry: 0, biology: 0, botany: 0, zoology: 0 };
         state.subjectChecked = { physics: false, chemistry: false, biology: false, botany: false, zoology: false };
         state.notes = [];
         state.lastStudyDate = null;
+        state.dailyFocus = '';
         saveState();
         dom.onboardingModal.classList.add('hidden');
         renderCountdown();
+        updateMiniQuote();
         showToast(`🌸 Welcome, ${state.userName}! Let's grow.`);
       }
 
       // ============================================================
-      // 13. INITIALIZATION
+      // 14. RESET JOURNEY (hidden but accessible via console if needed)
+      // ============================================================
+      function resetJourney() {
+        if (!confirm('Are you sure you want to reset your entire journey? All data will be lost.')) return;
+        localStorage.removeItem(CONFIG.STORAGE_KEY);
+        window.location.reload();
+      }
+
+      // ============================================================
+      // 15. INITIALIZATION
       // ============================================================
       function init() {
         // Load state
@@ -1811,6 +1436,10 @@
           ThemeEngine.update();
         }, 30000);
 
+        // Update mini quote
+        updateMiniQuote();
+        setInterval(updateMiniQuote, 60000); // change every minute
+
         // ---- Event Listeners ----
 
         // Onboarding
@@ -1832,18 +1461,6 @@
           this.textContent = open ? '✕' : '☰';
         });
 
-        // Subject checkboxes
-        document.querySelectorAll('input[data-subject]').forEach(cb => {
-          cb.addEventListener('change', function() {
-            toggleSubject(this.dataset.subject, this.checked);
-          });
-        });
-
-        // Study buttons
-        dom.addHourBtn.addEventListener('click', addStudyHour);
-        dom.resetHoursBtn.addEventListener('click', resetStudyHours);
-        dom.resetJourneyBtn.addEventListener('click', resetJourney);
-
         // Notes
         dom.addNoteBtn.addEventListener('click', function() {
           const val = dom.noteInput.value;
@@ -1854,21 +1471,45 @@
           if (e.key === 'Enter') dom.addNoteBtn.click();
         });
 
-        // Quotes
-        dom.newQuoteBtn.addEventListener('click', showRandomQuote);
-        showRandomQuote();
+        // Daily focus
+        dom.saveFocusBtn.addEventListener('click', saveDailyFocus);
+        dom.dailyFocusInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') saveDailyFocus();
+        });
 
-        // Keyboard shortcuts
+        // Quick add study hour (we can add a floating button or use keyboard shortcut)
+        // For simplicity, we add a hidden shortcut: press 'h' to log an hour
         document.addEventListener('keydown', function(e) {
           if (e.ctrlKey || e.metaKey || e.altKey) return;
           if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
           const key = e.key.toLowerCase();
-          if (key === 'h') navigateTo('home');
-          else if (key === 't') navigateTo('tracker');
-          else if (key === 'r') navigateTo('resources');
-          else if (key === 'n') navigateTo('notes');
-          else if (key === 'm') navigateTo('motivation');
+          if (key === 'h') {
+            e.preventDefault();
+            addStudyHour();
+          } else if (key === 'n') {
+            e.preventDefault();
+            navigateTo('notes');
+          } else if (key === 'h') { // already handled
+          } else if (key === 'r') {
+            // reset journey (with confirmation)
+            if (confirm('Reset journey?')) resetJourney();
+          }
         });
+
+        // Also add a plus button on home for study hour (hidden in header)
+        // We'll add a small button in the stats card
+        const statsCard = document.querySelector('.stats-grid');
+        if (statsCard) {
+          // Add a hidden or visible button? We'll add it as a small floating style
+          const hourBtn = document.createElement('button');
+          hourBtn.className = 'btn btn-gold btn-sm';
+          hourBtn.textContent = '+1h';
+          hourBtn.style.marginTop = '0.8rem';
+          hourBtn.style.width = '100%';
+          hourBtn.addEventListener('click', addStudyHour);
+          // Append after stats-grid
+          statsCard.parentNode.appendChild(hourBtn);
+        }
 
         // Show welcome toast if already onboarded
         if (hasState && state.journeyStarted) {
@@ -1877,12 +1518,12 @@
           }, 600);
         }
 
-        console.log('🌸 NEET 2027 · Quiet Focus');
-        console.log('⌨️ Shortcuts: H=Home, T=Tracker, R=Resources, N=Notes, M=Motivation');
+        console.log('🌸 NEET 2027 · Quiet Focus (dropper edition)');
+        console.log('⌨️ Shortcuts: H=log hour, N=Notes, R=reset');
       }
 
       // ============================================================
-      // 14. START
+      // 16. START
       // ============================================================
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
