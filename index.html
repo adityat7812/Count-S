@@ -3,37 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>三重 · NEET 2027 · 戦 · 学 · 宙</title>
+  <title>NEET 2027 · The Threefold Path</title>
   <meta name="theme-color" content="#0a0a12" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=Noto+Serif+JP:wght@200;400;600;700&family=Noto+Serif+SC:wght@300;600;700&family=Noto+Sans+Devanagari:wght@300;400;700&display=swap" rel="stylesheet" />
   <style>
     /* ============================================================
-       0.  CSS VARIABLES
+       0.  CSS VARIABLES — The Threefold Palette
        ============================================================ */
     :root {
       --bg-primary: #0a0a12;
-      --bg-card: rgba(18, 18, 30, 0.65);
-      --bg-card-hover: rgba(30, 30, 50, 0.75);
-      --text-primary: #e8e0d8;
+      --bg-card: rgba(14, 14, 28, 0.7);
+      --bg-card-hover: rgba(24, 24, 44, 0.8);
+      --text-primary: #e8e2da;
       --text-secondary: #b0a8a0;
       --text-muted: #6a6a7a;
-      --gold: #d4a843;
-      --gold-light: #f0d5a0;
-      --gold-dark: #a8893a;
-      --jade: #4a8a7a;
-      --jade-light: #80c0b0;
-      --vermilion: #b33939;
-      --vermilion-light: #d46060;
-      --indigo: #2a2a5a;
-      --indigo-light: #5a5a8a;
-      --saffron: #e8a830;
-      --saffron-light: #f0c060;
-      --border-color: rgba(200, 180, 160, 0.08);
-      --shadow: rgba(0, 0, 0, 0.4);
-      --shadow-hover: rgba(0, 0, 0, 0.6);
-      --glass-border: rgba(255, 255, 255, 0.06);
+      /* Chinese — Gold / Vermilion */
+      --cn-gold: #d4a843;
+      --cn-gold-light: #f0d5a0;
+      --cn-gold-dark: #a8893a;
+      --cn-vermilion: #b33939;
+      --cn-vermilion-light: #d46060;
+      /* Japanese — Jade / Indigo */
+      --jp-jade: #4a8a7a;
+      --jp-jade-light: #80c0b0;
+      --jp-jade-dark: #2a5a4a;
+      --jp-indigo: #2a2a5a;
+      --jp-indigo-light: #5a5a8a;
+      /* Indian — Saffron / Sandalwood */
+      --in-saffron: #e8a830;
+      --in-saffron-light: #f0c060;
+      --in-sandalwood: #c4a080;
+      --in-sandalwood-light: #e0c8b0;
+      /* Shared */
+      --border-color: rgba(200, 180, 160, 0.06);
+      --shadow: rgba(0, 0, 0, 0.5);
+      --shadow-hover: rgba(0, 0, 0, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.05);
       --radius: 16px;
       --radius-sm: 8px;
       --transition: 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -41,7 +48,7 @@
       --font-jp: 'Noto Serif JP', serif;
       --font-cn: 'Noto Serif SC', serif;
       --font-in: 'Noto Sans Devanagari', 'Inter', sans-serif;
-      --star-opacity: 0.6;
+      --star-opacity: 0.5;
     }
 
     /* ============================================================
@@ -67,10 +74,10 @@
     }
     ::-webkit-scrollbar { width: 4px; height: 4px; }
     ::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
-    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 20px; }
+    ::-webkit-scrollbar-thumb { background: var(--cn-gold); border-radius: 20px; }
 
     /* ============================================================
-       2.  COSMIC BACKGROUND
+       2.  CINEMATIC COSMIC BACKGROUND
        ============================================================ */
     #cosmic-bg {
       position: fixed;
@@ -81,8 +88,9 @@
       z-index: 0;
       pointer-events: none;
       overflow: hidden;
-      background: radial-gradient(ellipse at 30% 20%, #1a0a2a 0%, #0a0a12 60%, #050510 100%);
+      background: radial-gradient(ellipse at 25% 15%, #120820 0%, #0a0a12 50%, #040408 100%);
     }
+    /* stars layer */
     #cosmic-bg .stars {
       position: absolute;
       top: 0;
@@ -101,68 +109,49 @@
         radial-gradient(1.5px 1.5px at 55% 45%, rgba(255,255,240,0.8), transparent),
         radial-gradient(1px 1px at 85% 15%, rgba(255,255,240,0.4), transparent),
         radial-gradient(1px 1px at 5% 45%, rgba(255,255,240,0.5), transparent),
-        radial-gradient(1.2px 1.2px at 95% 55%, rgba(255,255,240,0.3), transparent);
+        radial-gradient(1.2px 1.2px at 95% 55%, rgba(255,255,240,0.3), transparent),
+        radial-gradient(1px 1px at 35% 35%, rgba(255,255,240,0.6), transparent),
+        radial-gradient(1.3px 1.3px at 65% 75%, rgba(255,255,240,0.4), transparent);
       background-size: 200px 200px, 300px 300px, 400px 400px, 250px 250px, 350px 350px,
-        150px 150px, 280px 280px, 320px 320px, 180px 180px, 220px 220px, 270px 270px, 340px 340px;
+        150px 150px, 280px 280px, 320px 320px, 180px 180px, 220px 220px,
+        270px 270px, 340px 340px, 160px 160px, 190px 190px;
       opacity: var(--star-opacity);
-      animation: twinkle 4s ease-in-out infinite alternate;
+      animation: twinkle 5s ease-in-out infinite alternate;
     }
     @keyframes twinkle {
-      0% { opacity: 0.5; }
+      0% { opacity: 0.4; }
       100% { opacity: 0.9; }
     }
 
-    #cosmic-bg .mandala {
+    /* Cultural symbols as design elements */
+    #cosmic-bg .cultural-symbol {
+      position: absolute;
+      opacity: 0.035;
+      font-size: 10rem;
+      pointer-events: none;
+      transition: opacity 0.8s ease;
+    }
+    #cosmic-bg .cultural-symbol.cn-sym { font-family: var(--font-cn); color: var(--cn-gold); }
+    #cosmic-bg .cultural-symbol.jp-sym { font-family: var(--font-jp); color: var(--jp-jade-light); }
+    #cosmic-bg .cultural-symbol.in-sym { font-family: var(--font-in); color: var(--in-saffron); }
+
+    #cosmic-bg .cs1 { top: 6%; right: 6%; transform: rotate(12deg); font-size: 8rem; }
+    #cosmic-bg .cs2 { bottom: 8%; left: 4%; transform: rotate(-6deg); font-size: 9rem; }
+    #cosmic-bg .cs3 { top: 45%; left: 50%; transform: translateX(-50%) rotate(0deg); font-size: 5rem; opacity: 0.025; }
+
+    /* Mandala ring */
+    #cosmic-bg .mandala-ring {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 600px;
-      height: 600px;
-      opacity: 0.04;
+      width: 500px;
+      height: 500px;
       border-radius: 50%;
-      background: radial-gradient(circle, transparent 40%, var(--gold) 45%, transparent 50%),
-        radial-gradient(circle, transparent 48%, var(--gold) 50%, transparent 52%),
-        radial-gradient(circle, transparent 58%, var(--gold) 60%, transparent 62%),
-        radial-gradient(circle, transparent 68%, var(--gold) 70%, transparent 72%),
-        radial-gradient(circle, transparent 78%, var(--gold) 80%, transparent 82%);
-      animation: mandalaSpin 60s linear infinite;
+      border: 1px solid rgba(212, 168, 67, 0.04);
+      animation: spinSlow 80s linear infinite;
     }
-    @keyframes mandalaSpin {
-      0% { transform: translate(-50%, -50%) rotate(0deg); }
-      100% { transform: translate(-50%, -50%) rotate(360deg); }
-    }
-
-    #cosmic-bg .bagua {
-      position: absolute;
-      top: 10%;
-      right: 8%;
-      font-size: 8rem;
-      opacity: 0.04;
-      font-family: var(--font-cn);
-      color: var(--gold);
-      transform: rotate(15deg);
-    }
-    #cosmic-bg .om {
-      position: absolute;
-      bottom: 12%;
-      left: 6%;
-      font-size: 8rem;
-      opacity: 0.04;
-      font-family: var(--font-in);
-      color: var(--saffron);
-    }
-    #cosmic-bg .enso {
-      position: absolute;
-      top: 20%;
-      left: 12%;
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      border: 2px solid rgba(212, 168, 67, 0.06);
-      opacity: 0.3;
-    }
-    #cosmic-bg .enso::after {
+    #cosmic-bg .mandala-ring::before {
       content: '';
       position: absolute;
       top: 10%;
@@ -170,18 +159,38 @@
       width: 80%;
       height: 80%;
       border-radius: 50%;
-      border: 1px solid rgba(212, 168, 67, 0.04);
+      border: 1px solid rgba(74, 138, 122, 0.04);
+    }
+    #cosmic-bg .mandala-ring::after {
+      content: '';
+      position: absolute;
+      top: 20%;
+      left: 20%;
+      width: 60%;
+      height: 60%;
+      border-radius: 50%;
+      border: 1px solid rgba(232, 168, 48, 0.03);
+    }
+    @keyframes spinSlow {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
     }
 
-    /* cosmic rings */
+    /* Decorative rings */
     #cosmic-bg .ring {
       position: absolute;
-      border: 1px solid rgba(212, 168, 67, 0.03);
+      border: 1px solid rgba(212, 168, 67, 0.025);
       border-radius: 50%;
+      animation: floatRing 20s ease-in-out infinite alternate;
     }
-    #cosmic-bg .ring.r1 { width: 400px; height: 400px; top: 20%; left: 15%; }
-    #cosmic-bg .ring.r2 { width: 500px; height: 500px; bottom: 10%; right: 10%; }
-    #cosmic-bg .ring.r3 { width: 300px; height: 300px; top: 55%; left: 55%; }
+    #cosmic-bg .ring.r1 { width: 380px; height: 380px; top: 18%; left: 12%; }
+    #cosmic-bg .ring.r2 { width: 460px; height: 460px; bottom: 10%; right: 8%; animation-delay: -8s; }
+    #cosmic-bg .ring.r3 { width: 240px; height: 240px; top: 60%; left: 60%; animation-delay: -14s; }
+
+    @keyframes floatRing {
+      0% { transform: translateY(0px) scale(1); }
+      100% { transform: translateY(-20px) scale(1.02); }
+    }
 
     /* ============================================================
        3.  UI OVERLAY
@@ -202,12 +211,12 @@
     }
 
     /* ============================================================
-       4.  GLASS COMPONENTS
+       4.  GLASS COMPONENTS — Cinematic Frost
        ============================================================ */
     .glass {
       background: var(--bg-card);
-      backdrop-filter: blur(20px) saturate(1.4);
-      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      backdrop-filter: blur(24px) saturate(1.4);
+      -webkit-backdrop-filter: blur(24px) saturate(1.4);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius);
       box-shadow: 0 8px 32px var(--shadow);
@@ -222,7 +231,7 @@
     }
 
     /* ============================================================
-       5.  HEADER — TRIPLE CULTURE
+       5.  HEADER — The Threefold Way
        ============================================================ */
     .site-header {
       display: flex;
@@ -233,12 +242,13 @@
       padding: 1.2rem 2.4rem;
       margin-bottom: 2.4rem;
       background: var(--bg-card);
-      backdrop-filter: blur(20px) saturate(1.4);
-      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      backdrop-filter: blur(24px) saturate(1.4);
+      -webkit-backdrop-filter: blur(24px) saturate(1.4);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius);
       box-shadow: 0 4px 24px var(--shadow);
     }
+
     .logo {
       display: flex;
       align-items: center;
@@ -246,22 +256,23 @@
       text-decoration: none;
       color: var(--text-primary);
     }
-    .logo .triple {
+    .logo .three-symbols {
       display: flex;
       align-items: center;
-      gap: 0.4rem;
-      font-size: 1.8rem;
-      font-weight: 300;
-      letter-spacing: 0.08em;
+      gap: 0.6rem;
+      font-size: 2rem;
+      font-weight: 200;
+      letter-spacing: 0.06em;
     }
-    .logo .triple .cn { font-family: var(--font-cn); color: var(--gold); }
-    .logo .triple .jp { font-family: var(--font-jp); color: var(--jade-light); }
-    .logo .triple .in { font-family: var(--font-in); color: var(--saffron); }
-    .logo .sub {
-      font-size: 1.2rem;
-      opacity: 0.5;
+    .logo .three-symbols .cn { font-family: var(--font-cn); color: var(--cn-gold); }
+    .logo .three-symbols .jp { font-family: var(--font-jp); color: var(--jp-jade-light); }
+    .logo .three-symbols .in { font-family: var(--font-in); color: var(--in-saffron); }
+    .logo .divider { opacity: 0.2; font-weight: 100; }
+    .logo .brand-text {
+      font-size: 1.6rem;
       font-weight: 200;
       letter-spacing: 0.12em;
+      opacity: 0.6;
     }
 
     .header-right {
@@ -279,9 +290,9 @@
       padding: 0.4rem 1.4rem;
       border-radius: 40px;
       border: 1px solid var(--glass-border);
-      font-family: var(--font-jp);
       letter-spacing: 0.06em;
       white-space: nowrap;
+      font-weight: 300;
     }
     .cosmic-badge .icon { font-size: 1.4rem; }
 
@@ -316,7 +327,6 @@
       position: relative;
       cursor: pointer;
       letter-spacing: 0.06em;
-      font-family: var(--font-jp);
     }
     .nav-links a::after {
       content: '';
@@ -325,7 +335,7 @@
       left: 50%;
       width: 0;
       height: 2px;
-      background: var(--gold);
+      background: var(--cn-gold);
       transition: width 0.3s ease, left 0.3s ease;
       border-radius: 4px;
     }
@@ -337,7 +347,7 @@
     .nav-links a:hover { color: var(--text-primary); }
     .nav-links a.active {
       color: var(--text-primary);
-      background: rgba(212, 168, 67, 0.08);
+      background: rgba(212, 168, 67, 0.06);
     }
 
     @media (max-width: 640px) {
@@ -356,7 +366,8 @@
       .nav-links a { width: 100%; text-align: center; padding: 0.8rem; }
       .site-header { padding: 1.2rem 1.6rem; }
       .card { padding: 1.6rem; }
-      .logo .triple { font-size: 1.4rem; }
+      .logo .three-symbols { font-size: 1.6rem; }
+      .logo .brand-text { font-size: 1.2rem; }
       .cosmic-badge { font-size: 1rem; padding: 0.2rem 1rem; }
     }
 
@@ -370,31 +381,33 @@
     }
     .page.active { display: block; }
     @keyframes fadeSlide {
-      0% { opacity: 0; transform: translateY(16px) scale(0.98); }
+      0% { opacity: 0; transform: translateY(20px) scale(0.98); }
       100% { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     /* ============================================================
-       7.  HOME — COUNTDOWN WITH COSMIC FLAIR
+       7.  HOME — COUNTDOWN WITH CULTURAL FLAIR
        ============================================================ */
     .hero-section {
       text-align: center;
       padding: 0.8rem 0 1.6rem;
       position: relative;
     }
-    .hero-section .cosmic-symbols {
+
+    .hero-section .culture-row {
       display: flex;
       justify-content: center;
+      align-items: center;
       gap: 2.4rem;
       font-size: 2.4rem;
       margin-bottom: 1.2rem;
-      opacity: 0.3;
+      opacity: 0.25;
       font-weight: 200;
     }
-    .hero-section .cosmic-symbols span { transition: opacity 0.5s; }
-    .hero-section .cosmic-symbols .cn { font-family: var(--font-cn); color: var(--gold); }
-    .hero-section .cosmic-symbols .jp { font-family: var(--font-jp); color: var(--jade-light); }
-    .hero-section .cosmic-symbols .in { font-family: var(--font-in); color: var(--saffron); }
+    .hero-section .culture-row .cn { font-family: var(--font-cn); color: var(--cn-gold); }
+    .hero-section .culture-row .jp { font-family: var(--font-jp); color: var(--jp-jade-light); }
+    .hero-section .culture-row .in { font-family: var(--font-in); color: var(--in-saffron); }
+    .hero-section .culture-row .sep { opacity: 0.2; font-size: 1.6rem; }
 
     .phase-badge {
       display: inline-block;
@@ -403,29 +416,27 @@
       font-size: 1.2rem;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      background: rgba(212, 168, 67, 0.12);
-      color: var(--gold);
-      border: 1px solid rgba(212, 168, 67, 0.2);
+      background: rgba(212, 168, 67, 0.08);
+      color: var(--cn-gold);
+      border: 1px solid rgba(212, 168, 67, 0.12);
       margin-bottom: 1.2rem;
-      font-family: var(--font-jp);
       font-weight: 400;
     }
     .phase-badge.revision {
-      background: rgba(179, 57, 57, 0.15);
-      border-color: rgba(179, 57, 57, 0.25);
-      color: var(--vermilion-light);
+      background: rgba(179, 57, 57, 0.1);
+      border-color: rgba(179, 57, 57, 0.15);
+      color: var(--cn-vermilion-light);
     }
 
     .main-title {
-      font-family: var(--font-jp);
       font-weight: 200;
       font-size: 4.8rem;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.08em;
       line-height: 1.2;
     }
-    .main-title .gold { color: var(--gold); }
-    .main-title .jade { color: var(--jade-light); }
-    .main-title .saffron { color: var(--saffron); }
+    .main-title .gold { color: var(--cn-gold); }
+    .main-title .jade { color: var(--jp-jade-light); }
+    .main-title .saffron { color: var(--in-saffron); }
 
     .sub-title {
       color: var(--text-secondary);
@@ -434,7 +445,7 @@
       font-size: 1.2rem;
       font-weight: 300;
       margin-top: 0.4rem;
-      opacity: 0.6;
+      opacity: 0.5;
     }
 
     .divider-cosmic {
@@ -443,16 +454,20 @@
       justify-content: center;
       gap: 1.6rem;
       margin: 1.6rem auto;
-      width: 80%;
-      max-width: 400px;
+      width: 70%;
+      max-width: 360px;
     }
     .divider-cosmic .line {
       flex: 1;
       height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      opacity: 0.2;
+      background: linear-gradient(90deg, transparent, var(--cn-gold), transparent);
+      opacity: 0.15;
     }
-    .divider-cosmic .dot { font-size: 1.2rem; opacity: 0.3; color: var(--gold); }
+    .divider-cosmic .dot {
+      font-size: 1.2rem;
+      opacity: 0.2;
+      color: var(--cn-gold);
+    }
 
     .countdown-grid {
       display: grid;
@@ -474,10 +489,7 @@
     .countdown-item::before {
       content: '';
       position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
+      inset: 0;
       background: radial-gradient(circle at center, rgba(212,168,67,0.03), transparent 70%);
       opacity: 0;
       transition: opacity 0.6s;
@@ -485,15 +497,14 @@
     .countdown-item:hover::before { opacity: 1; }
     .countdown-item:hover {
       transform: scale(1.03);
-      border-color: rgba(212, 168, 67, 0.15);
+      border-color: rgba(212, 168, 67, 0.1);
     }
     .countdown-number {
       font-size: 6.4rem;
       font-weight: 200;
-      font-family: var(--font-jp);
       line-height: 1;
       letter-spacing: 0.04em;
-      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      background: linear-gradient(135deg, var(--cn-gold), var(--jp-jade-light), var(--in-saffron));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -522,11 +533,8 @@
     .progress-track::after {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(90deg, transparent, rgba(212,168,67,0.1), transparent);
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(212,168,67,0.08), transparent);
       animation: shimmer 3s infinite;
     }
     @keyframes shimmer {
@@ -536,7 +544,7 @@
     .progress-fill {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--jade-light));
+      background: linear-gradient(90deg, var(--cn-gold), var(--jp-jade-light), var(--in-saffron));
       border-radius: 12px;
       transition: width 0.8s ease;
       position: relative;
@@ -556,11 +564,11 @@
       margin-top: 1.6rem;
       font-size: 1.5rem;
       font-weight: 300;
-      font-family: var(--font-jp);
-      letter-spacing: 0.06em;
-      opacity: 0.7;
+      letter-spacing: 0.04em;
+      opacity: 0.6;
+      font-style: italic;
     }
-    .sub-message span { color: var(--gold); font-weight: 400; }
+    .sub-message span { color: var(--cn-gold); font-weight: 400; }
 
     /* Stats */
     .stats-grid {
@@ -578,15 +586,14 @@
       transition: all 0.3s;
     }
     .stat-card:hover {
-      background: rgba(212,168,67,0.04);
-      border-color: rgba(212,168,67,0.1);
+      background: rgba(212,168,67,0.03);
+      border-color: rgba(212,168,67,0.06);
     }
     .stat-number {
       font-size: 3.2rem;
       font-weight: 200;
-      font-family: var(--font-jp);
       line-height: 1.2;
-      color: var(--gold);
+      color: var(--cn-gold);
     }
     .stat-label {
       font-size: 1.1rem;
@@ -595,7 +602,7 @@
       font-weight: 300;
     }
 
-    /* Daily Focus with cultural flair */
+    /* Daily Focus */
     .focus-area {
       margin-top: 2.4rem;
       padding: 1.6rem 2rem;
@@ -608,11 +615,10 @@
       flex-wrap: wrap;
     }
     .focus-area .focus-label {
-      font-family: var(--font-jp);
       font-weight: 300;
       font-size: 1.4rem;
       color: var(--text-secondary);
-      letter-spacing: 0.06em;
+      letter-spacing: 0.04em;
       display: flex;
       align-items: center;
       gap: 0.6rem;
@@ -623,36 +629,34 @@
       min-width: 160px;
       padding: 0.6rem 1.2rem;
       border: none;
-      border-bottom: 2px solid rgba(212,168,67,0.15);
+      border-bottom: 2px solid rgba(212,168,67,0.1);
       background: transparent;
       font-size: 1.5rem;
       color: var(--text-primary);
       outline: none;
       transition: border-color 0.3s;
-      font-family: var(--font-sans);
     }
-    .focus-area input:focus { border-color: var(--gold); }
+    .focus-area input:focus { border-color: var(--cn-gold); }
     .focus-area input::placeholder {
       color: var(--text-muted);
       font-weight: 300;
     }
     .focus-area .btn { flex-shrink: 0; }
 
-    /* mini quote */
+    /* Mini quote */
     .mini-quote {
       margin-top: 2.4rem;
       text-align: center;
-      font-family: var(--font-jp);
       font-weight: 200;
       font-size: 1.4rem;
       color: var(--text-secondary);
-      opacity: 0.5;
+      opacity: 0.4;
       letter-spacing: 0.04em;
       font-style: italic;
     }
 
     /* ============================================================
-       8.  NOTES PAGE — ZEN SIMPLICITY
+       8.  NOTES
        ============================================================ */
     .page-notes-header {
       display: flex;
@@ -661,10 +665,25 @@
       flex-wrap: wrap;
       margin-bottom: 0.8rem;
     }
+    .page-notes-header .title {
+      font-weight: 200;
+      font-size: 2.8rem;
+      letter-spacing: 0.08em;
+    }
+    .page-notes-header .title .g { color: var(--cn-gold); }
+    .page-notes-header .title .j { color: var(--jp-jade-light); }
+    .page-notes-header .title .s { color: var(--in-saffron); }
     .page-notes-header .symbol {
       font-size: 2.4rem;
-      opacity: 0.3;
-      font-family: var(--font-jp);
+      opacity: 0.2;
+    }
+    .page-notes-header .sub {
+      color: var(--text-secondary);
+      font-weight: 300;
+      font-size: 1.3rem;
+      letter-spacing: 0.04em;
+      margin-left: auto;
+      opacity: 0.6;
     }
 
     .notes-input-group {
@@ -684,11 +703,10 @@
       outline: none;
       transition: border 0.2s, box-shadow 0.2s;
       color: var(--text-primary);
-      font-family: var(--font-sans);
     }
     .notes-input-group input:focus {
-      border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(212,168,67,0.06);
+      border-color: var(--cn-gold);
+      box-shadow: 0 0 0 3px rgba(212,168,67,0.04);
     }
     .notes-input-group input::placeholder {
       color: var(--text-muted);
@@ -705,20 +723,19 @@
       align-items: center;
       justify-content: space-between;
       padding: 0.8rem 1.6rem;
-      background: rgba(0,0,0,0.15);
+      background: rgba(0,0,0,0.12);
       border-radius: var(--radius-sm);
       border: 1px solid var(--border-color);
       transition: background 0.2s, border-color 0.2s;
     }
     .note-item:hover {
-      background: rgba(0,0,0,0.25);
-      border-color: rgba(212,168,67,0.08);
+      background: rgba(0,0,0,0.2);
+      border-color: rgba(212,168,67,0.05);
     }
     .note-item .note-text {
       flex: 1;
       font-size: 1.5rem;
       font-weight: 300;
-      font-family: var(--font-jp);
     }
     .note-item .note-time {
       font-size: 1.1rem;
@@ -726,11 +743,11 @@
       white-space: nowrap;
       margin-left: 1.2rem;
       font-weight: 200;
-      opacity: 0.6;
+      opacity: 0.5;
     }
 
     /* ============================================================
-       9.  BUTTONS — WARRIOR'S TOUCH
+       9.  BUTTONS — Cinematic
        ============================================================ */
     .btn {
       display: inline-flex;
@@ -742,12 +759,11 @@
       border-radius: var(--radius-sm);
       font-size: 1.3rem;
       font-weight: 400;
-      background: var(--gold);
+      background: var(--cn-gold);
       color: #0a0a12;
       cursor: pointer;
       transition: all 0.3s ease;
       letter-spacing: 0.06em;
-      font-family: var(--font-jp);
       min-height: 4rem;
       position: relative;
       overflow: hidden;
@@ -765,23 +781,22 @@
     .btn:hover::before { left: 100%; }
     .btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 24px rgba(212,168,67,0.2);
+      box-shadow: 0 4px 24px rgba(212,168,67,0.15);
     }
     .btn:active { transform: scale(0.97); }
-    .btn-gold { background: var(--gold); color: #0a0a12; }
-    .btn-gold:hover { background: var(--gold-light); }
-    .btn-vermilion {
-      background: var(--vermilion);
-      color: #fff;
-    }
-    .btn-vermilion:hover { background: var(--vermilion-light); }
+    .btn-gold { background: var(--cn-gold); color: #0a0a12; }
+    .btn-gold:hover { background: var(--cn-gold-light); }
+    .btn-jade { background: var(--jp-jade); color: #fff; }
+    .btn-jade:hover { background: var(--jp-jade-light); color: #0a0a12; }
+    .btn-vermilion { background: var(--cn-vermilion); color: #fff; }
+    .btn-vermilion:hover { background: var(--cn-vermilion-light); }
     .btn-outline {
       background: transparent;
       color: var(--text-primary);
       border: 1px solid var(--border-color);
     }
     .btn-outline:hover {
-      background: rgba(255,255,255,0.04);
+      background: rgba(255,255,255,0.03);
       transform: none;
       box-shadow: none;
     }
@@ -792,7 +807,7 @@
     }
 
     /* ============================================================
-       10. ONBOARDING — SACRED BEGINNING
+       10. ONBOARDING
        ============================================================ */
     #onboarding-modal {
       position: fixed;
@@ -801,8 +816,8 @@
       width: 100%;
       height: 100%;
       background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(24px) saturate(1.6);
-      -webkit-backdrop-filter: blur(24px) saturate(1.6);
+      backdrop-filter: blur(32px) saturate(1.6);
+      -webkit-backdrop-filter: blur(32px) saturate(1.6);
       z-index: 999;
       display: flex;
       align-items: center;
@@ -822,30 +837,29 @@
       padding: 3.2rem;
       box-shadow: 0 24px 64px rgba(0,0,0,0.6);
       text-align: center;
-      border: 1px solid rgba(212,168,67,0.08);
+      border: 1px solid rgba(212,168,67,0.06);
     }
-    .onboarding-card .symbols {
+    .onboarding-card .culture-icons {
       font-size: 3.2rem;
       margin-bottom: 1.2rem;
       display: flex;
       justify-content: center;
       gap: 1.6rem;
-      opacity: 0.5;
+      opacity: 0.4;
     }
-    .onboarding-card .symbols .cn { font-family: var(--font-cn); color: var(--gold); }
-    .onboarding-card .symbols .jp { font-family: var(--font-jp); color: var(--jade-light); }
-    .onboarding-card .symbols .in { font-family: var(--font-in); color: var(--saffron); }
+    .onboarding-card .culture-icons .cn { font-family: var(--font-cn); color: var(--cn-gold); }
+    .onboarding-card .culture-icons .jp { font-family: var(--font-jp); color: var(--jp-jade-light); }
+    .onboarding-card .culture-icons .in { font-family: var(--font-in); color: var(--in-saffron); }
 
     .onboarding-card h2 {
-      font-family: var(--font-jp);
       font-weight: 200;
       font-size: 3.2rem;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.08em;
       margin-bottom: 0.8rem;
     }
-    .onboarding-card h2 .gold { color: var(--gold); }
-    .onboarding-card h2 .jade { color: var(--jade-light); }
-    .onboarding-card h2 .saffron { color: var(--saffron); }
+    .onboarding-card h2 .g { color: var(--cn-gold); }
+    .onboarding-card h2 .j { color: var(--jp-jade-light); }
+    .onboarding-card h2 .s { color: var(--in-saffron); }
 
     .onboarding-card p {
       color: var(--text-secondary);
@@ -864,12 +878,11 @@
       margin-bottom: 1.2rem;
       outline: none;
       color: var(--text-primary);
-      font-family: var(--font-sans);
       transition: border 0.2s;
     }
     .onboarding-card input:focus {
-      border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(212,168,67,0.06);
+      border-color: var(--cn-gold);
+      box-shadow: 0 0 0 3px rgba(212,168,67,0.04);
     }
     .onboarding-card .btn {
       width: 100%;
@@ -894,7 +907,7 @@
       right: 2.4rem;
       padding: 1.2rem 2.4rem;
       border-radius: 12px;
-      background: rgba(10,10,18,0.9);
+      background: rgba(10,10,18,0.92);
       color: var(--text-primary);
       font-size: 1.3rem;
       box-shadow: 0 8px 32px rgba(0,0,0,0.6);
@@ -905,7 +918,6 @@
       z-index: 200;
       pointer-events: none;
       max-width: 400px;
-      font-family: var(--font-jp);
       font-weight: 300;
       backdrop-filter: blur(12px);
     }
@@ -930,21 +942,21 @@
     .footer-divider {
       width: 60px;
       height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      background: linear-gradient(90deg, transparent, var(--cn-gold), transparent);
       margin: 0 auto 0.8rem;
-      opacity: 0.2;
+      opacity: 0.15;
     }
     .footer-symbols {
       display: flex;
       justify-content: center;
       gap: 1.6rem;
       font-size: 1.4rem;
-      opacity: 0.2;
+      opacity: 0.15;
       margin-bottom: 0.8rem;
     }
-    .footer-symbols .cn { font-family: var(--font-cn); color: var(--gold); }
-    .footer-symbols .jp { font-family: var(--font-jp); color: var(--jade-light); }
-    .footer-symbols .in { font-family: var(--font-in); color: var(--saffron); }
+    .footer-symbols .cn { font-family: var(--font-cn); color: var(--cn-gold); }
+    .footer-symbols .jp { font-family: var(--font-jp); color: var(--jp-jade-light); }
+    .footer-symbols .in { font-family: var(--font-in); color: var(--in-saffron); }
 
     /* ============================================================
        13. UTILITY
@@ -981,7 +993,7 @@
       .main-title { font-size: 3.6rem; }
       .focus-area { flex-direction: column; align-items: stretch; }
       .focus-area input { width: 100%; }
-      .hero-section .cosmic-symbols { font-size: 1.8rem; gap: 1.2rem; }
+      .hero-section .culture-row { font-size: 1.8rem; gap: 1.2rem; }
     }
     @media (max-width: 380px) {
       .countdown-grid { grid-template-columns: 1fr 1fr; }
@@ -1003,17 +1015,19 @@
 <body>
 
   <!-- ============================================================
-  COSMIC BACKGROUND
+  CINEMATIC COSMIC BACKGROUND
   ============================================================ -->
   <div id="cosmic-bg">
     <div class="stars"></div>
-    <div class="mandala"></div>
-    <div class="bagua">☯</div>
-    <div class="om">ॐ</div>
-    <div class="enso"></div>
+    <div class="mandala-ring"></div>
     <div class="ring r1"></div>
     <div class="ring r2"></div>
     <div class="ring r3"></div>
+
+    <!-- Cultural symbols as cinematic design elements -->
+    <div class="cultural-symbol cn-sym cs1">道</div>
+    <div class="cultural-symbol jp-sym cs2">武</div>
+    <div class="cultural-symbol in-sym cs3">ॐ</div>
   </div>
 
   <!-- ============================================================
@@ -1021,24 +1035,24 @@
   ============================================================ -->
   <div id="onboarding-modal">
     <div class="onboarding-card">
-      <div class="symbols">
+      <div class="culture-icons">
         <span class="cn">道</span>
         <span class="jp">武</span>
         <span class="in">विद्या</span>
       </div>
       <h2>
-        <span class="gold">三</span><span class="jade">重</span>
-        <span style="font-weight:200;font-size:2.4rem;">·</span>
-        <span class="saffron">NEET 2027</span>
+        <span class="g">The</span>
+        <span class="j">Threefold</span>
+        <span class="s">Path</span>
       </h2>
       <p>
-        The path of the warrior-scholar.<br />
-        Science · Fighting Arts · Cosmos.
+        Science · Martial Arts · Cosmos<br />
+        Begin your journey of mastery.
       </p>
-      <input type="text" id="user-name-input" placeholder="Your name, aspirant..." value="Warrior" />
+      <input type="text" id="user-name-input" placeholder="Your name..." value="Aspirant" />
       <input type="date" id="target-date-input" value="2027-05-01" />
-      <button class="btn btn-gold" id="start-journey-btn">⚔️ Begin the Way</button>
-      <p class="hint">Your journey is recorded locally. 道 · 武 · 学</p>
+      <button class="btn btn-gold" id="start-journey-btn">Begin the Path</button>
+      <p class="hint">Your journey is saved locally. 道 · 武 · 学</p>
     </div>
   </div>
 
@@ -1056,12 +1070,14 @@
       <!-- HEADER -->
       <header class="site-header">
         <a href="#" class="logo">
-          <div class="triple">
+          <div class="three-symbols">
             <span class="cn">道</span>
-            <span class="jp">· 武</span>
-            <span class="in">· विद्या</span>
+            <span class="divider">·</span>
+            <span class="jp">武</span>
+            <span class="divider">·</span>
+            <span class="in">विद्या</span>
           </div>
-          <span class="sub">NEET 2027</span>
+          <span class="brand-text">NEET 2027</span>
         </a>
         <div class="header-right">
           <span class="cosmic-badge">
@@ -1082,21 +1098,22 @@
         <!-- ===== HOME ===== -->
         <section class="page active" id="page-home">
           <div class="hero-section">
-            <div class="cosmic-symbols">
+            <div class="culture-row">
               <span class="cn">道</span>
-              <span class="jp">· 戦 ·</span>
-              <span class="in">ॐ</span>
+              <span class="sep">·</span>
+              <span class="jp">戦</span>
+              <span class="sep">·</span>
+              <span class="in">विद्या</span>
             </div>
 
             <div class="phase-badge" id="phaseBadge">📖 Preparation</div>
 
             <h1 class="main-title">
-              <span class="gold">時</span>
-              <span class="jade">を</span>
-              <span class="saffron">刻</span>
-              <span style="font-weight:200;font-size:3.6rem;letter-spacing:0.2em;">む</span>
+              <span class="gold">The</span>
+              <span class="jade">Count</span>
+              <span class="saffron">down</span>
             </h1>
-            <p class="sub-title">The warrior counts each breath · Each day is a step</p>
+            <p class="sub-title">Every breath is a step on the path</p>
 
             <div class="divider-cosmic">
               <span class="line"></span>
@@ -1134,8 +1151,7 @@
             </div>
 
             <p class="sub-message" id="subMessage">
-              <span>静</span> かに、<span>着実</span> に。<br />
-              One day at a time.
+              "<span>One day</span> at a time. <span>Steady</span> as the stars."
             </p>
           </div>
 
@@ -1162,7 +1178,7 @@
             <span class="focus-label">
               <span class="icon">⚔️</span> Today's Focus
             </span>
-            <input type="text" id="dailyFocusInput" placeholder="e.g., Conquer Electrostatics" maxlength="100" />
+            <input type="text" id="dailyFocusInput" placeholder="What will you conquer today?" maxlength="100" />
             <button class="btn btn-gold btn-sm" id="saveFocusBtn">Set</button>
           </div>
 
@@ -1175,15 +1191,15 @@
         <!-- ===== NOTES ===== -->
         <section class="page" id="page-notes">
           <div class="page-notes-header">
-            <h2 style="font-family:var(--font-jp);font-weight:200;font-size:2.8rem;letter-spacing:0.12em;">
-              <span class="gold">覚</span><span class="jade">書</span>
-            </h2>
-            <span class="symbol" style="font-family:var(--font-in);">📜</span>
-            <p style="color:var(--text-secondary);font-weight:300;font-size:1.3rem;letter-spacing:0.04em;margin-left:auto;">
-              Insights · Mistakes · Wisdom
-            </p>
+            <div class="title">
+              <span class="g">Notes</span>
+              <span class="j">·</span>
+              <span class="s">Journal</span>
+            </div>
+            <span class="symbol">📜</span>
+            <span class="sub">Insights · Mistakes · Wisdom</span>
           </div>
-          <div style="width:60px;height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin:0.8rem 0 1.6rem;opacity:0.2;"></div>
+          <div style="width:60px;height:1px;background:linear-gradient(90deg,var(--cn-gold),transparent);margin:0.8rem 0 1.6rem;opacity:0.15;"></div>
 
           <div class="glass card">
             <div class="notes-input-group">
@@ -1208,11 +1224,11 @@
           <span class="jp">· 武 ·</span>
           <span class="in">विद्या</span>
         </div>
-        <p style="font-family:var(--font-jp);letter-spacing:0.08em;font-weight:200;">
-          三重 · NEET 2027 · 戦 · 学 · 宙
+        <p style="letter-spacing:0.08em;font-weight:200;">
+          The Threefold Path · NEET 2027
         </p>
         <p style="font-size:1.1rem;opacity:0.4;margin-top:0.4rem;font-weight:200;">
-          The warrior-scholar's path.
+          Science · Martial Arts · Cosmos
         </p>
       </footer>
 
@@ -1232,15 +1248,15 @@
       const CONFIG = {
         PREP_END: new Date(2026, 11, 31, 23, 59, 59),
         REVISION_END: new Date(2027, 3, 30, 23, 59, 59),
-        STORAGE_KEY: 'neet2027_warrior_scholar',
-        APP_VERSION: '3.0.0',
+        STORAGE_KEY: 'neet2027_threefold_path',
+        APP_VERSION: '3.1.0',
       };
 
       // ============================================================
       // 2.  STATE
       // ============================================================
       let state = {
-        userName: 'Warrior',
+        userName: 'Aspirant',
         targetDate: '2027-05-01',
         phase: 'preparation',
         studyDays: 0,
@@ -1312,14 +1328,14 @@
           const s = this.getSeason();
           const d = this.isDayTime();
           const map = {
-            summer: { icon: '☀️', label: 'Summer', bg1: '#0a0a12', bg2: '#1a0a1a', accent: '#d4a843', accentLight: '#f0d5a0',
-              text: '#e8e0d8', textSec: '#b0a8a0' },
+            summer: { icon: '☀️', label: 'Summer', bg1: '#0a0a12', bg2: '#1a0a1a', accent: '#d4a843',
+            accentLight: '#f0d5a0' },
             monsoon: { icon: '🌧️', label: 'Monsoon', bg1: '#080c14', bg2: '#0a1018', accent: '#4a8a7a',
-              accentLight: '#80c0b0', text: '#d8e0e0', textSec: '#90a8a8' },
+              accentLight: '#80c0b0' },
             autumn: { icon: '🍂', label: 'Autumn', bg1: '#0a080a', bg2: '#141010', accent: '#b87c4a',
-              accentLight: '#e0c4a0', text: '#e8ddd0', textSec: '#b0a090' },
+              accentLight: '#e0c4a0' },
             winter: { icon: '❄️', label: 'Winter', bg1: '#0a0a14', bg2: '#0e0e18', accent: '#7a8a9a',
-              accentLight: '#b0c0d0', text: '#e0e4ea', textSec: '#90aab0' }
+              accentLight: '#b0c0d0' }
           };
           const info = map[s];
           return {
@@ -1331,28 +1347,24 @@
         },
         apply(info) {
           const root = dom.root;
-          root.style.setProperty('--bg-primary', info.bg1);
-          root.style.setProperty('--text-primary', info.text);
-          root.style.setProperty('--text-secondary', info.textSec);
-          root.style.setProperty('--gold', info.accent);
-          root.style.setProperty('--gold-light', info.accentLight);
-          root.style.setProperty('--gold-dark', info.accent);
-          // bg card
-          const bgCard = info.isDay ? 'rgba(18,18,30,0.65)' : 'rgba(8,8,18,0.75)';
+          const bg = info.isDay ? info.bg1 : info.bg2;
+          root.style.setProperty('--bg-primary', bg);
+          const bgCard = info.isDay ? 'rgba(14,14,28,0.7)' : 'rgba(8,8,18,0.8)';
           root.style.setProperty('--bg-card', bgCard);
-          root.style.setProperty('--bg-card-hover', info.isDay ? 'rgba(30,30,50,0.75)' : 'rgba(12,12,28,0.85)');
+          root.style.setProperty('--bg-card-hover', info.isDay ? 'rgba(24,24,44,0.8)' : 'rgba(12,12,28,0.9)');
 
-          // Update cosmic badge
+          // Update gold accent
+          root.style.setProperty('--cn-gold', info.accent);
+          root.style.setProperty('--cn-gold-light', info.accentLight);
+
           dom.cosmicIcon.textContent = info.cosmicIcon;
           dom.cosmicLabel.textContent = info.fullLabel;
 
-          // Update star opacity
           const starOpacity = info.isDay ? 0.4 : 0.8;
           document.documentElement.style.setProperty('--star-opacity', starOpacity);
 
-          // Background gradient
           dom.cosmicBg.style.background =
-            `radial-gradient(ellipse at 30% 20%, ${info.bg2} 0%, ${info.bg1} 60%, #050510 100%)`;
+            `radial-gradient(ellipse at 25% 15%, ${info.bg2} 0%, ${bg} 50%, #040408 100%)`;
         },
         update() {
           const info = this.getCosmicState();
@@ -1444,8 +1456,8 @@
         dom.phaseBadge.className = 'phase-badge' + (phase === 'revision' ? ' revision' : '');
 
         dom.subMessage.innerHTML = phase === 'preparation' ?
-          '<span>静</span> かに、<span>着実</span> に。<br />One day at a time.' :
-          '<span>集中</span> して、<span>やり抜</span> く。<br />Finish strong.';
+          '"<span>One day</span> at a time. <span>Steady</span> as the stars."' :
+          '"<span>Focus</span> your spirit. <span>Finish</span> with honor."';
 
         // Pulse
         if (cd.days !== prevCountdown.days || cd.hours !== prevCountdown.hours ||
@@ -1553,13 +1565,13 @@
         const val = dom.dailyFocusInput.value.trim();
         state.dailyFocus = val;
         saveState();
-        showToast('🎯 Focus set. 戦 · 学 · 宙');
+        showToast('🎯 Focus set. 道 · 武 · 学');
       }
 
       // ============================================================
-      // 10. QUOTES — Warrior-Scholar Wisdom
+      // 10. QUOTES
       // ============================================================
-      const WARRIOR_QUOTES = [
+      const QUOTES = [
         '"The warrior\'s path is the scholar\'s way."',
         '"Know thyself, and the cosmos opens."',
         '"Discipline is the bridge between goals and accomplishment."',
@@ -1569,13 +1581,15 @@
         '"The scholar\'s mind, the warrior\'s heart."',
         '"Patience and persistence have a magical effect."',
         '"The best time to start was yesterday. The next best is now."',
-        '"道 · 武 · 学 — the triple path of mastery."',
+        '"道 · 武 · 学 — the threefold path of mastery."',
+        '"Mastery is not perfection. It is the journey."',
+        '"The universe rewards those who move forward."',
       ];
       let quoteIdx = 0;
 
       function updateMiniQuote() {
-        const idx = Math.floor(Math.random() * WARRIOR_QUOTES.length);
-        dom.miniQuote.textContent = WARRIOR_QUOTES[idx];
+        const idx = Math.floor(Math.random() * QUOTES.length);
+        dom.miniQuote.textContent = QUOTES[idx];
       }
 
       // ============================================================
@@ -1609,7 +1623,7 @@
       // 13. ONBOARDING
       // ============================================================
       function startJourney() {
-        const name = dom.userNameInput.value.trim() || 'Warrior';
+        const name = dom.userNameInput.value.trim() || 'Aspirant';
         const target = dom.targetDateInput.value;
         if (!target) {
           showToast('⚠️ Please select your target exam date.');
@@ -1628,7 +1642,7 @@
         dom.onboardingModal.classList.add('hidden');
         renderCountdown();
         updateMiniQuote();
-        showToast(`⚔️ Welcome, ${state.userName}. The way begins.`);
+        showToast(`⚔️ Welcome, ${state.userName}. The path begins.`);
       }
 
       // ============================================================
@@ -1641,10 +1655,10 @@
 
         if (!hasState || !state.journeyStarted) {
           dom.onboardingModal.classList.remove('hidden');
-          dom.userNameInput.value = 'Warrior';
+          dom.userNameInput.value = 'Aspirant';
         } else {
           dom.onboardingModal.classList.add('hidden');
-          dom.userNameInput.value = state.userName || 'Warrior';
+          dom.userNameInput.value = state.userName || 'Aspirant';
         }
 
         // Apply cosmic theme
@@ -1704,12 +1718,10 @@
           } else if (key === 'n') {
             e.preventDefault();
             navigateTo('notes');
-          } else if (key === 'h') {
-            // already handled
           }
         });
 
-        // Add study hour button to stats
+        // Add study hour button
         const statsCard = document.querySelector('.stats-grid');
         if (statsCard) {
           const hourBtn = document.createElement('button');
@@ -1723,11 +1735,11 @@
 
         if (hasState && state.journeyStarted) {
           setTimeout(() => {
-            showToast(`⚔️ Welcome back, ${state.userName || 'Warrior'}. Stay on the path.`);
+            showToast(`⚔️ Welcome back, ${state.userName || 'Aspirant'}. Stay on the path.`);
           }, 600);
         }
 
-        console.log('⚔️ NEET 2027 · 三重 · Warrior-Scholar');
+        console.log('⚔️ NEET 2027 · The Threefold Path');
         console.log('⌨️ H=log hour, N=Notes');
       }
 
