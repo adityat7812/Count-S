@@ -3,35 +3,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>NEET 2027 · 静</title>
-  <meta name="theme-color" content="#1a1a2e" />
+  <title>三重 · NEET 2027 · 戦 · 学 · 宙</title>
+  <meta name="theme-color" content="#0a0a12" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=Noto+Serif+JP:wght@200;300;400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=Noto+Serif+JP:wght@200;400;600;700&family=Noto+Serif+SC:wght@300;600;700&family=Noto+Sans+Devanagari:wght@300;400;700&display=swap" rel="stylesheet" />
   <style>
     /* ============================================================
-       0.  CSS VARIABLES (set by JS theme)
+       0.  CSS VARIABLES
        ============================================================ */
     :root {
-      --bg-primary: #f7f2eb;
-      --bg-secondary: rgba(255, 252, 248, 0.6);
-      --bg-card: rgba(255, 252, 248, 0.45);
-      --text-primary: #1a1a2e;
-      --text-secondary: #4a4a6a;
-      --text-muted: #8a8aaa;
-      --accent: #c9a84c;
-      --accent-light: #e8d5a3;
-      --accent-dark: #a8893a;
-      --border-color: rgba(26, 26, 46, 0.08);
-      --shadow: rgba(26, 26, 46, 0.06);
-      --shadow-hover: rgba(26, 26, 46, 0.14);
-      --glass-border: rgba(255, 255, 255, 0.3);
+      --bg-primary: #0a0a12;
+      --bg-card: rgba(18, 18, 30, 0.65);
+      --bg-card-hover: rgba(30, 30, 50, 0.75);
+      --text-primary: #e8e0d8;
+      --text-secondary: #b0a8a0;
+      --text-muted: #6a6a7a;
+      --gold: #d4a843;
+      --gold-light: #f0d5a0;
+      --gold-dark: #a8893a;
+      --jade: #4a8a7a;
+      --jade-light: #80c0b0;
+      --vermilion: #b33939;
+      --vermilion-light: #d46060;
+      --indigo: #2a2a5a;
+      --indigo-light: #5a5a8a;
+      --saffron: #e8a830;
+      --saffron-light: #f0c060;
+      --border-color: rgba(200, 180, 160, 0.08);
+      --shadow: rgba(0, 0, 0, 0.4);
+      --shadow-hover: rgba(0, 0, 0, 0.6);
+      --glass-border: rgba(255, 255, 255, 0.06);
       --radius: 16px;
       --radius-sm: 8px;
-      --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --transition: 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       --font-sans: 'Inter', -apple-system, sans-serif;
-      --font-serif: 'Noto Serif JP', 'Inter', serif;
-      --texture-opacity: 0.06;
+      --font-jp: 'Noto Serif JP', serif;
+      --font-cn: 'Noto Serif SC', serif;
+      --font-in: 'Noto Sans Devanagari', 'Inter', sans-serif;
+      --star-opacity: 0.6;
     }
 
     /* ============================================================
@@ -54,16 +64,15 @@
       background: var(--bg-primary);
       min-height: 100vh;
       overflow-x: hidden;
-      transition: background 0.8s ease, color 0.8s ease;
     }
     ::-webkit-scrollbar { width: 4px; height: 4px; }
-    ::-webkit-scrollbar-track { background: rgba(0,0,0,0.02); }
-    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 20px; }
+    ::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 20px; }
 
     /* ============================================================
-       2.  BACKGROUND LAYER (gradient + texture + ornaments)
+       2.  COSMIC BACKGROUND
        ============================================================ */
-    #bg-layer {
+    #cosmic-bg {
       position: fixed;
       top: 0;
       left: 0;
@@ -72,55 +81,107 @@
       z-index: 0;
       pointer-events: none;
       overflow: hidden;
-      transition: background 1.2s ease;
+      background: radial-gradient(ellipse at 30% 20%, #1a0a2a 0%, #0a0a12 60%, #050510 100%);
     }
-    /* texture overlay – washi paper effect */
-    #bg-layer .texture {
+    #cosmic-bg .stars {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      opacity: var(--texture-opacity);
-      background-image: 
-        url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-      background-size: 300px 300px;
-      mix-blend-mode: multiply;
-      transition: opacity 1s ease;
-    }
-    #bg-layer .bg-pattern {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0.035;
       background-image:
-        radial-gradient(circle at 20% 30%, var(--accent-light) 1px, transparent 1px),
-        radial-gradient(circle at 80% 70%, var(--accent-light) 1px, transparent 1px);
-      background-size: 60px 60px, 80px 80px;
-      transition: opacity 1s ease;
+        radial-gradient(1px 1px at 10% 20%, rgba(255,255,240,0.8), transparent),
+        radial-gradient(1px 1px at 30% 60%, rgba(255,255,240,0.6), transparent),
+        radial-gradient(1.5px 1.5px at 50% 10%, rgba(255,255,240,0.9), transparent),
+        radial-gradient(1px 1px at 70% 40%, rgba(255,255,240,0.5), transparent),
+        radial-gradient(1px 1px at 90% 70%, rgba(255,255,240,0.7), transparent),
+        radial-gradient(1.2px 1.2px at 15% 80%, rgba(255,255,240,0.4), transparent),
+        radial-gradient(1px 1px at 45% 90%, rgba(255,255,240,0.6), transparent),
+        radial-gradient(1px 1px at 75% 85%, rgba(255,255,240,0.5), transparent),
+        radial-gradient(1.5px 1.5px at 55% 45%, rgba(255,255,240,0.8), transparent),
+        radial-gradient(1px 1px at 85% 15%, rgba(255,255,240,0.4), transparent),
+        radial-gradient(1px 1px at 5% 45%, rgba(255,255,240,0.5), transparent),
+        radial-gradient(1.2px 1.2px at 95% 55%, rgba(255,255,240,0.3), transparent);
+      background-size: 200px 200px, 300px 300px, 400px 400px, 250px 250px, 350px 350px,
+        150px 150px, 280px 280px, 320px 320px, 180px 180px, 220px 220px, 270px 270px, 340px 340px;
+      opacity: var(--star-opacity);
+      animation: twinkle 4s ease-in-out infinite alternate;
     }
-    #bg-layer .bg-ornament {
-      position: absolute;
-      font-size: 12rem;
-      opacity: 0.035;
-      font-family: var(--font-serif);
-      letter-spacing: 0.2em;
-      transition: all 1.2s ease;
+    @keyframes twinkle {
+      0% { opacity: 0.5; }
+      100% { opacity: 0.9; }
     }
-    #bg-layer .bg-ornament.orn1 { top: 5%; right: 5%; transform: rotate(8deg); }
-    #bg-layer .bg-ornament.orn2 { bottom: 8%; left: 3%; transform: rotate(-4deg); }
-    #bg-layer .bg-ornament.orn3 { top: 40%; left: 50%; transform: translateX(-50%) rotate(0deg); font-size: 6rem; opacity: 0.02; }
-    #bg-layer .bg-shape {
+
+    #cosmic-bg .mandala {
       position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      opacity: 0.04;
       border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.05;
-      transition: all 1.5s ease;
+      background: radial-gradient(circle, transparent 40%, var(--gold) 45%, transparent 50%),
+        radial-gradient(circle, transparent 48%, var(--gold) 50%, transparent 52%),
+        radial-gradient(circle, transparent 58%, var(--gold) 60%, transparent 62%),
+        radial-gradient(circle, transparent 68%, var(--gold) 70%, transparent 72%),
+        radial-gradient(circle, transparent 78%, var(--gold) 80%, transparent 82%);
+      animation: mandalaSpin 60s linear infinite;
     }
-    #bg-layer .bg-shape.s1 { width: 500px; height: 500px; top: -150px; right: -100px; background: var(--accent); }
-    #bg-layer .bg-shape.s2 { width: 400px; height: 400px; bottom: -100px; left: -100px; background: var(--text-secondary); }
+    @keyframes mandalaSpin {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    #cosmic-bg .bagua {
+      position: absolute;
+      top: 10%;
+      right: 8%;
+      font-size: 8rem;
+      opacity: 0.04;
+      font-family: var(--font-cn);
+      color: var(--gold);
+      transform: rotate(15deg);
+    }
+    #cosmic-bg .om {
+      position: absolute;
+      bottom: 12%;
+      left: 6%;
+      font-size: 8rem;
+      opacity: 0.04;
+      font-family: var(--font-in);
+      color: var(--saffron);
+    }
+    #cosmic-bg .enso {
+      position: absolute;
+      top: 20%;
+      left: 12%;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 2px solid rgba(212, 168, 67, 0.06);
+      opacity: 0.3;
+    }
+    #cosmic-bg .enso::after {
+      content: '';
+      position: absolute;
+      top: 10%;
+      left: 10%;
+      width: 80%;
+      height: 80%;
+      border-radius: 50%;
+      border: 1px solid rgba(212, 168, 67, 0.04);
+    }
+
+    /* cosmic rings */
+    #cosmic-bg .ring {
+      position: absolute;
+      border: 1px solid rgba(212, 168, 67, 0.03);
+      border-radius: 50%;
+    }
+    #cosmic-bg .ring.r1 { width: 400px; height: 400px; top: 20%; left: 15%; }
+    #cosmic-bg .ring.r2 { width: 500px; height: 500px; bottom: 10%; right: 10%; }
+    #cosmic-bg .ring.r3 { width: 300px; height: 300px; top: 55%; left: 55%; }
 
     /* ============================================================
        3.  UI OVERLAY
@@ -136,7 +197,7 @@
     }
     .app-container {
       width: 100%;
-      max-width: 900px;
+      max-width: 960px;
       margin: 0 auto;
     }
 
@@ -145,22 +206,23 @@
        ============================================================ */
     .glass {
       background: var(--bg-card);
-      backdrop-filter: blur(16px) saturate(1.2);
-      -webkit-backdrop-filter: blur(16px) saturate(1.2);
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius);
-      box-shadow: 0 4px 24px var(--shadow);
+      box-shadow: 0 8px 32px var(--shadow);
       transition: all var(--transition);
     }
     .glass:hover {
-      box-shadow: 0 8px 40px var(--shadow-hover);
+      box-shadow: 0 12px 48px var(--shadow-hover);
+      background: var(--bg-card-hover);
     }
     .card {
       padding: 2.4rem;
     }
 
     /* ============================================================
-       5.  HEADER
+       5.  HEADER — TRIPLE CULTURE
        ============================================================ */
     .site-header {
       display: flex;
@@ -170,12 +232,12 @@
       gap: 1.2rem;
       padding: 1.2rem 2.4rem;
       margin-bottom: 2.4rem;
-      background: var(--bg-secondary);
-      backdrop-filter: blur(16px) saturate(1.2);
-      -webkit-backdrop-filter: blur(16px) saturate(1.2);
+      background: var(--bg-card);
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius);
-      box-shadow: 0 4px 20px var(--shadow);
+      box-shadow: 0 4px 24px var(--shadow);
     }
     .logo {
       display: flex;
@@ -183,31 +245,23 @@
       gap: 0.8rem;
       text-decoration: none;
       color: var(--text-primary);
-      font-family: var(--font-serif);
-      font-size: 2.2rem;
+    }
+    .logo .triple {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 1.8rem;
       font-weight: 300;
       letter-spacing: 0.08em;
     }
-    .logo-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: var(--accent);
-      color: #fff;
-      font-size: 1.8rem;
-      transition: transform 0.3s ease;
-    }
-    .logo:hover .logo-icon {
-      transform: rotate(-8deg) scale(1.05);
-    }
-    .logo small {
-      font-weight: 200;
+    .logo .triple .cn { font-family: var(--font-cn); color: var(--gold); }
+    .logo .triple .jp { font-family: var(--font-jp); color: var(--jade-light); }
+    .logo .triple .in { font-family: var(--font-in); color: var(--saffron); }
+    .logo .sub {
+      font-size: 1.2rem;
       opacity: 0.5;
-      font-size: 1.4rem;
-      letter-spacing: 0.06em;
+      font-weight: 200;
+      letter-spacing: 0.12em;
     }
 
     .header-right {
@@ -215,21 +269,21 @@
       align-items: center;
       gap: 1.2rem;
     }
-    .season-badge {
+    .cosmic-badge {
       display: inline-flex;
       align-items: center;
       gap: 0.6rem;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       color: var(--text-secondary);
-      background: var(--bg-card);
-      padding: 0.4rem 1.6rem;
+      background: rgba(0,0,0,0.3);
+      padding: 0.4rem 1.4rem;
       border-radius: 40px;
       border: 1px solid var(--glass-border);
-      backdrop-filter: blur(4px);
-      font-family: var(--font-serif);
-      letter-spacing: 0.04em;
+      font-family: var(--font-jp);
+      letter-spacing: 0.06em;
       white-space: nowrap;
     }
+    .cosmic-badge .icon { font-size: 1.4rem; }
 
     .menu-toggle {
       display: none;
@@ -242,9 +296,7 @@
       border-radius: var(--radius-sm);
       transition: background 0.2s;
     }
-    .menu-toggle:hover {
-      background: var(--border-color);
-    }
+    .menu-toggle:hover { background: rgba(255,255,255,0.04); }
 
     .nav-links {
       display: flex;
@@ -263,7 +315,8 @@
       transition: all 0.25s ease;
       position: relative;
       cursor: pointer;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.06em;
+      font-family: var(--font-jp);
     }
     .nav-links a::after {
       content: '';
@@ -272,7 +325,7 @@
       left: 50%;
       width: 0;
       height: 2px;
-      background: var(--accent);
+      background: var(--gold);
       transition: width 0.3s ease, left 0.3s ease;
       border-radius: 4px;
     }
@@ -281,12 +334,10 @@
       width: 60%;
       left: 20%;
     }
-    .nav-links a:hover {
-      color: var(--text-primary);
-    }
+    .nav-links a:hover { color: var(--text-primary); }
     .nav-links a.active {
       color: var(--text-primary);
-      background: rgba(201, 168, 76, 0.10);
+      background: rgba(212, 168, 67, 0.08);
     }
 
     @media (max-width: 640px) {
@@ -305,8 +356,8 @@
       .nav-links a { width: 100%; text-align: center; padding: 0.8rem; }
       .site-header { padding: 1.2rem 1.6rem; }
       .card { padding: 1.6rem; }
-      .season-badge { font-size: 1rem; padding: 0.2rem 1.2rem; }
-      .logo { font-size: 1.8rem; }
+      .logo .triple { font-size: 1.4rem; }
+      .cosmic-badge { font-size: 1rem; padding: 0.2rem 1rem; }
     }
 
     /* ============================================================
@@ -314,41 +365,95 @@
        ============================================================ */
     .page {
       display: none;
-      animation: fadeSlide 0.5s ease forwards;
+      animation: fadeSlide 0.6s ease forwards;
       padding: 0.8rem 0 2.4rem;
     }
     .page.active { display: block; }
     @keyframes fadeSlide {
-      0% { opacity: 0; transform: translateY(12px); }
-      100% { opacity: 1; transform: translateY(0); }
+      0% { opacity: 0; transform: translateY(16px) scale(0.98); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     /* ============================================================
-       7.  HOME – COUNTDOWN & STATS
+       7.  HOME — COUNTDOWN WITH COSMIC FLAIR
        ============================================================ */
     .hero-section {
       text-align: center;
       padding: 0.8rem 0 1.6rem;
+      position: relative;
     }
+    .hero-section .cosmic-symbols {
+      display: flex;
+      justify-content: center;
+      gap: 2.4rem;
+      font-size: 2.4rem;
+      margin-bottom: 1.2rem;
+      opacity: 0.3;
+      font-weight: 200;
+    }
+    .hero-section .cosmic-symbols span { transition: opacity 0.5s; }
+    .hero-section .cosmic-symbols .cn { font-family: var(--font-cn); color: var(--gold); }
+    .hero-section .cosmic-symbols .jp { font-family: var(--font-jp); color: var(--jade-light); }
+    .hero-section .cosmic-symbols .in { font-family: var(--font-in); color: var(--saffron); }
+
     .phase-badge {
       display: inline-block;
       padding: 0.4rem 2.4rem;
       border-radius: 40px;
-      font-size: 1.3rem;
-      letter-spacing: 0.12em;
+      font-size: 1.2rem;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      background: var(--accent-light);
-      color: var(--text-primary);
-      border: 1px solid var(--accent);
+      background: rgba(212, 168, 67, 0.12);
+      color: var(--gold);
+      border: 1px solid rgba(212, 168, 67, 0.2);
       margin-bottom: 1.2rem;
-      font-family: var(--font-serif);
+      font-family: var(--font-jp);
       font-weight: 400;
     }
     .phase-badge.revision {
-      background: #d4a0a0;
-      border-color: #b33939;
-      color: #5a1a1a;
+      background: rgba(179, 57, 57, 0.15);
+      border-color: rgba(179, 57, 57, 0.25);
+      color: var(--vermilion-light);
     }
+
+    .main-title {
+      font-family: var(--font-jp);
+      font-weight: 200;
+      font-size: 4.8rem;
+      letter-spacing: 0.12em;
+      line-height: 1.2;
+    }
+    .main-title .gold { color: var(--gold); }
+    .main-title .jade { color: var(--jade-light); }
+    .main-title .saffron { color: var(--saffron); }
+
+    .sub-title {
+      color: var(--text-secondary);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 1.2rem;
+      font-weight: 300;
+      margin-top: 0.4rem;
+      opacity: 0.6;
+    }
+
+    .divider-cosmic {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.6rem;
+      margin: 1.6rem auto;
+      width: 80%;
+      max-width: 400px;
+    }
+    .divider-cosmic .line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0.2;
+    }
+    .divider-cosmic .dot { font-size: 1.2rem; opacity: 0.3; color: var(--gold); }
+
     .countdown-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -358,30 +463,48 @@
     }
     .countdown-item {
       background: var(--bg-card);
-      backdrop-filter: blur(4px);
+      backdrop-filter: blur(8px);
       border-radius: 12px;
       border: 1px solid var(--border-color);
       padding: 1.6rem 0.8rem;
-      transition: transform 0.3s ease, background 0.4s ease;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
     }
+    .countdown-item::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at center, rgba(212,168,67,0.03), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.6s;
+    }
+    .countdown-item:hover::before { opacity: 1; }
     .countdown-item:hover {
       transform: scale(1.03);
-      background: var(--bg-secondary);
+      border-color: rgba(212, 168, 67, 0.15);
     }
     .countdown-number {
       font-size: 6.4rem;
       font-weight: 200;
-      font-family: var(--font-serif);
+      font-family: var(--font-jp);
       line-height: 1;
       letter-spacing: 0.04em;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
     .countdown-label {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--text-secondary);
       margin-top: 0.4rem;
-      font-weight: 400;
+      font-weight: 300;
     }
 
     .progress-wrapper {
@@ -390,41 +513,56 @@
     }
     .progress-track {
       width: 100%;
-      height: 4px;
-      background: rgba(0,0,0,0.06);
+      height: 3px;
+      background: rgba(255,255,255,0.04);
       border-radius: 12px;
       overflow: hidden;
+      position: relative;
+    }
+    .progress-track::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(212,168,67,0.1), transparent);
+      animation: shimmer 3s infinite;
+    }
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
     }
     .progress-fill {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, var(--accent), var(--accent-light));
+      background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--jade-light));
       border-radius: 12px;
       transition: width 0.8s ease;
+      position: relative;
+      z-index: 2;
     }
     .progress-label {
       display: flex;
       justify-content: space-between;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       color: var(--text-secondary);
       margin-top: 0.4rem;
-      font-weight: 400;
-      letter-spacing: 0.04em;
-    }
-    .sub-message {
-      margin-top: 1.6rem;
-      font-size: 1.6rem;
       font-weight: 300;
-      font-family: var(--font-serif);
       letter-spacing: 0.04em;
-      opacity: 0.85;
-    }
-    .sub-message span {
-      color: var(--accent);
-      font-weight: 400;
     }
 
-    /* stats cards */
+    .sub-message {
+      margin-top: 1.6rem;
+      font-size: 1.5rem;
+      font-weight: 300;
+      font-family: var(--font-jp);
+      letter-spacing: 0.06em;
+      opacity: 0.7;
+    }
+    .sub-message span { color: var(--gold); font-weight: 400; }
+
+    /* Stats */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -434,55 +572,58 @@
     .stat-card {
       text-align: center;
       padding: 1.2rem 0.8rem;
-      background: rgba(255,252,248,0.2);
+      background: rgba(0,0,0,0.2);
       border-radius: var(--radius-sm);
       border: 1px solid var(--border-color);
-      transition: background 0.3s;
+      transition: all 0.3s;
     }
     .stat-card:hover {
-      background: rgba(255,252,248,0.35);
+      background: rgba(212,168,67,0.04);
+      border-color: rgba(212,168,67,0.1);
     }
     .stat-number {
       font-size: 3.2rem;
       font-weight: 200;
-      font-family: var(--font-serif);
+      font-family: var(--font-jp);
       line-height: 1.2;
+      color: var(--gold);
     }
     .stat-label {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       letter-spacing: 0.08em;
       color: var(--text-secondary);
-      font-weight: 400;
+      font-weight: 300;
     }
 
-    /* daily focus */
+    /* Daily Focus with cultural flair */
     .focus-area {
       margin-top: 2.4rem;
       padding: 1.6rem 2rem;
       border-radius: var(--radius-sm);
-      background: rgba(255,252,248,0.15);
+      background: rgba(0,0,0,0.2);
       border: 1px dashed var(--border-color);
       display: flex;
       align-items: center;
       gap: 1.2rem;
       flex-wrap: wrap;
     }
-    .focus-area label {
-      font-family: var(--font-serif);
+    .focus-area .focus-label {
+      font-family: var(--font-jp);
       font-weight: 300;
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       color: var(--text-secondary);
-      letter-spacing: 0.04em;
+      letter-spacing: 0.06em;
       display: flex;
       align-items: center;
       gap: 0.6rem;
     }
+    .focus-area .focus-label .icon { font-size: 1.8rem; }
     .focus-area input {
       flex: 1;
       min-width: 160px;
       padding: 0.6rem 1.2rem;
       border: none;
-      border-bottom: 2px solid var(--accent-light);
+      border-bottom: 2px solid rgba(212,168,67,0.15);
       background: transparent;
       font-size: 1.5rem;
       color: var(--text-primary);
@@ -490,20 +631,42 @@
       transition: border-color 0.3s;
       font-family: var(--font-sans);
     }
-    .focus-area input:focus {
-      border-color: var(--accent);
-    }
+    .focus-area input:focus { border-color: var(--gold); }
     .focus-area input::placeholder {
       color: var(--text-muted);
       font-weight: 300;
     }
-    .focus-area .btn {
-      flex-shrink: 0;
+    .focus-area .btn { flex-shrink: 0; }
+
+    /* mini quote */
+    .mini-quote {
+      margin-top: 2.4rem;
+      text-align: center;
+      font-family: var(--font-jp);
+      font-weight: 200;
+      font-size: 1.4rem;
+      color: var(--text-secondary);
+      opacity: 0.5;
+      letter-spacing: 0.04em;
+      font-style: italic;
     }
 
     /* ============================================================
-       8.  NOTES PAGE
+       8.  NOTES PAGE — ZEN SIMPLICITY
        ============================================================ */
+    .page-notes-header {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.8rem;
+    }
+    .page-notes-header .symbol {
+      font-size: 2.4rem;
+      opacity: 0.3;
+      font-family: var(--font-jp);
+    }
+
     .notes-input-group {
       display: flex;
       gap: 0.8rem;
@@ -517,15 +680,15 @@
       border: 1px solid var(--border-color);
       border-radius: var(--radius-sm);
       font-size: 1.5rem;
-      background: rgba(255,252,248,0.3);
+      background: rgba(0,0,0,0.2);
       outline: none;
       transition: border 0.2s, box-shadow 0.2s;
       color: var(--text-primary);
       font-family: var(--font-sans);
     }
     .notes-input-group input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(212,168,67,0.06);
     }
     .notes-input-group input::placeholder {
       color: var(--text-muted);
@@ -542,29 +705,32 @@
       align-items: center;
       justify-content: space-between;
       padding: 0.8rem 1.6rem;
-      background: rgba(255,252,248,0.2);
+      background: rgba(0,0,0,0.15);
       border-radius: var(--radius-sm);
       border: 1px solid var(--border-color);
-      transition: background 0.2s;
+      transition: background 0.2s, border-color 0.2s;
     }
     .note-item:hover {
-      background: rgba(255,252,248,0.35);
+      background: rgba(0,0,0,0.25);
+      border-color: rgba(212,168,67,0.08);
     }
     .note-item .note-text {
       flex: 1;
       font-size: 1.5rem;
-      font-weight: 400;
+      font-weight: 300;
+      font-family: var(--font-jp);
     }
     .note-item .note-time {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       color: var(--text-secondary);
       white-space: nowrap;
       margin-left: 1.2rem;
-      font-weight: 300;
+      font-weight: 200;
+      opacity: 0.6;
     }
 
     /* ============================================================
-       9.  BUTTONS
+       9.  BUTTONS — WARRIOR'S TOUCH
        ============================================================ */
     .btn {
       display: inline-flex;
@@ -574,46 +740,59 @@
       padding: 0.8rem 2.4rem;
       border: none;
       border-radius: var(--radius-sm);
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-weight: 400;
-      background: var(--text-primary);
-      color: #fff;
+      background: var(--gold);
+      color: #0a0a12;
       cursor: pointer;
-      transition: all 0.25s ease;
-      letter-spacing: 0.04em;
-      font-family: var(--font-sans);
+      transition: all 0.3s ease;
+      letter-spacing: 0.06em;
+      font-family: var(--font-jp);
       min-height: 4rem;
+      position: relative;
+      overflow: hidden;
     }
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.6s;
+    }
+    .btn:hover::before { left: 100%; }
     .btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 16px var(--shadow-hover);
+      box-shadow: 0 4px 24px rgba(212,168,67,0.2);
     }
-    .btn:active {
-      transform: scale(0.97);
-    }
-    .btn-gold {
-      background: var(--accent);
-      color: var(--text-primary);
-    }
-    .btn-gold:hover {
-      background: var(--accent-dark);
-      color: #fff;
-    }
+    .btn:active { transform: scale(0.97); }
+    .btn-gold { background: var(--gold); color: #0a0a12; }
+    .btn-gold:hover { background: var(--gold-light); }
     .btn-vermilion {
-      background: #b33939;
+      background: var(--vermilion);
       color: #fff;
     }
-    .btn-vermilion:hover {
-      background: #c94a4a;
+    .btn-vermilion:hover { background: var(--vermilion-light); }
+    .btn-outline {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+    .btn-outline:hover {
+      background: rgba(255,255,255,0.04);
+      transform: none;
+      box-shadow: none;
     }
     .btn-sm {
       padding: 0.4rem 1.2rem;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       min-height: 3.2rem;
     }
 
     /* ============================================================
-       10. ONBOARDING MODAL
+       10. ONBOARDING — SACRED BEGINNING
        ============================================================ */
     #onboarding-modal {
       position: fixed;
@@ -621,41 +800,59 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.5);
-      backdrop-filter: blur(16px) saturate(1.4);
-      -webkit-backdrop-filter: blur(16px) saturate(1.4);
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(24px) saturate(1.6);
+      -webkit-backdrop-filter: blur(24px) saturate(1.6);
       z-index: 999;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 2.4rem;
-      transition: opacity 0.6s ease;
+      transition: opacity 0.8s ease;
     }
     #onboarding-modal.hidden {
       opacity: 0;
       pointer-events: none;
     }
     .onboarding-card {
-      max-width: 460px;
+      max-width: 480px;
       width: 100%;
-      background: var(--bg-primary);
+      background: linear-gradient(145deg, #12101a, #1a1828);
       border-radius: 24px;
       padding: 3.2rem;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.25);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.6);
       text-align: center;
-      border: 1px solid var(--accent-light);
+      border: 1px solid rgba(212,168,67,0.08);
     }
-    .onboarding-card h2 {
-      font-family: var(--font-serif);
-      font-weight: 300;
+    .onboarding-card .symbols {
       font-size: 3.2rem;
+      margin-bottom: 1.2rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.6rem;
+      opacity: 0.5;
+    }
+    .onboarding-card .symbols .cn { font-family: var(--font-cn); color: var(--gold); }
+    .onboarding-card .symbols .jp { font-family: var(--font-jp); color: var(--jade-light); }
+    .onboarding-card .symbols .in { font-family: var(--font-in); color: var(--saffron); }
+
+    .onboarding-card h2 {
+      font-family: var(--font-jp);
+      font-weight: 200;
+      font-size: 3.2rem;
+      letter-spacing: 0.12em;
       margin-bottom: 0.8rem;
     }
+    .onboarding-card h2 .gold { color: var(--gold); }
+    .onboarding-card h2 .jade { color: var(--jade-light); }
+    .onboarding-card h2 .saffron { color: var(--saffron); }
+
     .onboarding-card p {
       color: var(--text-secondary);
       margin-bottom: 2.4rem;
       font-weight: 300;
       line-height: 1.7;
+      font-size: 1.4rem;
     }
     .onboarding-card input {
       width: 100%;
@@ -663,16 +860,16 @@
       border: 1px solid var(--border-color);
       border-radius: 12px;
       font-size: 1.6rem;
-      background: rgba(255,252,248,0.4);
+      background: rgba(0,0,0,0.3);
       margin-bottom: 1.2rem;
       outline: none;
       color: var(--text-primary);
       font-family: var(--font-sans);
-      transition: border 0.2s, box-shadow 0.2s;
+      transition: border 0.2s;
     }
     .onboarding-card input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(212,168,67,0.06);
     }
     .onboarding-card .btn {
       width: 100%;
@@ -681,10 +878,11 @@
       padding: 1.2rem;
     }
     .onboarding-card .hint {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       color: var(--text-muted);
       margin-top: 1.6rem;
-      font-weight: 300;
+      font-weight: 200;
+      letter-spacing: 0.04em;
     }
 
     /* ============================================================
@@ -696,18 +894,20 @@
       right: 2.4rem;
       padding: 1.2rem 2.4rem;
       border-radius: 12px;
-      background: var(--text-primary);
-      color: #fff;
-      font-size: 1.4rem;
-      box-shadow: 0 8px 32px var(--shadow-hover);
+      background: rgba(10,10,18,0.9);
+      color: var(--text-primary);
+      font-size: 1.3rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+      border: 1px solid var(--glass-border);
       opacity: 0;
       transform: translateY(20px);
       transition: all 0.4s ease;
       z-index: 200;
       pointer-events: none;
       max-width: 400px;
-      font-family: var(--font-sans);
-      font-weight: 400;
+      font-family: var(--font-jp);
+      font-weight: 300;
+      backdrop-filter: blur(12px);
     }
     .toast.show {
       opacity: 1;
@@ -723,17 +923,28 @@
       border-top: 1px solid var(--border-color);
       margin-top: 4.8rem;
       text-align: center;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       color: var(--text-secondary);
-      font-weight: 300;
+      font-weight: 200;
     }
     .footer-divider {
       width: 60px;
       height: 1px;
-      background: var(--accent-light);
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
       margin: 0 auto 0.8rem;
-      opacity: 0.5;
+      opacity: 0.2;
     }
+    .footer-symbols {
+      display: flex;
+      justify-content: center;
+      gap: 1.6rem;
+      font-size: 1.4rem;
+      opacity: 0.2;
+      margin-bottom: 0.8rem;
+    }
+    .footer-symbols .cn { font-family: var(--font-cn); color: var(--gold); }
+    .footer-symbols .jp { font-family: var(--font-jp); color: var(--jade-light); }
+    .footer-symbols .in { font-family: var(--font-in); color: var(--saffron); }
 
     /* ============================================================
        13. UTILITY
@@ -767,9 +978,10 @@
       .countdown-number { font-size: 4.8rem; }
       .stats-grid { grid-template-columns: 1fr 1fr; }
       .onboarding-card { padding: 2.4rem; }
-      h1 { font-size: 3.6rem; }
+      .main-title { font-size: 3.6rem; }
       .focus-area { flex-direction: column; align-items: stretch; }
       .focus-area input { width: 100%; }
+      .hero-section .cosmic-symbols { font-size: 1.8rem; gap: 1.2rem; }
     }
     @media (max-width: 380px) {
       .countdown-grid { grid-template-columns: 1fr 1fr; }
@@ -781,39 +993,52 @@
        16. PRINT
        ============================================================ */
     @media print {
-      #bg-layer, .site-header, .site-footer, .btn, .notes-input-group { display: none !important; }
+      #cosmic-bg, .site-header, .site-footer, .btn, .notes-input-group { display: none !important; }
       .page { padding: 0 !important; }
-      .glass { box-shadow: none !important; border: 1px solid #ccc !important; background: #fff !important; }
-      body { background: #fff !important; }
+      .glass { box-shadow: none !important; border: 1px solid #444 !important; background: #111 !important; }
+      body { background: #0a0a12 !important; color: #ddd !important; }
     }
   </style>
 </head>
 <body>
 
   <!-- ============================================================
-  BACKGROUND LAYER (gradient + texture + ornaments)
+  COSMIC BACKGROUND
   ============================================================ -->
-  <div id="bg-layer">
-    <div class="texture"></div>
-    <div class="bg-pattern"></div>
-    <div class="bg-shape s1"></div>
-    <div class="bg-shape s2"></div>
-    <div class="bg-ornament orn1">静</div>
-    <div class="bg-ornament orn2">和</div>
-    <div class="bg-ornament orn3">· 道 ·</div>
+  <div id="cosmic-bg">
+    <div class="stars"></div>
+    <div class="mandala"></div>
+    <div class="bagua">☯</div>
+    <div class="om">ॐ</div>
+    <div class="enso"></div>
+    <div class="ring r1"></div>
+    <div class="ring r2"></div>
+    <div class="ring r3"></div>
   </div>
 
   <!-- ============================================================
   ONBOARDING MODAL
   ============================================================ -->
   <div id="onboarding-modal">
-    <div class="onboarding-card glass">
-      <h2>🌸 静 · NEET 2027</h2>
-      <p>Begin your journey with clarity and purpose.<br />Every day, grow stronger.</p>
-      <input type="text" id="user-name-input" placeholder="What is your name?" value="Aspirant" />
+    <div class="onboarding-card">
+      <div class="symbols">
+        <span class="cn">道</span>
+        <span class="jp">武</span>
+        <span class="in">विद्या</span>
+      </div>
+      <h2>
+        <span class="gold">三</span><span class="jade">重</span>
+        <span style="font-weight:200;font-size:2.4rem;">·</span>
+        <span class="saffron">NEET 2027</span>
+      </h2>
+      <p>
+        The path of the warrior-scholar.<br />
+        Science · Fighting Arts · Cosmos.
+      </p>
+      <input type="text" id="user-name-input" placeholder="Your name, aspirant..." value="Warrior" />
       <input type="date" id="target-date-input" value="2027-05-01" />
-      <button class="btn btn-gold" id="start-journey-btn">Start Your Journey</button>
-      <p class="hint">Your data is saved locally. Privacy first.</p>
+      <button class="btn btn-gold" id="start-journey-btn">⚔️ Begin the Way</button>
+      <p class="hint">Your journey is recorded locally. 道 · 武 · 学</p>
     </div>
   </div>
 
@@ -831,14 +1056,17 @@
       <!-- HEADER -->
       <header class="site-header">
         <a href="#" class="logo">
-          <span class="logo-icon">静</span>
-          NEET 2027
-          <small>· 和</small>
+          <div class="triple">
+            <span class="cn">道</span>
+            <span class="jp">· 武</span>
+            <span class="in">· विद्या</span>
+          </div>
+          <span class="sub">NEET 2027</span>
         </a>
         <div class="header-right">
-          <span class="season-badge" id="seasonBadge">
-            <span id="seasonIcon">🌸</span>
-            <span id="seasonLabel">Spring · Day</span>
+          <span class="cosmic-badge">
+            <span class="icon" id="cosmicIcon">☯</span>
+            <span id="cosmicLabel">Cosmos · Day</span>
           </span>
           <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
         </div>
@@ -854,60 +1082,118 @@
         <!-- ===== HOME ===== -->
         <section class="page active" id="page-home">
           <div class="hero-section">
+            <div class="cosmic-symbols">
+              <span class="cn">道</span>
+              <span class="jp">· 戦 ·</span>
+              <span class="in">ॐ</span>
+            </div>
+
             <div class="phase-badge" id="phaseBadge">📖 Preparation</div>
-            <h1>Countdown</h1>
-            <p style="color:var(--text-secondary);letter-spacing:0.12em;text-transform:uppercase;font-size:1.3rem;font-weight:400;margin-top:0.2rem;">NEET 2027 · Serene Determination</p>
-            <div style="width:60px;height:2px;background:var(--accent);margin:1.2rem auto;opacity:0.3;border-radius:4px;"></div>
+
+            <h1 class="main-title">
+              <span class="gold">時</span>
+              <span class="jade">を</span>
+              <span class="saffron">刻</span>
+              <span style="font-weight:200;font-size:3.6rem;letter-spacing:0.2em;">む</span>
+            </h1>
+            <p class="sub-title">The warrior counts each breath · Each day is a step</p>
+
+            <div class="divider-cosmic">
+              <span class="line"></span>
+              <span class="dot">✦</span>
+              <span class="line"></span>
+            </div>
 
             <div class="countdown-grid" id="countdownGrid">
-              <div class="countdown-item"><span class="countdown-number" id="days">00</span><span class="countdown-label">Days</span></div>
-              <div class="countdown-item"><span class="countdown-number" id="hours">00</span><span class="countdown-label">Hours</span></div>
-              <div class="countdown-item"><span class="countdown-number" id="minutes">00</span><span class="countdown-label">Minutes</span></div>
-              <div class="countdown-item"><span class="countdown-number" id="seconds">00</span><span class="countdown-label">Seconds</span></div>
+              <div class="countdown-item">
+                <span class="countdown-number" id="days">00</span>
+                <span class="countdown-label">Days</span>
+              </div>
+              <div class="countdown-item">
+                <span class="countdown-number" id="hours">00</span>
+                <span class="countdown-label">Hours</span>
+              </div>
+              <div class="countdown-item">
+                <span class="countdown-number" id="minutes">00</span>
+                <span class="countdown-label">Minutes</span>
+              </div>
+              <div class="countdown-item">
+                <span class="countdown-number" id="seconds">00</span>
+                <span class="countdown-label">Seconds</span>
+              </div>
             </div>
 
             <div class="progress-wrapper">
-              <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%;"></div></div>
-              <div class="progress-label"><span id="progressLabelLeft">Prep 0%</span><span id="progressLabelRight">Target 2027</span></div>
+              <div class="progress-track">
+                <div class="progress-fill" id="progressFill" style="width:0%;"></div>
+              </div>
+              <div class="progress-label">
+                <span id="progressLabelLeft">Prep 0%</span>
+                <span id="progressLabelRight">Target 2027</span>
+              </div>
             </div>
-            <p class="sub-message" id="subMessage">Quietly, steadily. <span>One day</span> at a time.</p>
+
+            <p class="sub-message" id="subMessage">
+              <span>静</span> かに、<span>着実</span> に。<br />
+              One day at a time.
+            </p>
           </div>
 
           <!-- Stats -->
           <div class="glass card" style="margin-top:1.6rem;">
             <div class="stats-grid">
-              <div class="stat-card"><div class="stat-number" id="studyDays">0</div><div class="stat-label">Study Days</div></div>
-              <div class="stat-card"><div class="stat-number" id="studyStreak">0</div><div class="stat-label">Streak 🔥</div></div>
-              <div class="stat-card"><div class="stat-number" id="totalHours">0</div><div class="stat-label">Total Hours</div></div>
+              <div class="stat-card">
+                <div class="stat-number" id="studyDays">0</div>
+                <div class="stat-label">Study Days</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number" id="studyStreak">0</div>
+                <div class="stat-label">Streak 🔥</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number" id="totalHours">0</div>
+                <div class="stat-label">Total Hours</div>
+              </div>
             </div>
           </div>
 
           <!-- Daily Focus -->
-          <div class="focus-area glass" style="background:var(--bg-card);">
-            <label for="dailyFocusInput">🎯 Today's Focus</label>
-            <input type="text" id="dailyFocusInput" placeholder="e.g., Revise Electrostatics" maxlength="100" />
-            <button class="btn btn-gold btn-sm" id="saveFocusBtn">Save</button>
+          <div class="focus-area glass">
+            <span class="focus-label">
+              <span class="icon">⚔️</span> Today's Focus
+            </span>
+            <input type="text" id="dailyFocusInput" placeholder="e.g., Conquer Electrostatics" maxlength="100" />
+            <button class="btn btn-gold btn-sm" id="saveFocusBtn">Set</button>
           </div>
 
           <!-- Mini quote -->
-          <div style="margin-top:2.4rem;text-align:center;font-family:var(--font-serif);font-weight:300;font-size:1.4rem;color:var(--text-secondary);opacity:0.7;letter-spacing:0.04em;">
-            <span id="miniQuote">"Focus on the step, not the staircase."</span>
+          <div class="mini-quote" id="miniQuote">
+            "The warrior's path is the scholar's way."
           </div>
         </section>
 
         <!-- ===== NOTES ===== -->
         <section class="page" id="page-notes">
-          <h2 style="font-family:var(--font-serif);font-weight:300;font-size:2.8rem;">📝 Notes</h2>
-          <p style="color:var(--text-secondary);letter-spacing:0.08em;font-size:1.4rem;font-weight:300;">Capture insights, mistakes, or daily reflections</p>
-          <div style="width:60px;height:2px;background:var(--accent);margin:1.2rem 0;opacity:0.3;border-radius:4px;"></div>
+          <div class="page-notes-header">
+            <h2 style="font-family:var(--font-jp);font-weight:200;font-size:2.8rem;letter-spacing:0.12em;">
+              <span class="gold">覚</span><span class="jade">書</span>
+            </h2>
+            <span class="symbol" style="font-family:var(--font-in);">📜</span>
+            <p style="color:var(--text-secondary);font-weight:300;font-size:1.3rem;letter-spacing:0.04em;margin-left:auto;">
+              Insights · Mistakes · Wisdom
+            </p>
+          </div>
+          <div style="width:60px;height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin:0.8rem 0 1.6rem;opacity:0.2;"></div>
 
           <div class="glass card">
             <div class="notes-input-group">
-              <input type="text" id="noteInput" placeholder="Write a new note..." maxlength="200" />
+              <input type="text" id="noteInput" placeholder="Write a note..." maxlength="200" />
               <button class="btn btn-gold" id="addNoteBtn">➕ Add</button>
             </div>
             <div class="notes-list" id="notesList">
-              <div style="text-align:center;padding:1.6rem;color:var(--text-secondary);font-size:1.4rem;font-weight:300;">No notes yet. Start your first one.</div>
+              <div style="text-align:center;padding:1.6rem;color:var(--text-secondary);font-size:1.4rem;font-weight:300;">
+                No notes yet. Begin your journal.
+              </div>
             </div>
           </div>
         </section>
@@ -917,9 +1203,17 @@
       <!-- FOOTER -->
       <footer class="site-footer">
         <div class="footer-divider"></div>
-        <p style="font-family:var(--font-serif);letter-spacing:0.08em;">和 · NEET 2027 · Quiet Focus</p>
-        <p style="font-size:1.2rem;opacity:0.6;font-weight:300;">Every moment is a step forward.</p>
-        <p style="font-size:1.1rem;opacity:0.4;margin-top:0.4rem;font-weight:300;">© 2026 · 静</p>
+        <div class="footer-symbols">
+          <span class="cn">道</span>
+          <span class="jp">· 武 ·</span>
+          <span class="in">विद्या</span>
+        </div>
+        <p style="font-family:var(--font-jp);letter-spacing:0.08em;font-weight:200;">
+          三重 · NEET 2027 · 戦 · 学 · 宙
+        </p>
+        <p style="font-size:1.1rem;opacity:0.4;margin-top:0.4rem;font-weight:200;">
+          The warrior-scholar's path.
+        </p>
       </footer>
 
     </div>
@@ -938,24 +1232,21 @@
       const CONFIG = {
         PREP_END: new Date(2026, 11, 31, 23, 59, 59),
         REVISION_END: new Date(2027, 3, 30, 23, 59, 59),
-        STORAGE_KEY: 'neet2027_quiet_focus_v2',
-        APP_VERSION: '2.2.0',
+        STORAGE_KEY: 'neet2027_warrior_scholar',
+        APP_VERSION: '3.0.0',
       };
 
       // ============================================================
       // 2.  STATE
       // ============================================================
       let state = {
-        userName: 'Aspirant',
+        userName: 'Warrior',
         targetDate: '2027-05-01',
         phase: 'preparation',
         studyDays: 0,
         streak: 0,
         totalHours: 0,
         todayHours: 0,
-        todaySubjects: 0,
-        subjectHours: { physics: 0, chemistry: 0, biology: 0, botany: 0, zoology: 0 },
-        subjectChecked: { physics: false, chemistry: false, biology: false, botany: false, zoology: false },
         notes: [],
         lastStudyDate: null,
         journeyStarted: false,
@@ -992,21 +1283,20 @@
         pages: $$('.page'),
         navAnchors: $$('.nav-links a'),
         countdownItems: $$('.countdown-item'),
-        seasonIcon: $('#seasonIcon'),
-        seasonLabel: $('#seasonLabel'),
+        cosmicIcon: $('#cosmicIcon'),
+        cosmicLabel: $('#cosmicLabel'),
         root: document.documentElement,
         onboardingModal: $('#onboarding-modal'),
         userNameInput: $('#user-name-input'),
         targetDateInput: $('#target-date-input'),
         startJourneyBtn: $('#start-journey-btn'),
-        bgLayer: $('#bg-layer'),
-        resetJourneyBtn: $('#resetJourneyBtn'), // not used but kept for consistency
+        cosmicBg: $('#cosmic-bg'),
       };
 
       // ============================================================
-      // 4.  THEME ENGINE (Season + Time + Background)
+      // 4.  COSMIC THEME ENGINE
       // ============================================================
-      const ThemeEngine = {
+      const CosmicEngine = {
         getSeason() {
           const month = new Date().getMonth();
           if (month >= 2 && month <= 5) return 'summer';
@@ -1014,93 +1304,58 @@
           if (month >= 9 && month <= 10) return 'autumn';
           return 'winter';
         },
-
         isDayTime() {
           const hours = new Date().getHours();
           return hours >= 6 && hours < 18;
         },
-
-        getSeasonInfo() {
+        getCosmicState() {
           const s = this.getSeason();
           const d = this.isDayTime();
           const map = {
-            summer: { icon: '☀️', label: 'Summer', bg1: '#fdf6ed', bg2: '#f5ede0', accent: '#d4a373', accentLight: '#f0d5b0',
-              text: '#3d2b1a', textSec: '#7a5a3a' },
-            monsoon: { icon: '🌧️', label: 'Monsoon', bg1: '#e8f0f0', bg2: '#dce8e8', accent: '#4a7a8a',
-              accentLight: '#a0c4d4', text: '#1a2e3a', textSec: '#3a5a6a' },
-            autumn: { icon: '🍂', label: 'Autumn', bg1: '#f5efe6', bg2: '#ede4d8', accent: '#b87c4a',
-              accentLight: '#e0c4a0', text: '#3a2a1a', textSec: '#7a5a3a' },
-            winter: { icon: '❄️', label: 'Winter', bg1: '#f0f2f5', bg2: '#e4e8ec', accent: '#7a8a9a',
-              accentLight: '#b0c0d0', text: '#1a1a2e', textSec: '#4a4a6a' }
+            summer: { icon: '☀️', label: 'Summer', bg1: '#0a0a12', bg2: '#1a0a1a', accent: '#d4a843', accentLight: '#f0d5a0',
+              text: '#e8e0d8', textSec: '#b0a8a0' },
+            monsoon: { icon: '🌧️', label: 'Monsoon', bg1: '#080c14', bg2: '#0a1018', accent: '#4a8a7a',
+              accentLight: '#80c0b0', text: '#d8e0e0', textSec: '#90a8a8' },
+            autumn: { icon: '🍂', label: 'Autumn', bg1: '#0a080a', bg2: '#141010', accent: '#b87c4a',
+              accentLight: '#e0c4a0', text: '#e8ddd0', textSec: '#b0a090' },
+            winter: { icon: '❄️', label: 'Winter', bg1: '#0a0a14', bg2: '#0e0e18', accent: '#7a8a9a',
+              accentLight: '#b0c0d0', text: '#e0e4ea', textSec: '#90aab0' }
           };
           const info = map[s];
           return {
             ...info,
             isDay: d,
-            dayLabel: d ? 'Day' : 'Night',
-            fullLabel: `${info.label} · ${d ? 'Day' : 'Night'}`
+            fullLabel: `${info.label} · ${d ? 'Day' : 'Night'}`,
+            cosmicIcon: d ? '☯' : '🌙',
           };
         },
-
         apply(info) {
           const root = dom.root;
-          const isDay = info.isDay;
+          root.style.setProperty('--bg-primary', info.bg1);
+          root.style.setProperty('--text-primary', info.text);
+          root.style.setProperty('--text-secondary', info.textSec);
+          root.style.setProperty('--gold', info.accent);
+          root.style.setProperty('--gold-light', info.accentLight);
+          root.style.setProperty('--gold-dark', info.accent);
+          // bg card
+          const bgCard = info.isDay ? 'rgba(18,18,30,0.65)' : 'rgba(8,8,18,0.75)';
+          root.style.setProperty('--bg-card', bgCard);
+          root.style.setProperty('--bg-card-hover', info.isDay ? 'rgba(30,30,50,0.75)' : 'rgba(12,12,28,0.85)');
 
-          const bg1 = isDay ? info.bg1 : this.darken(info.bg1, 0.7);
-          const bg2 = isDay ? info.bg2 : this.darken(info.bg2, 0.7);
-          const text = isDay ? info.text : '#e8e0d8';
-          const textSec = isDay ? info.textSec : '#a0a0b0';
-          const accent = isDay ? info.accent : info.accentLight;
-          const accentLight = isDay ? info.accentLight : info.accent;
-          const border = isDay ? 'rgba(26,26,46,0.08)' : 'rgba(200,200,210,0.08)';
-          const glassBorder = isDay ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.06)';
-          const shadow = isDay ? 'rgba(26,26,46,0.06)' : 'rgba(0,0,0,0.20)';
+          // Update cosmic badge
+          dom.cosmicIcon.textContent = info.cosmicIcon;
+          dom.cosmicLabel.textContent = info.fullLabel;
 
-          root.style.setProperty('--bg-primary', bg1);
-          root.style.setProperty('--bg-secondary', isDay ? 'rgba(255,252,248,0.6)' : 'rgba(30,30,40,0.5)');
-          root.style.setProperty('--bg-card', isDay ? 'rgba(255,252,248,0.45)' : 'rgba(35,35,45,0.45)');
-          root.style.setProperty('--text-primary', text);
-          root.style.setProperty('--text-secondary', textSec);
-          root.style.setProperty('--text-muted', isDay ? '#8a8aaa' : '#6a6a8a');
-          root.style.setProperty('--accent', accent);
-          root.style.setProperty('--accent-light', accentLight);
-          root.style.setProperty('--accent-dark', isDay ? '#a8893a' : '#5a6a7a');
-          root.style.setProperty('--border-color', border);
-          root.style.setProperty('--glass-border', glassBorder);
-          root.style.setProperty('--shadow', shadow);
-          root.style.setProperty('--shadow-hover', isDay ? 'rgba(26,26,46,0.14)' : 'rgba(0,0,0,0.30)');
+          // Update star opacity
+          const starOpacity = info.isDay ? 0.4 : 0.8;
+          document.documentElement.style.setProperty('--star-opacity', starOpacity);
 
-          dom.bgLayer.style.background = `linear-gradient(135deg, ${bg1} 0%, ${bg2} 100%)`;
-
-          dom.seasonIcon.textContent = info.icon;
-          dom.seasonLabel.textContent = info.fullLabel;
-
-          // Ornament colours
-          const orns = dom.bgLayer.querySelectorAll('.bg-ornament');
-          orns.forEach(el => { el.style.color = accent; });
-          const shapes = dom.bgLayer.querySelectorAll('.bg-shape');
-          shapes.forEach(el => {
-            el.style.background = accent;
-            el.style.opacity = isDay ? '0.06' : '0.08';
-          });
-
-          // texture opacity
-          const texture = dom.bgLayer.querySelector('.texture');
-          texture.style.opacity = isDay ? '0.06' : '0.08';
+          // Background gradient
+          dom.cosmicBg.style.background =
+            `radial-gradient(ellipse at 30% 20%, ${info.bg2} 0%, ${info.bg1} 60%, #050510 100%)`;
         },
-
-        darken(hex, factor) {
-          let r = parseInt(hex.slice(1,3), 16);
-          let g = parseInt(hex.slice(3,5), 16);
-          let b = parseInt(hex.slice(5,7), 16);
-          r = Math.floor(r * factor);
-          g = Math.floor(g * factor);
-          b = Math.floor(b * factor);
-          return `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`;
-        },
-
         update() {
-          const info = this.getSeasonInfo();
+          const info = this.getCosmicState();
           this.apply(info);
           return info;
         }
@@ -1117,13 +1372,8 @@
             if (saved.version === CONFIG.APP_VERSION) {
               Object.assign(state, saved);
               if (state.lastStudyDate) state.lastStudyDate = new Date(state.lastStudyDate);
-              if (!state.subjectHours) state.subjectHours = { physics: 0, chemistry: 0, biology: 0, botany: 0, zoology: 0 };
-              if (!state.subjectChecked) state.subjectChecked = { physics: false, chemistry: false, biology: false,
-                botany: false, zoology: false };
               if (!state.notes) state.notes = [];
               if (!state.dailyFocus) state.dailyFocus = '';
-              // For backward compatibility, we don't have subject tracking now but keep it for stats
-              updateTodayStats();
               return true;
             }
           }
@@ -1137,19 +1387,6 @@
           if (toSave.lastStudyDate) toSave.lastStudyDate = toSave.lastStudyDate.toISOString();
           localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(toSave));
         } catch (e) { /* ignore */ }
-      }
-
-      function updateTodayStats() {
-        // We no longer track subjects, but keep total hours etc.
-        // We'll keep subjectHours for compatibility, but we won't use checkboxes
-        // Instead, we'll use a simple "study hour" increment
-        let hours = 0;
-        for (const key of Object.keys(state.subjectHours)) {
-          hours += state.subjectHours[key] || 0;
-        }
-        state.todayHours = hours;
-        // Today subjects not used anymore
-        state.todaySubjects = 0;
       }
 
       // ============================================================
@@ -1207,8 +1444,8 @@
         dom.phaseBadge.className = 'phase-badge' + (phase === 'revision' ? ' revision' : '');
 
         dom.subMessage.innerHTML = phase === 'preparation' ?
-          'Quietly, steadily. <span>One day</span> at a time.' :
-          'Final push. <span>Stay focused</span> and finish strong.';
+          '<span>静</span> かに、<span>着実</span> に。<br />One day at a time.' :
+          '<span>集中</span> して、<span>やり抜</span> く。<br />Finish strong.';
 
         // Pulse
         if (cd.days !== prevCountdown.days || cd.hours !== prevCountdown.hours ||
@@ -1240,7 +1477,7 @@
         const list = dom.notesList;
         if (!state.notes || state.notes.length === 0) {
           list.innerHTML =
-            `<div style="text-align:center;padding:1.6rem;color:var(--text-secondary);font-size:1.4rem;font-weight:300;">No notes yet. Start your first one.</div>`;
+            `<div style="text-align:center;padding:1.6rem;color:var(--text-secondary);font-size:1.4rem;font-weight:300;">No notes yet. Begin your journal.</div>`;
           return;
         }
         list.innerHTML = state.notes.map((note, i) => `
@@ -1257,7 +1494,7 @@
               state.notes.splice(idx, 1);
               saveState();
               renderNotes();
-              showToast('🗑️ Note deleted');
+              showToast('🗑️ Note removed');
             }
           });
         });
@@ -1282,13 +1519,12 @@
       }
 
       // ============================================================
-      // 8.  STUDY TRACKER (simplified – only total hours and days)
+      // 8.  STUDY LOG
       // ============================================================
       function addStudyHour() {
-        // Add 1 hour to total and today
         state.totalHours = (state.totalHours || 0) + 1;
         state.todayHours = (state.todayHours || 0) + 1;
-        // Update study days / streak
+
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         if (state.lastStudyDate) {
@@ -1307,7 +1543,7 @@
         }
         saveState();
         renderCountdown();
-        showToast('⏱️ +1 hour logged');
+        showToast('⚔️ +1 hour of training logged');
       }
 
       // ============================================================
@@ -1317,27 +1553,29 @@
         const val = dom.dailyFocusInput.value.trim();
         state.dailyFocus = val;
         saveState();
-        showToast('🎯 Daily focus updated');
+        showToast('🎯 Focus set. 戦 · 学 · 宙');
       }
 
       // ============================================================
-      // 10. QUOTES (mini quote on home)
+      // 10. QUOTES — Warrior-Scholar Wisdom
       // ============================================================
-      const MINI_QUOTES = [
-        '"Focus on the step, not the staircase."',
-        '"Success is the sum of small efforts repeated daily."',
-        '"Patience and persistence have a magical effect."',
-        '"The secret of getting ahead is getting started."',
+      const WARRIOR_QUOTES = [
+        '"The warrior\'s path is the scholar\'s way."',
+        '"Know thyself, and the cosmos opens."',
         '"Discipline is the bridge between goals and accomplishment."',
-        '"It does not matter how slowly you go as long as you do not stop."',
-        '"Believe you can and you\'re halfway there."',
+        '"The way of the warrior is the way of the scholar."',
+        '"In stillness, the warrior finds clarity."',
+        '"One step, one breath, one victory."',
+        '"The scholar\'s mind, the warrior\'s heart."',
+        '"Patience and persistence have a magical effect."',
         '"The best time to start was yesterday. The next best is now."',
+        '"道 · 武 · 学 — the triple path of mastery."',
       ];
-      let quoteIndex = 0;
+      let quoteIdx = 0;
 
       function updateMiniQuote() {
-        const idx = Math.floor(Math.random() * MINI_QUOTES.length);
-        dom.miniQuote.textContent = MINI_QUOTES[idx];
+        const idx = Math.floor(Math.random() * WARRIOR_QUOTES.length);
+        dom.miniQuote.textContent = WARRIOR_QUOTES[idx];
       }
 
       // ============================================================
@@ -1371,7 +1609,7 @@
       // 13. ONBOARDING
       // ============================================================
       function startJourney() {
-        const name = dom.userNameInput.value.trim() || 'Aspirant';
+        const name = dom.userNameInput.value.trim() || 'Warrior';
         const target = dom.targetDateInput.value;
         if (!target) {
           showToast('⚠️ Please select your target exam date.');
@@ -1383,9 +1621,6 @@
         state.studyDays = 0;
         state.streak = 0;
         state.totalHours = 0;
-        state.todayHours = 0;
-        state.subjectHours = { physics: 0, chemistry: 0, biology: 0, botany: 0, zoology: 0 };
-        state.subjectChecked = { physics: false, chemistry: false, biology: false, botany: false, zoology: false };
         state.notes = [];
         state.lastStudyDate = null;
         state.dailyFocus = '';
@@ -1393,61 +1628,44 @@
         dom.onboardingModal.classList.add('hidden');
         renderCountdown();
         updateMiniQuote();
-        showToast(`🌸 Welcome, ${state.userName}! Let's grow.`);
+        showToast(`⚔️ Welcome, ${state.userName}. The way begins.`);
       }
 
       // ============================================================
-      // 14. RESET JOURNEY (hidden but accessible via console if needed)
-      // ============================================================
-      function resetJourney() {
-        if (!confirm('Are you sure you want to reset your entire journey? All data will be lost.')) return;
-        localStorage.removeItem(CONFIG.STORAGE_KEY);
-        window.location.reload();
-      }
-
-      // ============================================================
-      // 15. INITIALIZATION
+      // 14. INITIALIZATION
       // ============================================================
       function init() {
-        // Load state
         const hasState = loadState();
 
-        // Set default target date
         dom.targetDateInput.value = '2027-05-01';
 
-        // If no state, show onboarding
         if (!hasState || !state.journeyStarted) {
           dom.onboardingModal.classList.remove('hidden');
-          dom.userNameInput.value = 'Aspirant';
+          dom.userNameInput.value = 'Warrior';
         } else {
           dom.onboardingModal.classList.add('hidden');
-          dom.userNameInput.value = state.userName || 'Aspirant';
+          dom.userNameInput.value = state.userName || 'Warrior';
         }
 
-        // Apply initial theme
-        ThemeEngine.update();
+        // Apply cosmic theme
+        CosmicEngine.update();
 
-        // Render countdown
         renderCountdown();
         setInterval(renderCountdown, 1000);
 
-        // Update theme every 30 seconds
         setInterval(() => {
-          ThemeEngine.update();
+          CosmicEngine.update();
         }, 30000);
 
-        // Update mini quote
         updateMiniQuote();
-        setInterval(updateMiniQuote, 60000); // change every minute
+        setInterval(updateMiniQuote, 60000);
 
         // ---- Event Listeners ----
 
-        // Onboarding
         dom.startJourneyBtn.addEventListener('click', startJourney);
         dom.targetDateInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') startJourney(); });
         dom.userNameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') startJourney(); });
 
-        // Navigation
         dom.navAnchors.forEach(a => {
           a.addEventListener('click', function(e) {
             e.preventDefault();
@@ -1461,7 +1679,6 @@
           this.textContent = open ? '✕' : '☰';
         });
 
-        // Notes
         dom.addNoteBtn.addEventListener('click', function() {
           const val = dom.noteInput.value;
           if (addNote(val)) dom.noteInput.value = '';
@@ -1471,14 +1688,12 @@
           if (e.key === 'Enter') dom.addNoteBtn.click();
         });
 
-        // Daily focus
         dom.saveFocusBtn.addEventListener('click', saveDailyFocus);
         dom.dailyFocusInput.addEventListener('keydown', function(e) {
           if (e.key === 'Enter') saveDailyFocus();
         });
 
-        // Quick add study hour (we can add a floating button or use keyboard shortcut)
-        // For simplicity, we add a hidden shortcut: press 'h' to log an hour
+        // Keyboard shortcuts
         document.addEventListener('keydown', function(e) {
           if (e.ctrlKey || e.metaKey || e.altKey) return;
           if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
@@ -1489,41 +1704,35 @@
           } else if (key === 'n') {
             e.preventDefault();
             navigateTo('notes');
-          } else if (key === 'h') { // already handled
-          } else if (key === 'r') {
-            // reset journey (with confirmation)
-            if (confirm('Reset journey?')) resetJourney();
+          } else if (key === 'h') {
+            // already handled
           }
         });
 
-        // Also add a plus button on home for study hour (hidden in header)
-        // We'll add a small button in the stats card
+        // Add study hour button to stats
         const statsCard = document.querySelector('.stats-grid');
         if (statsCard) {
-          // Add a hidden or visible button? We'll add it as a small floating style
           const hourBtn = document.createElement('button');
           hourBtn.className = 'btn btn-gold btn-sm';
-          hourBtn.textContent = '+1h';
+          hourBtn.textContent = '⚔️ +1h';
           hourBtn.style.marginTop = '0.8rem';
           hourBtn.style.width = '100%';
           hourBtn.addEventListener('click', addStudyHour);
-          // Append after stats-grid
           statsCard.parentNode.appendChild(hourBtn);
         }
 
-        // Show welcome toast if already onboarded
         if (hasState && state.journeyStarted) {
           setTimeout(() => {
-            showToast(`🌸 Welcome back, ${state.userName || 'Aspirant'}. Stay focused.`);
+            showToast(`⚔️ Welcome back, ${state.userName || 'Warrior'}. Stay on the path.`);
           }, 600);
         }
 
-        console.log('🌸 NEET 2027 · Quiet Focus (dropper edition)');
-        console.log('⌨️ Shortcuts: H=log hour, N=Notes, R=reset');
+        console.log('⚔️ NEET 2027 · 三重 · Warrior-Scholar');
+        console.log('⌨️ H=log hour, N=Notes');
       }
 
       // ============================================================
-      // 16. START
+      // 15. START
       // ============================================================
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
